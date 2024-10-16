@@ -42,41 +42,10 @@ public class PedidoService {
         return buscarPedido(idPedido);
     }
 
-    public void removerProduto(int idPedido, int idProduto) {
-        itemPedidoService.removerProdutoPedido(idPedido, idProduto);
-        // calcularValorTotal
-    }
-
-    public PedidoDto editarQuantidade(int idPedido, int idProduto, int quantidadeAtualizada) {
-        return itemPedidoService.editarQuantidadeProduto(idPedido, idProduto, quantidadeAtualizada);
-        // calcularValorTotal()
-    }
-
     public List<Produto> listarProdutos(int pedidoId) {
 
         return itemPedidoService.buscaProdutoPorPedido(pedidoId);
 
-    }
-
-    /*public static double calcularValorTotal(ListaProduto listaProduto, int index) {
-        if (index == listaProduto.size()){
-            return 0.0;
-        }
-        double subTotal = (listaProduto.exibirPorIndex(index).getPrecoProduto()
-                * listaProduto.exibirPorIndex(index).getQuantidade());
-        index++;
-        return subTotal + calcularValorTotal(listaProduto, index);
-    }*/
-
-    @Modifying
-    @Transactional
-    public void removerProdutos(int idPedido) {
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
-        if (pedidoOpt.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado");
-        }
-        itemPedidoService.removerProdutosPorPedido(idPedido);
-        pedidoRepository.atualizarValorTotal(pedidoOpt.get().getId(), 0.0);
     }
 
     public Pedido buscarPedido(int idPedido) {
@@ -90,6 +59,27 @@ public class PedidoService {
         return pedidoOpt.get();
     }
 
+    public PedidoDto editarQuantidade(int idPedido, int idProduto, int quantidadeAtualizada) {
+        return itemPedidoService.editarQuantidadeProduto(idPedido, idProduto, quantidadeAtualizada);
+        // calcularValorTotal()
+    }
+
+    public void removerProduto(int idPedido, int idProduto) {
+        itemPedidoService.removerProdutoPedido(idPedido, idProduto);
+        // calcularValorTotal
+    }
+
+    @Modifying
+    @Transactional
+    public void removerProdutos(int idPedido) {
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+        if (pedidoOpt.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado");
+        }
+        itemPedidoService.removerProdutosPorPedido(idPedido);
+        pedidoRepository.atualizarValorTotal(pedidoOpt.get().getId(), 0.0);
+    }
+
     public void exportarPedidosEmAberto() {
 
         List<Pedido> pedidos = pedidoRepository.findAll();
@@ -101,9 +91,17 @@ public class PedidoService {
             carrinhoDtos.add(PedidoMapper.toDetalheCarrinhoDto(pedidos.get(i), listaProdutos));
 
         }
-
         Escritor.exportar(carrinhoDtos);
-
     }
+
+    /*public static double calcularValorTotal(ListaProduto listaProduto, int index) {
+        if (index == listaProduto.size()){
+            return 0.0;
+        }
+        double subTotal = (listaProduto.exibirPorIndex(index).getPrecoProduto()
+                * listaProduto.exibirPorIndex(index).getQuantidade());
+        index++;
+        return subTotal + calcularValorTotal(listaProduto, index);
+    }*/
 
 }

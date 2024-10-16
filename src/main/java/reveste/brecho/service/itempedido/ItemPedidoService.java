@@ -20,29 +20,6 @@ public class ItemPedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
-    public List<Produto> buscaProdutoPorPedido(int pedidoId) {
-
-        return itemPedidoRepository.findByPedidoId(pedidoId).stream().map(ItemPedido::getProduto).toList();
-    }
-
-    public void removerProdutoPedido(int idPedido, int idProduto) {
-        List<Integer> idItemPedido = itemPedidoRepository.findIdByPedidoIdAndProdutoId(idPedido, idProduto);
-        itemPedidoRepository.deleteAllById(idItemPedido);
-    }
-
-    public PedidoDto editarQuantidadeProduto(int idPedido, int idProduto, int quantidadeAtualizada) {
-        ItemPedido itemPedido = itemPedidoRepository.findByPedidoIdAndProdutoId(idPedido, idProduto);
-        itemPedido.setQuantidade(quantidadeAtualizada);
-        return null;
-    }
-
-    public void removerProdutosPorPedido(int idPedido) {
-        List<ItemPedido> itemPedidos = itemPedidoRepository.findByPedidoId(idPedido).stream().toList();
-        for (ItemPedido itemPedido : itemPedidos) {
-            itemPedidoRepository.deleteById(itemPedido.getId());
-        }
-    }
-
     public void adicionarProduto(ProdutoRequisicaoDto produtoDto, Pedido pedido, Integer quantidade) {
 
         Produto produto = ProdutoMapper.requisicaoDtoToProduto(produtoDto);
@@ -57,6 +34,29 @@ public class ItemPedidoService {
                 .build();
 
         itemPedidoRepository.save(novoItemPedido);
+    }
+
+    public List<Produto> buscaProdutoPorPedido(int pedidoId) {
+
+        return itemPedidoRepository.findByPedidoId(pedidoId).stream().map(ItemPedido::getProduto).toList();
+    }
+
+    public PedidoDto editarQuantidadeProduto(int idPedido, int idProduto, int quantidadeAtualizada) {
+        ItemPedido itemPedido = itemPedidoRepository.findByPedidoIdAndProdutoId(idPedido, idProduto);
+        itemPedido.setQuantidade(quantidadeAtualizada);
+        return null;
+    }
+
+    public void removerProdutoPedido(int idPedido, int idProduto) {
+        List<Integer> idItemPedido = itemPedidoRepository.findIdByPedidoIdAndProdutoId(idPedido, idProduto);
+        itemPedidoRepository.deleteAllById(idItemPedido);
+    }
+
+    public void removerProdutosPorPedido(int idPedido) {
+        List<ItemPedido> itemPedidos = itemPedidoRepository.findByPedidoId(idPedido).stream().toList();
+        for (ItemPedido itemPedido : itemPedidos) {
+            itemPedidoRepository.deleteById(itemPedido.getId());
+        }
     }
 
 }

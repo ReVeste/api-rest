@@ -40,6 +40,9 @@ public class Usuario {
 
     private TipoEnum tipo;
 
+    // @NotNull
+    // private Integer ativo;
+
     @OneToMany
     List<Endereco> enderecos;
 }

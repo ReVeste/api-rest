@@ -1,7 +1,9 @@
 package reveste.brecho.entity.produto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoEnum;
 import reveste.brecho.enun.produto.TipoEnum;
 
@@ -23,6 +25,37 @@ public class Produto {
     private Double preco;
     private String descricao;
     private String urlImagem;
+
+    // Produto atualizado
+
+    /* @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank
+    private String nome;
+
+    @NotBlank
+    private TamanhoEnum tamanho;
+
+    @NotBlank
+    private Integer qualidade;
+
+    @NotBlank
+    private String categoria;
+
+    @NotBlank
+    private Double preco;
+
+    @NotBlank
+    private String descricao;
+
+    @NotBlank
+    private Integer quantidadeEstoque;
+
+    @NotBlank
+    private StatusProdutoEnum status;
+
+    */
 
     @Override
     public String toString() {
