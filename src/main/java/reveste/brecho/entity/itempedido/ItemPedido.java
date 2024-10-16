@@ -2,15 +2,13 @@ package reveste.brecho.entity.itempedido;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
 
 @Entity
 @Getter @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemPedido {

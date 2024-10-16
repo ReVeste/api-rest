@@ -2,16 +2,15 @@ package reveste.brecho.entity.pedido;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import reveste.brecho.entity.usuario.Usuario;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pedido {
@@ -22,7 +21,8 @@ public class Pedido {
     @NotBlank
     private LocalDateTime data;
 
-    private double valorTotal;
+    @NotNull
+    private Double valorTotal;
     @NotBlank
     private StatusEnum status;
     @ManyToOne

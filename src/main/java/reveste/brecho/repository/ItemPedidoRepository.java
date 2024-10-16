@@ -9,8 +9,8 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer>
 
 
     List<ItemPedido> findByPedidoId(int pedidoId);
-    Integer findIdByPedidoIdAndProdutoId(int PedidoId, int ProdutoId);
-    ItemPedido findByPedidoIdAndProdutoId(int PedidoId, int ProdutoId);
+    List<Integer> findIdByPedidoIdAndProdutoId(int pedidoId, int produtoId);
+    ItemPedido findByPedidoIdAndProdutoId(int pedidoId, int produtoId);
 
 
 }

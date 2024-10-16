@@ -10,8 +10,6 @@ import reveste.brecho.enun.produto.TipoEnum;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_produto", discriminatorType = DiscriminatorType.STRING)
 public class Produto {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +17,25 @@ public class Produto {
     private String nome;
     private TamanhoEnum tamanho;
     private String cor;
-    //private String marca;
     private TipoEnum tipo;
-    private String categoria; // Enum - Acessorio, bolsa, calçado, roupa
-    private String subCategoria; // Enum - tudo
+    private String categoria;
+    private String subCategoria;
     private Double preco;
     private String descricao;
     private String urlImagem;
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                ", nome='" + nome + '\'' +
+                ", tamanho=" + tamanho +
+                ", cor='" + cor + '\'' +
+                ", tipo=" + tipo +
+                ", categoria='" + categoria + '\'' +
+                ", subCategoria='" + subCategoria + '\'' +
+                ", preco=" + preco +
+                ", descricao='" + descricao + '\''+
+                '}';
+    }
 
 }
