@@ -6,15 +6,15 @@ import reveste.brecho.entity.produto.Produto;
 
 public class ListaProduto {
 
-    private ProdutoPedidoDto[] vetor;
+    private Produto[] vetor;
     private int nroElem;
 
     public ListaProduto(int tamanhoLista) {
-        this.vetor = new ProdutoPedidoDto[tamanhoLista];
+        this.vetor = new Produto[tamanhoLista];
         this.nroElem = 0;
     }
 
-    public void adiciona(ProdutoPedidoDto elementoProduto){
+    public void adiciona(Produto elementoProduto){
         if (nroElem >= vetor.length){
             throw new IllegalStateException();
         } else {
@@ -23,7 +23,7 @@ public class ListaProduto {
         }
     }
 
-    public int busca(ProdutoPedidoDto elementoPesquisa){
+    public int busca(Produto elementoPesquisa){
         for (int i = 0; i < nroElem; i++) {
             if (vetor[i] == elementoPesquisa){
                 return i;
@@ -43,7 +43,7 @@ public class ListaProduto {
         return true;
     }
 
-    public boolean removeElemento(ProdutoPedidoDto elemento){
+    public boolean removeElemento(Produto elemento){
         if (busca(elemento) == -1){
             return false;
         }
@@ -57,17 +57,17 @@ public class ListaProduto {
         }
     }
 
-    public ProdutoPedidoDto exibirPorIndex(int index){
-        ProdutoPedidoDto produtoPedidoDto = new ProdutoPedidoDto();
+    public Produto exibirPorIndex(int index){
+        Produto produto = new Produto();
         if (index < 0 || index >= nroElem){
             return null;
         }
         for (int i = index; i < nroElem - 1; i++) {
             if (i == index){
-                produtoPedidoDto = vetor[i];
+                produto = vetor[i];
             }
         }
-        return produtoPedidoDto;
+        return produto;
     }
 
     public int size(){
@@ -78,7 +78,7 @@ public class ListaProduto {
         return tamanho;
     }
 
-    public ProdutoPedidoDto[] getVetor() {
+    public Produto[] getVetor() {
         return vetor;
     }
 

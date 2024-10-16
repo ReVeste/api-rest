@@ -1,4 +1,4 @@
-package reveste.brecho.entity.pedido;
+package reveste.brecho.enun.pedido;
 
 public enum StatusEnum {
     CONCLUIDO,

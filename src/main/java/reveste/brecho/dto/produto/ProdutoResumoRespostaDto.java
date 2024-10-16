@@ -2,8 +2,6 @@ package reveste.brecho.dto.produto;
 
 import lombok.Builder;
 import lombok.Data;
-import reveste.brecho.enun.produto.TamanhoEnum;
-import reveste.brecho.enun.produto.TipoEnum;
 
 @Data
 @Builder
