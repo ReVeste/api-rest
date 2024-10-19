@@ -48,7 +48,7 @@ public class PedidoController {
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
-    @PutMapping("/{idPedido}/{idProduto}")
+    @PutMapping("/{idPedido}/produto/{idProduto}")
     public ResponseEntity<PedidoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
                                                              @PathVariable Integer idProduto,
                                                              @RequestBody Integer quantidadeAtualizada){
@@ -56,8 +56,9 @@ public class PedidoController {
                 idPedido, idProduto, quantidadeAtualizada));
     }
 
-    @DeleteMapping("/{idPedido}/{idProduto}")
-    public ResponseEntity<Void> removerProduto(@PathVariable Integer idPedido, @PathVariable Integer idProduto) {
+    @DeleteMapping("/{idPedido}/produto/{idProduto}")
+    public ResponseEntity<Void> removerProduto(@PathVariable Integer idPedido,
+                                               @PathVariable Integer idProduto) {
         pedidoService.removerProduto(idPedido, idProduto);
         return ResponseEntity.ok().build();
     }

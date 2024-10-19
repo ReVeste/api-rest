@@ -66,7 +66,6 @@ public class PedidoService {
 
     public void removerProduto(int idPedido, int idProduto) {
         itemPedidoService.removerProdutoPedido(idPedido, idProduto);
-        // calcularValorTotal
     }
 
     @Modifying

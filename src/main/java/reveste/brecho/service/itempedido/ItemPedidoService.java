@@ -11,6 +11,8 @@ import reveste.brecho.entity.itempedido.ItemPedido;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.repository.ItemPedidoRepository;
+import reveste.brecho.util.Ordenador;
+import reveste.brecho.util.PesquisaBinaria;
 
 import java.util.List;
 
@@ -48,8 +50,10 @@ public class ItemPedidoService {
     }
 
     public void removerProdutoPedido(int idPedido, int idProduto) {
-        List<Integer> idItemPedido = itemPedidoRepository.findIdByPedidoIdAndProdutoId(idPedido, idProduto);
-        itemPedidoRepository.deleteAllById(idItemPedido);
+        List<ItemPedido> produtosDoPedido = itemPedidoRepository.findByPedidoId(idPedido);
+        produtosDoPedido = Ordenador.ordenarItemPedidoPorProduto(produtosDoPedido);
+        Integer idItemPedidoParaDeletar = PesquisaBinaria.buscarItemProdutoPorProduto(produtosDoPedido, idProduto);
+        itemPedidoRepository.deleteById(produtosDoPedido.get(idItemPedidoParaDeletar).getId());
     }
 
     public void removerProdutosPorPedido(int idPedido) {
