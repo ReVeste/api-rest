@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import reveste.brecho.dto.endereco.*;
 import reveste.brecho.entity.endereco.Endereco;
 import reveste.brecho.service.endereco.EnderecoService;
-import reveste.brecho.util.Ordenador;
 
 import java.util.List;
 
