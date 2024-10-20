@@ -1,10 +1,10 @@
 INSERT INTO Usuario (nome, cpf, telefone, data_nascimento, email, senha, tipo, ativo)
     VALUES ('Matheus Rabello', '94960625040', '11992247954',
-            '2003-11-08', 'matheus.csantos@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 0, true);
+            '2003-11-08', 'matheus.csantos@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'cliente', true);
 
 INSERT INTO Usuario (nome, cpf, telefone, data_nascimento, email, senha, tipo, ativo)
     VALUES ('Pedro Saraujo', '46553098069', '13981309594',
-            '2005-05-13', 'pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 0, true);
+            '2005-05-13', 'pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'cliente', true);
 
 INSERT INTO Produto (nome, tamanho, cor, tipo, categoria, sub_categoria, preco, descricao, url_imagem)
 VALUES

@@ -1,5 +1,7 @@
 package reveste.brecho.dto.usuario;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
@@ -18,6 +20,7 @@ public class UsuarioDetalheRespostaDto {
     private LocalDate dataNascimento;
     private String email;
     private String senha;
+    @Enumerated(EnumType.STRING)
     private TipoUsuarioEnum tipo;
     private Boolean ativo;
 }

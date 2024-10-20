@@ -21,6 +21,7 @@ public class Usuario {
     private LocalDate dataNascimento;
     private String email;
     private String senha;
+    @Enumerated(EnumType.STRING)
     private TipoUsuarioEnum tipo;
     private Boolean ativo;
 }
