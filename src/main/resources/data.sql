@@ -36,7 +36,7 @@ VALUES
 
 INSERT INTO Pedido (data, valor_total, status, usuario_id)
 VALUES
-(NOW(), 0.0, 1, 1),
+(NOW(), 0.0, 3, 1),
 (NOW(), 0.0, 1, 1),
 (NOW(), 0.0, 1, 1),
 (NOW(), 0.0, 1, 1),

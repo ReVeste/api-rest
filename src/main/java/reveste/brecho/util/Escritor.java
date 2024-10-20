@@ -30,7 +30,7 @@ public class Escritor {
                     escritor.write("%d;%s;%.2f;%s;%s;%s".formatted(
                             pedidos.get(i).getId(), pedidos.get(i).getData(),
                             pedidos.get(i).getValorTotal(), pedidos.get(i).getStatus(),
-                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos().toString()
+                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos()
                     ));
 
                 } else {
@@ -38,7 +38,7 @@ public class Escritor {
                     escritor.write("%d;%s;%.2f;%s;%s;%s\n".formatted(
                             pedidos.get(i).getId(), pedidos.get(i).getData(),
                             pedidos.get(i).getValorTotal(), pedidos.get(i).getStatus(),
-                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos().toString()
+                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos()
                     ));
 
                 }

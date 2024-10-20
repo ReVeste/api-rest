@@ -4,20 +4,25 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reveste.brecho.dto.pedido.CarrinhoDto;
+import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
 import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
+import reveste.brecho.enun.pedido.StatusEnum;
 import reveste.brecho.repository.PedidoRepository;
+import reveste.brecho.repository.UsuarioRepository;
 import reveste.brecho.service.itempedido.ItemPedidoService;
 import reveste.brecho.util.Escritor;
 import reveste.brecho.util.ListaProduto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,27 +33,54 @@ public class PedidoService {
 
     private final ItemPedidoService itemPedidoService;
     private final PedidoRepository pedidoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public Pedido adicionarProduto(ProdutoRequisicaoDto produtoDto, Integer idPedido, Integer quantidade) {
+    @Modifying
+    @Transactional
+    public CarrinhoDto adicionarProduto(PedidoAdicionarProdutoDto pedidoDto) {
 
-        Optional<Pedido> pedido = pedidoRepository.findById(idPedido);
-        if (pedido.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado");
+        Pedido pedido = pedidoRepository.findByUsuarioIdAndStatus(pedidoDto.getIdUsuario(), StatusEnum.EM_ANDAMENTO);
+
+        if (pedido == null) {
+
+            Pedido pedidoCriado = Pedido.builder()
+                    .data(LocalDateTime.now())
+                    .valorTotal(0.0)
+                    .status(StatusEnum.EM_ANDAMENTO)
+                    .usuario(usuarioRepository.findById(pedidoDto.getIdUsuario()).get())
+                    .build();
+
+            pedidoRepository.save(pedidoCriado);
+
+            itemPedidoService.adicionarProduto(
+                    pedidoCriado,
+                    pedidoDto.getIdProduto(),
+                    pedidoDto.getQuantidadeProduto());
+
+
+            return PedidoMapper.toDetalheCarrinhoDto(
+                    PedidoMapper.entidadeToPedidoDto(pedidoCriado), listarProdutos(pedidoCriado.getId())
+            );
         }
-        itemPedidoService.adicionarProduto(produtoDto, pedido.get(), quantidade);
 
-        List<Produto> listaProduto = listarProdutos(idPedido);
+        itemPedidoService.adicionarProduto(
+                pedido,
+                pedidoDto.getIdProduto(),
+                pedidoDto.getQuantidadeProduto());
 
-        return buscarPedido(idPedido);
+
+        return PedidoMapper.toDetalheCarrinhoDto(
+                PedidoMapper.entidadeToPedidoDto(pedido), listarProdutos(pedido.getId())
+        );
     }
 
-    public List<Produto> listarProdutos(int pedidoId) {
+    public List<ProdutoDTO> listarProdutos(int pedidoId) {
 
         return itemPedidoService.buscaProdutoPorPedido(pedidoId);
 
     }
 
-    public Pedido buscarPedido(int idPedido) {
+    public PedidoDto buscarPedido(int idPedido) {
 
         Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
 
@@ -56,17 +88,16 @@ public class PedidoService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
         }
 
-        return pedidoOpt.get();
+        return PedidoMapper.entidadeToPedidoDto(pedidoOpt.get());
     }
 
-    public PedidoDto editarQuantidade(int idPedido, int idProduto, int quantidadeAtualizada) {
+
+    public List<ProdutoDTO> editarQuantidade(int idPedido, int idProduto, int quantidadeAtualizada) {
         return itemPedidoService.editarQuantidadeProduto(idPedido, idProduto, quantidadeAtualizada);
-        // calcularValorTotal()
     }
 
     public void removerProduto(int idPedido, int idProduto) {
         itemPedidoService.removerProdutoPedido(idPedido, idProduto);
-        // calcularValorTotal
     }
 
     @Modifying
@@ -87,8 +118,9 @@ public class PedidoService {
 
         for (int i = 0; i < pedidos.size(); i++) {
 
-            List<Produto> listaProdutos = (listarProdutos(pedidos.get(i).getId()));
-            carrinhoDtos.add(PedidoMapper.toDetalheCarrinhoDto(pedidos.get(i), listaProdutos));
+            List<ProdutoDTO> listaProdutos = (listarProdutos(pedidos.get(i).getId()));;
+            carrinhoDtos.add(PedidoMapper.toDetalheCarrinhoDto(
+                    PedidoMapper.entidadeToPedidoDto(pedidos.get(i)), listaProdutos));
 
         }
         Escritor.exportar(carrinhoDtos);

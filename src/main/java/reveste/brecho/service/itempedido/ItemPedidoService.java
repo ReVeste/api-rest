@@ -1,8 +1,12 @@
 package reveste.brecho.service.itempedido;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.produto.ProdutoMapper;
@@ -11,8 +15,15 @@ import reveste.brecho.entity.itempedido.ItemPedido;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.repository.ItemPedidoRepository;
+import reveste.brecho.repository.ProdutoRepository;
+import reveste.brecho.service.produto.ProdutoService;
+import reveste.brecho.util.Ordenador;
+import reveste.brecho.util.PesquisaBinaria;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static reveste.brecho.dto.produto.ProdutoMapper.entidadeToProdutoDTO;
 
 @Service
 public class ItemPedidoService {
@@ -20,36 +31,67 @@ public class ItemPedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
-    public void adicionarProduto(ProdutoRequisicaoDto produtoDto, Pedido pedido, Integer quantidade) {
+    @Autowired
+    private ProdutoService produtoService;
 
-        Produto produto = ProdutoMapper.requisicaoDtoToProduto(produtoDto);
+    public void adicionarProduto(Pedido pedido, Integer idProduto, Integer quantidade) {
 
-        Double subTotal = produto.getPreco() * quantidade;
+        Produto produto = produtoService.buscarPorId(idProduto);
 
-        ItemPedido novoItemPedido = ItemPedido.builder()
+        ItemPedido itemPedidoCriado = ItemPedido.builder()
                 .pedido(pedido)
                 .produto(produto)
                 .quantidade(quantidade)
-                .subTotal(subTotal)
+                .subTotal(0.0)
                 .build();
 
-        itemPedidoRepository.save(novoItemPedido);
+        itemPedidoRepository.save(itemPedidoCriado);
+
     }
 
-    public List<Produto> buscaProdutoPorPedido(int pedidoId) {
+    public List<ProdutoDTO> buscaProdutoPorPedido(int pedidoId) {
 
-        return itemPedidoRepository.findByPedidoId(pedidoId).stream().map(ItemPedido::getProduto).toList();
+        List<ItemPedido> produtosDoPedido = itemPedidoRepository.findByPedidoId(pedidoId);
+
+        List<ProdutoDTO> produtosDto = new ArrayList<>();
+
+        for (int i = 0; i < produtosDoPedido.size(); i++) {
+            produtosDto.add(ProdutoMapper.entidadeToProdutoDTO(
+                    produtosDoPedido.get(i).getProduto(), produtosDoPedido.get(i).getQuantidade()));
+        }
+
+        return produtosDto;
     }
 
-    public PedidoDto editarQuantidadeProduto(int idPedido, int idProduto, int quantidadeAtualizada) {
-        ItemPedido itemPedido = itemPedidoRepository.findByPedidoIdAndProdutoId(idPedido, idProduto);
-        itemPedido.setQuantidade(quantidadeAtualizada);
-        return null;
+    @Modifying
+    @Transactional
+    public List<ProdutoDTO> editarQuantidadeProduto(int idPedido, int idProduto, int quantidadeAtualizada) {
+        List<ItemPedido> produtosDoPedido = itemPedidoRepository.findByPedidoId(idPedido);
+        if (produtosDoPedido.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produtos não encontrados");
+        }
+        produtosDoPedido = Ordenador.ordenarItemPedidoPorProduto(produtosDoPedido);
+        Integer idItemPedidoParaEditar = PesquisaBinaria.buscarItemProdutoPorProduto(produtosDoPedido, idProduto);
+
+        itemPedidoRepository.atualizarQuantidade(
+                produtosDoPedido.get(idItemPedidoParaEditar).getId(), quantidadeAtualizada);
+
+        List<ProdutoDTO> produtosDto = new ArrayList<>();
+
+        for (int i = 0; i < produtosDoPedido.size(); i++) {
+            produtosDto.add(ProdutoMapper.entidadeToProdutoDTO(
+                    produtosDoPedido.get(i).getProduto(), produtosDoPedido.get(i).getQuantidade()));
+        }
+
+        return produtosDto;
+
     }
 
     public void removerProdutoPedido(int idPedido, int idProduto) {
-        List<Integer> idItemPedido = itemPedidoRepository.findIdByPedidoIdAndProdutoId(idPedido, idProduto);
-        itemPedidoRepository.deleteAllById(idItemPedido);
+        List<ItemPedido> produtosDoPedido = itemPedidoRepository.findByPedidoId(idPedido);
+        produtosDoPedido = Ordenador.ordenarItemPedidoPorProduto(produtosDoPedido);
+        Integer idItemPedidoParaDeletar = PesquisaBinaria.buscarItemProdutoPorProduto(produtosDoPedido, idProduto);
+        itemPedidoRepository.deleteById(produtosDoPedido.get(idItemPedidoParaDeletar).getId());
     }
 
     public void removerProdutosPorPedido(int idPedido) {
