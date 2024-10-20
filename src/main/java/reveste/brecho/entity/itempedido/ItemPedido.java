@@ -2,6 +2,7 @@ package reveste.brecho.entity.itempedido;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
@@ -22,10 +23,10 @@ public class ItemPedido {
     @ManyToOne
     private Produto produto;
 
-    @NotBlank
+    @NotNull
     private int quantidade;
 
-    @NotBlank
+    @NotNull
     private double subTotal;
 
 }

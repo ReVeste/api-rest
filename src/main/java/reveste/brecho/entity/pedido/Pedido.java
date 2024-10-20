@@ -20,12 +20,14 @@ public class Pedido {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime data;
 
     @NotNull
     private Double valorTotal;
-    @NotBlank
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
     private StatusEnum status;
     @ManyToOne
     private Usuario usuario;

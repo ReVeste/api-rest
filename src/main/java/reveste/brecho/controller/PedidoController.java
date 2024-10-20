@@ -4,14 +4,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
 import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.dto.produto.ProdutoRequisicaoAdicionar;
-import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.service.pedido.PedidoService;
 
 import java.util.List;
@@ -24,36 +22,35 @@ public class PedidoController {
     private final PedidoService pedidoService;
 
     @PostMapping
-    public ResponseEntity<Pedido> adicionarProduto(
-            @RequestBody @Valid ProdutoRequisicaoAdicionar produtoRequisicaoAdicionar) {
+    public ResponseEntity<CarrinhoDto> adicionarProduto(
+            @RequestBody @Valid PedidoAdicionarProdutoDto pedidoDto) {
 
-        return ResponseEntity.created(null).body(pedidoService.adicionarProduto(
-                produtoRequisicaoAdicionar.getProduto(),
-                produtoRequisicaoAdicionar.getIdPedido(),
-                produtoRequisicaoAdicionar.getQuantidade()));
+        return ResponseEntity.created(null).body(pedidoService.adicionarProduto(pedidoDto));
 
     }
 
     @GetMapping("/{idPedido}/produtos")
-    public ResponseEntity<List<Produto>> listarProdutosPedido(@PathVariable Integer idPedido) {
-        List<Produto> produtos = pedidoService.listarProdutos(idPedido);
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPedido(@PathVariable Integer idPedido) {
+        List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
 
         return ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{idPedido}")
     public ResponseEntity<CarrinhoDto> buscarCarrinho(@PathVariable Integer idPedido) {
-        List<Produto> produtos = pedidoService.listarProdutos(idPedido);
-        Pedido pedido = pedidoService.buscarPedido(idPedido);
+        List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
+        PedidoDto pedido = pedidoService.buscarPedido(idPedido);
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
     @PutMapping("/{idPedido}/produto/{idProduto}")
-    public ResponseEntity<PedidoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
+    public ResponseEntity<CarrinhoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
                                                              @PathVariable Integer idProduto,
                                                              @RequestBody Integer quantidadeAtualizada){
-        return ResponseEntity.status(200).body(pedidoService.editarQuantidade(
-                idPedido, idProduto, quantidadeAtualizada));
+
+        List<ProdutoDTO> produtos = pedidoService.editarQuantidade(idPedido, idProduto, quantidadeAtualizada);
+        PedidoDto pedido = pedidoService.buscarPedido(idPedido);
+        return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
     @DeleteMapping("/{idPedido}/produto/{idProduto}")
