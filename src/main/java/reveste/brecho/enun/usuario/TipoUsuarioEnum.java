@@ -1,6 +1,6 @@
 package reveste.brecho.enun.usuario;
 
-public enum TipoEnum {
+public enum TipoUsuarioEnum {
     CLIENTE,
     FUNCIONARIO,
     ADMIN,
