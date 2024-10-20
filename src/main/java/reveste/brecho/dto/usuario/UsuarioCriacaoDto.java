@@ -27,4 +27,6 @@ public class UsuarioCriacaoDto {
 
     @NotBlank @Size(min = 6)
     private String senha;
+
+    private String imagemUrl;
 }

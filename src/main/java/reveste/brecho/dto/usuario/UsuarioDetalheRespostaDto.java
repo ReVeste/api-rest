@@ -23,4 +23,5 @@ public class UsuarioDetalheRespostaDto {
     @Enumerated(EnumType.STRING)
     private TipoUsuarioEnum tipo;
     private Boolean ativo;
+    private String imagemUrl;
 }

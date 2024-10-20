@@ -38,6 +38,7 @@ public class UsuarioMapper {
                 .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())
                 .ativo(entidade.getAtivo())
+                .imagemUrl(entidade.getImagemUrl())
                 .build();
     }
 
@@ -65,6 +66,7 @@ public class UsuarioMapper {
                 .senha(dto.getSenha())
                 .tipo(TipoUsuarioEnum.cliente)
                 .ativo(true)
+                .imagemUrl(dto.getImagemUrl())
                 .build();
     }
 
