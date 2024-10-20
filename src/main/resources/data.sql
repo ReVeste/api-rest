@@ -43,68 +43,93 @@ VALUES
 (NOW(), 'Comum', 0.0, 0.0, 'EM_ANDAMENTO', 1);
 
 -- Pedido 1 com 5 produtos
-INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
+INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade)
 VALUES
-(1, 1, 1, 100.0),
-(2, 2, 1, 110.0),
-(3, 3, 1, 120.0),
-(4, 4, 1, 130.0),
-(5, 5, 1, 140.0);
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1);
 
 -- Pedido 2 com 5 produtos
-INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
+INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade)
 VALUES
-(1, 6, 1, 100.0),
-(2, 7, 1, 110.0),
-(3, 8, 1, 120.0),
-(4, 9, 1, 130.0),
-(5, 10, 1, 140.0);
+(1, 6, 1),
+(2, 7, 1),
+(3, 8, 1),
+(4, 9, 1),
+(5, 10, 1);
 
 -- Pedido 3 com 5 produtos
-INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
+INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade)
 VALUES
-(1, 11, 1, 100.0),
-(2, 12, 1, 110.0),
-(3, 13, 1, 120.0),
-(4, 14, 1, 130.0),
-(5, 15, 1, 140.0);
+(1, 11, 1),
+(2, 12, 1),
+(3, 13, 1),
+(4, 14, 1),
+(5, 15, 1);
 
 -- Pedido 4 com 5 produtos
-INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
+INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade)
 VALUES
-(1, 16, 1, 100.0),
-(2, 17, 1, 110.0),
-(3, 18, 1, 120.0),
-(4, 19, 1, 130.0),
-(5, 20, 1, 140.0);
+(1, 16, 1),
+(2, 17, 1),
+(3, 18, 1),
+(4, 19, 1),
+(5, 20, 1);
 
 -- Pedido 5 com 5 produtos
-INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
+INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade)
 VALUES
-(1, 21, 1, 100.0),
-(2, 22, 1, 110.0),
-(3, 23, 1, 120.0),
-(4, 24, 1, 130.0),
-(5, 25, 1, 140.0);
+(1, 21, 1),
+(2, 22, 1),
+(3, 23, 1),
+(4, 24, 1),
+(5, 25, 1);
 
 -- Atualizar valor total para Pedido 1
-UPDATE Pedido
-SET valor_total = (SELECT SUM(sub_total) FROM Item_Pedido WHERE pedido_id = 1)
-WHERE id = 1;
+UPDATE Pedido p
+SET valor_total = (
+    SELECT SUM(prod.preco)
+    FROM Produto prod
+    JOIN Item_Pedido ip ON prod.id = ip.produto_id
+    WHERE ip.pedido_id = p.id
+)
+WHERE p.id = 1;
 
 -- Repetir para os demais pedidos
-UPDATE Pedido
-SET valor_total = (SELECT SUM(sub_total) FROM Item_Pedido WHERE pedido_id = 2)
-WHERE id = 2;
+UPDATE Pedido p
+SET valor_total = (
+    SELECT SUM(prod.preco)
+    FROM Produto prod
+    JOIN Item_Pedido ip ON prod.id = ip.produto_id
+    WHERE ip.pedido_id = p.id
+)
+WHERE p.id = 2;
 
-UPDATE Pedido
-SET valor_total = (SELECT SUM(sub_total) FROM Item_Pedido WHERE pedido_id = 3)
-WHERE id = 3;
+UPDATE Pedido p
+SET valor_total = (
+    SELECT SUM(prod.preco)
+    FROM Produto prod
+    JOIN Item_Pedido ip ON prod.id = ip.produto_id
+    WHERE ip.pedido_id = p.id
+)
+WHERE p.id = 3;
 
-UPDATE Pedido
-SET valor_total = (SELECT SUM(sub_total) FROM Item_Pedido WHERE pedido_id = 4)
-WHERE id = 4;
+UPDATE Pedido p
+SET valor_total = (
+    SELECT SUM(prod.preco)
+    FROM Produto prod
+    JOIN Item_Pedido ip ON prod.id = ip.produto_id
+    WHERE ip.pedido_id = p.id
+)
+WHERE p.id = 4;
 
-UPDATE Pedido
-SET valor_total = (SELECT SUM(sub_total) FROM Item_Pedido WHERE pedido_id = 5)
-WHERE id = 5;
+UPDATE Pedido p
+SET valor_total = (
+    SELECT SUM(prod.preco)
+    FROM Produto prod
+    JOIN Item_Pedido ip ON prod.id = ip.produto_id
+    WHERE ip.pedido_id = p.id
+)
+WHERE p.id = 5;
