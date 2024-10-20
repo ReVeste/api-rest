@@ -1,74 +1,118 @@
 package reveste.brecho.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reveste.brecho.dto.usuario.*;
 import reveste.brecho.entity.usuario.Usuario;
-import reveste.brecho.repository.UsuarioRepository;
+import reveste.brecho.service.usuario.UsuarioService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioService service;
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Usuario.class)) }),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable int id){
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
-
-        if (usuarioOpt.isPresent()){
-            return ResponseEntity.status(200).body(usuarioOpt.get());
-        }
-        return ResponseEntity.status(404).build();
-
+    public ResponseEntity<UsuarioDetalheRespostaDto> buscarPorId(@PathVariable int id){
+        return ResponseEntity.ok(UsuarioMapper.toDetalheDto(service.buscarPorId(id)));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UsuarioResumoDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado", content = @Content)
+    })
     @GetMapping
-    public ResponseEntity<List<Usuario>> listar() {
+    public ResponseEntity<List<UsuarioResumoDto>> listar() {
+        List<Usuario> usuarios = service.listar();
 
-        List<Usuario> usuarios = usuarioRepository.findAll();
-
-        if (usuarios.isEmpty()){
-            return ResponseEntity.status(204).build();
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.status(200).body(usuarios);
+
+        return ResponseEntity.ok(usuarios.stream().map(UsuarioMapper::toResumoDto).toList());
     }
 
+
+    // usuário se registrando no sistema
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UsuarioDetalheRespostaDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Conflito: e-mail ou cpf já registrado", content = @Content)
+    })
     @PostMapping
-    public ResponseEntity<Usuario> criar(@RequestBody @Valid Usuario novoUsuario){
-
-        if (usuarioRepository.existsByEmailOrCpf(novoUsuario.getEmail(), novoUsuario.getCpf())) {
-            return ResponseEntity.status(422).build();
-        }
-
-        novoUsuario.setId(null);
-        return ResponseEntity.status(201).body(usuarioRepository.save(novoUsuario));
-
+    public ResponseEntity<UsuarioDetalheRespostaDto> registrar(@RequestBody @Valid UsuarioCriacaoDto novoUsuario) {
+        Usuario usuarioCriado = service.criar(UsuarioMapper.dtoToEntity(novoUsuario));
+        return ResponseEntity.created(null).body(UsuarioMapper.toDetalheDto(usuarioCriado));
     }
 
+
+    // usuário atualizando informações
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UsuarioDetalheRespostaDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Conflito: e-mail ou cpf já registrado", content = @Content)
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizar(@PathVariable int id, @RequestBody @Valid Usuario usuario) {
-        if (!usuarioRepository.existsById(id)){
-            return ResponseEntity.status(404).build();
-        }
-        usuario.setId(id);
-        return ResponseEntity.status(200).body(usuarioRepository.save(usuario));
+    public ResponseEntity<UsuarioDetalheRespostaDto> atualizarPorId(@PathVariable int id, @RequestBody @Valid UsuarioCriacaoDto usuario) {
+        Usuario usuarioAtualizado = service.atualizar(id, UsuarioMapper.dtoToEntity(usuario));
+        return ResponseEntity.ok(UsuarioMapper.toDetalheDto(usuarioAtualizado));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id){
+        service.deletarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
 
-        if (usuarioRepository.existsById(id)){
-            usuarioRepository.deleteById(id);
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(404).build();
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UsuarioTokenDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "404", description = "E-mail ou senha incorretos", content = @Content)
+    })
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto) {
+        return ResponseEntity.ok(service.autenticar(usuarioLoginDto));
+    }
 
+
+    // admin criando usuário
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Conflito: e-mail ou cpf já registrado", content = @Content)
+    })
+    @PostMapping("/registrar") @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Void> criar(@RequestBody @Valid UsuarioCriacaoDto usuarioCriacaoDto) {
+        service.criarNovoUsuario(usuarioCriacaoDto);
+        return ResponseEntity.created(null).build();
     }
 
 }

@@ -1,30 +1,60 @@
 package reveste.brecho.entity.produto;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
+import reveste.brecho.enun.produto.TamanhoEnum;
+import reveste.brecho.enun.produto.TipoEnum;
 
 @Entity
+@Builder
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_produto", discriminatorType = DiscriminatorType.STRING)
 public class Produto {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private TamanhoProdutoEnum tamanho;
+    private TamanhoEnum tamanho;
     private String cor;
-    //private String marca;
-    private TipoProdutoEnum tipo;
-    private String categoria; // Enum - Acessorio, bolsa, calçado, roupa
-    private String subCategoria; // Enum - tudo
+    private TipoEnum tipo;
+    private String categoria;
+    private String subCategoria;
     private Double preco;
     private String descricao;
     private String urlImagem;
+
+    // Produto atualizado
+
+    /* @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank
+    private String nome;
+
+    @NotBlank
+    private TamanhoEnum tamanho;
+
+    @NotBlank
+    private Integer qualidade;
+
+    @NotBlank
+    private String categoria;
+
+    @NotBlank
+    private Double preco;
+
+    @NotBlank
+    private String descricao;
+
+    @NotBlank
+    private Integer quantidadeEstoque;
+
+    @NotBlank
+    private StatusProdutoEnum status;
+
+    */
 
 }
