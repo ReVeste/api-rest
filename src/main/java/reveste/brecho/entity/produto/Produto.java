@@ -1,11 +1,9 @@
 package reveste.brecho.entity.produto;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
-import reveste.brecho.enun.produto.TamanhoEnum;
-import reveste.brecho.enun.produto.TipoEnum;
+import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
 @Entity
 @Builder
@@ -17,44 +15,14 @@ public class Produto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private TamanhoEnum tamanho;
-    private String cor;
-    private TipoEnum tipo;
-    private String categoria;
-    private String subCategoria;
-    private Double preco;
-    private String descricao;
-    private String urlImagem;
-
-    // Produto atualizado
-
-    /* @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    private String nome;
-
-    @NotBlank
-    private TamanhoEnum tamanho;
-
-    @NotBlank
+    @Enumerated(EnumType.STRING)
+    private TamanhoProdutoEnum tamanho; // por enquanto será deixado o enum, porém o tamanho será responsabilidade de outra entidade depois
     private Integer qualidade;
-
-    @NotBlank
     private String categoria;
-
-    @NotBlank
     private Double preco;
-
-    @NotBlank
     private String descricao;
-
-    @NotBlank
-    private Integer quantidadeEstoque;
-
-    @NotBlank
+    private Integer qtdEstoque;
+    @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
-
-    */
 
 }

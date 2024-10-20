@@ -1,8 +1,6 @@
 package reveste.brecho.util;
 
 import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.entity.produto.Produto;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -28,17 +26,17 @@ public class Escritor {
                 if (i == pedidos.size()-1){
 
                     escritor.write("%d;%s;%.2f;%s;%s;%s".formatted(
-                            pedidos.get(i).getId(), pedidos.get(i).getData(),
+                            pedidos.get(i).getId(), pedidos.get(i).getDataHora(),
                             pedidos.get(i).getValorTotal(), pedidos.get(i).getStatus(),
-                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos()
+                            pedidos.get(i).getNomeUsuario(), pedidos.get(i).getProdutos()
                     ));
 
                 } else {
 
                     escritor.write("%d;%s;%.2f;%s;%s;%s\n".formatted(
-                            pedidos.get(i).getId(), pedidos.get(i).getData(),
+                            pedidos.get(i).getId(), pedidos.get(i).getDataHora(),
                             pedidos.get(i).getValorTotal(), pedidos.get(i).getStatus(),
-                            pedidos.get(i).getUsuario(), pedidos.get(i).getProdutos()
+                            pedidos.get(i).getNomeUsuario(), pedidos.get(i).getProdutos()
                     ));
 
                 }
