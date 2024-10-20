@@ -57,9 +57,9 @@ public class UsuarioService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado um usuário com esse id no banco");
         }
 
-        if (!usuarioRepository.existsByEmailOrCpf(usuario.getEmail(), usuario.getCpf())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já há um usuário com esse e-mail ou CPF");
-        }
+//        if (usuarioRepository.existsByEmailOrCpf(usuario.getEmail(), usuario.getCpf())) {
+//             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já há um usuário com esse e-mail ou CPF");
+//        }
 
         usuario.setId(id);
         return usuarioRepository.save(usuario);

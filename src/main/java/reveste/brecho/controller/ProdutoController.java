@@ -69,7 +69,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<ProdutoDetalheRespostaDto> atualizarPorId(@PathVariable int id, @RequestBody ProdutoRequisicaoDto produtoDto){
         Produto produtoAtualizado = produtoService.atualizar(id, ProdutoMapper.requisicaoDtoToProduto(produtoDto));
         return ResponseEntity.ok(ProdutoMapper.toDetalheDto(produtoAtualizado));
