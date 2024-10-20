@@ -1,8 +1,6 @@
 package reveste.brecho.util;
 
 import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.entity.produto.Produto;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
