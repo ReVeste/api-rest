@@ -9,8 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class Usuario {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,11 +8,9 @@ import lombok.*;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
 @Entity
-@Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Tamanho {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
