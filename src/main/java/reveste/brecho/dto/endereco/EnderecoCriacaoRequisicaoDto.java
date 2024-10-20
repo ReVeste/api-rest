@@ -10,11 +10,14 @@ public class EnderecoCriacaoRequisicaoDto {
 
     private String apelido;
 
-    @NotBlank @Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve estar no formato 12345-678")
+    @NotBlank @Size(min = 8, max = 8)
     private String cep;
 
     @NotBlank
-    private String logradouro;
+    private String rua;
+
+    @NotNull
+    private Integer numero;
 
     private String complemento;
 
