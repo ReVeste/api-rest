@@ -34,13 +34,13 @@ VALUES
 ('Produto 24', 3, 'Amarelo', 2, 'Acessorio', 'Tudo', 330.0, 'Descrição do produto 24', 'http://exemplo.com/imagem24.jpg'),
 ('Produto 25', 3, 'Preto', 2, 'Acessorio', 'Tudo', 340.0, 'Descrição do produto 25', 'http://exemplo.com/imagem25.jpg');
 
-INSERT INTO Pedido (data, valor_total, status, usuario_id)
+INSERT INTO Pedido (data_hora, tipo_frete, valor_frete, valor_total, status, usuario_id)
 VALUES
-(NOW(), 0.0, 3, 1),
-(NOW(), 0.0, 1, 1),
-(NOW(), 0.0, 1, 1),
-(NOW(), 0.0, 1, 1),
-(NOW(), 0.0, 1, 1);
+(NOW(), 'Comum', 0.0, 0.0, 'CONCLUIDO', 1),
+(NOW(), 'Comum', 0.0, 0.0, 'CONCLUIDO', 2),
+(NOW(), 'Comum', 0.0, 0.0, 'CONCLUIDO', 1),
+(NOW(), 'Comum', 0.0, 0.0, 'EM_ANDAMENTO', 2),
+(NOW(), 'Comum', 0.0, 0.0, 'EM_ANDAMENTO', 1);
 
 -- Pedido 1 com 5 produtos
 INSERT INTO Item_Pedido (pedido_id, produto_id, quantidade, sub_total)
