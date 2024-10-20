@@ -4,10 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import reveste.brecho.enun.produto.TamanhoEnum;
-import reveste.brecho.enun.produto.TipoEnum;
+import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
 @Entity
 @Getter
@@ -17,13 +15,9 @@ import reveste.brecho.enun.produto.TipoEnum;
 @AllArgsConstructor
 public class Tamanho {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotNull
-    private TamanhoEnum tamanho;
-    @NotNull
-    private TipoEnum tipoProduto;
+    private TamanhoProdutoEnum tamanho;
+    private String categoria;
 
 }

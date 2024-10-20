@@ -6,33 +6,40 @@ INSERT INTO Usuario (nome, cpf, telefone, data_nascimento, email, senha, tipo, a
     VALUES ('Pedro Saraujo', '46553098069', '13981309594',
             '2005-05-13', 'pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'cliente', true);
 
-INSERT INTO Produto (nome, tamanho, cor, tipo, categoria, sub_categoria, preco, descricao, url_imagem)
+INSERT INTO Produto (nome, tamanho, qualidade, categoria, preco, descricao, qtd_estoque, status)
 VALUES
-('Produto 1', 1, 'Azul', 2, 'Acessorio', 'Tudo', 100.0, 'Descrição do produto 1', 'http://exemplo.com/imagem1.jpg'),
-('Produto 2', 1, 'Vermelho', 2, 'Acessorio', 'Tudo', 110.0, 'Descrição do produto 2', 'http://exemplo.com/imagem2.jpg'),
-('Produto 3', 1, 'Verde', 2, 'Acessorio', 'Tudo', 120.0, 'Descrição do produto 3', 'http://exemplo.com/imagem3.jpg'),
-('Produto 4', 1, 'Amarelo', 2, 'Acessorio', 'Tudo', 130.0, 'Descrição do produto 4', 'http://exemplo.com/imagem4.jpg'),
-('Produto 5', 1, 'Preto', 2, 'Acessorio', 'Tudo', 140.0, 'Descrição do produto 5', 'http://exemplo.com/imagem5.jpg'),
-('Produto 6', 1, 'Branco', 2, 'Acessorio', 'Tudo', 150.0, 'Descrição do produto 6', 'http://exemplo.com/imagem6.jpg'),
-('Produto 7', 1, 'Cinza', 2, 'Acessorio', 'Tudo', 160.0, 'Descrição do produto 7', 'http://exemplo.com/imagem7.jpg'),
-('Produto 8', 1, 'Roxo', 2, 'Acessorio', 'Tudo', 170.0, 'Descrição do produto 8', 'http://exemplo.com/imagem8.jpg'),
-('Produto 9', 1, 'Laranja', 2, 'Acessorio', 'Tudo', 180.0, 'Descrição do produto 9', 'http://exemplo.com/imagem9.jpg'),
-('Produto 10', 1, 'Marrom', 2, 'Acessorio', 'Tudo', 190.0, 'Descrição do produto 10', 'http://exemplo.com/imagem10.jpg'),
-('Produto 11', 2, 'Azul', 2, 'Acessorio', 'Tudo', 200.0, 'Descrição do produto 11', 'http://exemplo.com/imagem11.jpg'),
-('Produto 12', 2, 'Vermelho', 2, 'Acessorio', 'Tudo', 210.0, 'Descrição do produto 12', 'http://exemplo.com/imagem12.jpg'),
-('Produto 13', 2, 'Verde', 2, 'Acessorio', 'Tudo', 220.0, 'Descrição do produto 13', 'http://exemplo.com/imagem13.jpg'),
-('Produto 14', 2, 'Amarelo', 2, 'Acessorio', 'Tudo', 230.0, 'Descrição do produto 14', 'http://exemplo.com/imagem14.jpg'),
-('Produto 15', 2, 'Preto', 2, 'Acessorio', 'Tudo', 240.0, 'Descrição do produto 15', 'http://exemplo.com/imagem15.jpg'),
-('Produto 16', 3, 'Branco', 2, 'Acessorio', 'Tudo', 250.0, 'Descrição do produto 16', 'http://exemplo.com/imagem16.jpg'),
-('Produto 17', 3, 'Cinza', 2, 'Acessorio', 'Tudo', 260.0, 'Descrição do produto 17', 'http://exemplo.com/imagem17.jpg'),
-('Produto 18', 3, 'Roxo', 2, 'Acessorio', 'Tudo', 270.0, 'Descrição do produto 18', 'http://exemplo.com/imagem18.jpg'),
-('Produto 19', 3, 'Laranja', 2, 'Acessorio', 'Tudo', 280.0, 'Descrição do produto 19', 'http://exemplo.com/imagem19.jpg'),
-('Produto 20', 3, 'Marrom', 2, 'Acessorio', 'Tudo', 290.0, 'Descrição do produto 20', 'http://exemplo.com/imagem20.jpg'),
-('Produto 21', 3, 'Azul', 2, 'Acessorio', 'Tudo', 300.0, 'Descrição do produto 21', 'http://exemplo.com/imagem21.jpg'),
-('Produto 22', 3, 'Vermelho', 2, 'Acessorio', 'Tudo', 310.0, 'Descrição do produto 22', 'http://exemplo.com/imagem22.jpg'),
-('Produto 23', 3, 'Verde', 2, 'Acessorio', 'Tudo', 320.0, 'Descrição do produto 23', 'http://exemplo.com/imagem23.jpg'),
-('Produto 24', 3, 'Amarelo', 2, 'Acessorio', 'Tudo', 330.0, 'Descrição do produto 24', 'http://exemplo.com/imagem24.jpg'),
-('Produto 25', 3, 'Preto', 2, 'Acessorio', 'Tudo', 340.0, 'Descrição do produto 25', 'http://exemplo.com/imagem25.jpg');
+('Camiseta Básica Branca', 'M', 9, 'Roupas', 49.90, 'Camiseta de algodão básica branca', 1, 'DISPONIVEL'),
+('Calça Jeans Slim', 'G', 8, 'Roupas', 89.90, 'Calça jeans modelo slim fit', 2, 'DISPONIVEL'),
+('Vestido Midi Estampado', 'P', 7, 'Roupas', 119.90, 'Vestido midi com estampa floral', 1, 'DISPONIVEL'),
+('Jaqueta Jeans', 'GG', 9, 'Roupas', 199.90, 'Jaqueta jeans clássica', 1, 'RESERVADO'),
+('Saia Lápis Preta', 'M', 8, 'Roupas', 79.90, 'Saia lápis preta ajustada', 2, 'DISPONIVEL'),
+('Camiseta Estampada Vintage', 'P', 9, 'Roupas', 59.90, 'Camiseta com estampa vintage retrô', 3, 'DISPONIVEL'),
+('Cardigan de Tricô', 'GG', 10, 'Roupas', 199.90, 'Cardigan de tricô confortável e quentinho', 1, 'RESERVADO'),
+('Blusa Canelada', 'PP', 7, 'Roupas', 69.90, 'Blusa canelada com gola alta', 4, 'DISPONIVEL'),
+('Calça Legging', 'M', 8, 'Roupas', 59.90, 'Calça legging preta esportiva', 3, 'DISPONIVEL'),
+('Camisa Social Listrada', 'G', 9, 'Roupas', 99.90, 'Camisa social listrada azul', 2, 'DISPONIVEL'),
+('Blusa de Frio com Capuz', 'GG', 9, 'Roupas', 149.90, 'Blusa de frio com capuz e bolso frontal', 1, 'RESERVADO'),
+('Colete de Nylon', 'M', 8, 'Roupas', 89.90, 'Colete leve de nylon para meia estação', 1, 'DISPONIVEL'),
+('Blusa Cropped', 'P', 7, 'Roupas', 49.90, 'Blusa cropped de algodão', 2, 'DISPONIVEL'),
+('Cinto de Couro Preto', 'UNICO', 9, 'Acessórios', 69.90, 'Cinto de couro preto com fivela dourada', 2, 'RESERVADO'),
+('Gorro de Lã Cinza', 'UNICO', 8, 'Acessórios', 39.90, 'Gorro de lã cinza ideal para o inverno', 5, 'DISPONIVEL'),
+('Cachecol de Tricô', 'UNICO', 9, 'Acessórios', 49.90, 'Cachecol de tricô com franjas nas pontas', 3, 'DISPONIVEL'),
+('Pulseira de Couro', 'UNICO', 7, 'Acessórios', 29.90, 'Pulseira de couro com detalhe em metal', 4, 'DISPONIVEL'),
+('Relógio Minimalista', 'UNICO', 10, 'Acessórios', 299.90, 'Relógio minimalista com pulseira de couro', 1, 'VENDIDO'),
+('Bolsa Tiracolo', 'UNICO', 8, 'Acessórios', 149.90, 'Bolsa tiracolo em couro sintético', 1, 'RESERVADO'),
+('Óculos de Sol Redondo', 'UNICO', 9, 'Acessórios', 99.90, 'Óculos de sol redondo estilo retrô', 3, 'DISPONIVEL'),
+('Camisa Polo Básica', 'M', 8, 'Roupas', 79.90, 'Camisa polo básica com gola tradicional', 2, 'DISPONIVEL'),
+('Blazer Slim Fit', 'G', 9, 'Roupas', 199.90, 'Blazer slim fit para ocasiões formais', 1, 'RESERVADO'),
+('Calça de Sarja', 'GG', 8, 'Roupas', 89.90, 'Calça de sarja caqui ajustada', 2, 'DISPONIVEL'),
+('Jaqueta de Sarja', 'P', 9, 'Roupas', 189.90, 'Jaqueta de sarja com bolso frontal', 1, 'DISPONIVEL'),
+('Cinto Trançado', 'UNICO', 8, 'Acessórios', 59.90, 'Cinto trançado com fivela metálica', 2, 'DISPONIVEL'),
+('Brinco de Argola', 'UNICO', 7, 'Acessórios', 19.90, 'Brinco de argola dourada', 6, 'DISPONIVEL'),
+('Boné Estampado', 'UNICO', 8, 'Acessórios', 49.90, 'Boné com estampa geométrica', 2, 'DISPONIVEL'),
+('Mochila de Couro', 'UNICO', 9, 'Acessórios', 199.90, 'Mochila de couro sintético marrom', 1, 'RESERVADO'),
+('Bermuda Cargo', 'G', 8, 'Roupas', 69.90, 'Bermuda cargo com bolsos laterais', 3, 'DISPONIVEL'),
+('Blusa de Manga Longa', 'GG', 9, 'Roupas', 79.90, 'Blusa de manga longa em algodão leve', 1, 'DISPONIVEL');
+
+
 
 INSERT INTO Pedido (data_hora, tipo_frete, valor_frete, valor_total, status, usuario_id)
 VALUES
