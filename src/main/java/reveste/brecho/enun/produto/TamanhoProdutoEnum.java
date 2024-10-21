@@ -1,9 +1,10 @@
 package reveste.brecho.enun.produto;
 
-public enum TamanhoEnum {
+public enum TamanhoProdutoEnum {
     PP,
     P,
     M,
     G,
-    GG;
+    GG,
+    UNICO
 }

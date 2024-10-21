@@ -1,25 +1,25 @@
 package reveste.brecho.dto.produto;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import reveste.brecho.enun.produto.TamanhoEnum;
-import reveste.brecho.enun.produto.TipoEnum;
+import lombok.Data;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
+import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
-@Getter
-@Setter
-@Builder
+
+@Data @Builder
 public class ProdutoDTO {
 
     private Integer id;
     private String nome;
-    private TamanhoEnum tamanho;
-    private String cor;
-    private TipoEnum tipo;
+    @Enumerated(EnumType.STRING)
+    private TamanhoProdutoEnum tamanho;
+    private Integer qualidade;
     private String categoria;
-    private String subCategoria;
     private Double preco;
     private String descricao;
-    private String urlImagem;
-    private int quantidade;
+    private Integer qtdEstoque;
+    @Enumerated(EnumType.STRING)
+    private StatusProdutoEnum status;
 
 }

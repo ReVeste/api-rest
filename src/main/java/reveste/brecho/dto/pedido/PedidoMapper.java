@@ -2,11 +2,6 @@ package reveste.brecho.dto.pedido;
 
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.entity.produto.Produto;
-import reveste.brecho.entity.usuario.Usuario;
-import reveste.brecho.enun.pedido.StatusEnum;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PedidoMapper {
@@ -16,10 +11,12 @@ public class PedidoMapper {
 
         return CarrinhoDto.builder()
                 .id(pedido.getId())
-                .data(pedido.getData())
+                .dataHora(pedido.getDataHora())
+                .tipoFrete(pedido.getTipoFrete())
+                .valorFrete(pedido.getValorFrete())
                 .valorTotal(pedido.getValorTotal())
-                .status(pedido.getStatus())
-                .usuario(pedido.getUsuario().getNome())
+                .status(pedido.getStatus().getDescricao())
+                .nomeUsuario(pedido.getUsuario().getNome())
                 .produtos(produtos)
                 .build();
 
@@ -30,12 +27,13 @@ public class PedidoMapper {
 
         return PedidoDto.builder()
                 .id(pedido.getId())
-                .data(pedido.getData())
+                .dataHora(pedido.getDataHora())
+                .tipoFrete(pedido.getTipoFrete())
+                .valorFrete(pedido.getValorFrete())
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
                 .usuario(pedido.getUsuario())
                 .build();
-
     }
 
 }

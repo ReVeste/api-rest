@@ -1,10 +1,6 @@
 package reveste.brecho.dto.produto;
 
 import reveste.brecho.entity.produto.Produto;
-import reveste.brecho.enun.produto.TamanhoEnum;
-import reveste.brecho.enun.produto.TipoEnum;
-
-import java.util.List;
 
 public class ProdutoMapper {
 
@@ -15,12 +11,12 @@ public class ProdutoMapper {
                 .id(entidade.getId())
                 .nome(entidade.getNome())
                 .tamanho(entidade.getTamanho())
+                .qualidade(entidade.getQualidade())
                 .categoria(entidade.getCategoria())
-                .subCategoria(entidade.getSubCategoria())
                 .preco(entidade.getPreco())
                 .descricao(entidade.getDescricao())
-                .urlImagem(entidade.getUrlImagem())
-                .tipo(entidade.getTipo())
+                .qtdEstoque(entidade.getQtdEstoque())
+                .status(entidade.getStatus())
                 .build();
     }
 
@@ -32,7 +28,6 @@ public class ProdutoMapper {
                 .nome(entidade.getNome())
                 .categoria(entidade.getCategoria())
                 .preco(entidade.getPreco())
-                .urlImagem(entidade.getUrlImagem())
                 .build();
     }
 
@@ -42,31 +37,28 @@ public class ProdutoMapper {
         return Produto.builder()
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
-                .cor(dto.getCor())
-                .tipo(dto.getTipo())
+                .qualidade(dto.getQualidade())
                 .categoria(dto.getCategoria())
-                .subCategoria(dto.getSubCategoria())
                 .preco(dto.getPreco())
                 .descricao(dto.getDescricao())
-                .urlImagem(dto.getUrlImagem())
+                .qtdEstoque(dto.getQtdEstoque())
+                .status(dto.getStatus())
                 .build();
     }
 
     public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade) {
         if (produto == null || quantidade == null) return null;
 
-            return ProdutoDTO.builder()
+        return ProdutoDTO.builder()
                     .id(produto.getId())
                     .nome(produto.getNome())
                     .tamanho(produto.getTamanho())
-                    .cor(produto.getCor())
-                    .tipo(produto.getTipo())
+                    .qualidade(produto.getQualidade())
                     .categoria(produto.getCategoria())
-                    .subCategoria(produto.getSubCategoria())
                     .preco(produto.getPreco())
                     .descricao(produto.getDescricao())
-                    .urlImagem(produto.getUrlImagem())
-                    .quantidade(quantidade)
+                    .qtdEstoque(quantidade)
+                    .status(produto.getStatus())
                     .build();
     }
 

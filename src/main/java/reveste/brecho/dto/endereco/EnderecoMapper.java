@@ -13,7 +13,8 @@ public class EnderecoMapper {
                 .apelido(dto.getApelido())
                 .cep(dto.getCep())
                 .cidade(dto.getCidade())
-                .logradouro(dto.getLogradouro())
+                .rua(dto.getRua())
+                .numero(dto.getNumero())
                 .complemento(dto.getComplemento())
                 .bairro(dto.getBairro())
                 .uf(dto.getUf())
@@ -29,7 +30,8 @@ public class EnderecoMapper {
                 .apelido(entidade.getApelido())
                 .cidade(entidade.getCidade())
                 .uf(entidade.getUf())
-                .logradouro(entidade.getLogradouro())
+                .rua(entidade.getRua())
+                .numero(entidade.getNumero())
                 .bairro(entidade.getBairro())
                 .usuario(EnderecoDetalheRespostaDto.UsuarioDto.builder()
                         .id(entidade.getUsuario().getId())
@@ -46,7 +48,7 @@ public class EnderecoMapper {
                 .id(entidade.getId())
                 .apelido(entidade.getApelido())
                 .cep(entidade.getCep())
-                .logradouro(entidade.getLogradouro())
+                .rua(entidade.getRua())
                 .build();
     }
 

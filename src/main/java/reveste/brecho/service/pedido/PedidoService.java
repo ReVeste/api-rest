@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reveste.brecho.dto.pedido.CarrinhoDto;
@@ -12,15 +11,12 @@ import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
 import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.entity.produto.Produto;
-import reveste.brecho.enun.pedido.StatusEnum;
+import reveste.brecho.enun.pedido.StatusPedidoEnum;
 import reveste.brecho.repository.PedidoRepository;
-import reveste.brecho.repository.UsuarioRepository;
 import reveste.brecho.service.itempedido.ItemPedidoService;
+import reveste.brecho.service.usuario.UsuarioService;
 import reveste.brecho.util.Escritor;
-import reveste.brecho.util.ListaProduto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,21 +29,23 @@ public class PedidoService {
 
     private final ItemPedidoService itemPedidoService;
     private final PedidoRepository pedidoRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
     @Modifying
     @Transactional
     public CarrinhoDto adicionarProduto(PedidoAdicionarProdutoDto pedidoDto) {
 
-        Pedido pedido = pedidoRepository.findByUsuarioIdAndStatus(pedidoDto.getIdUsuario(), StatusEnum.EM_ANDAMENTO);
+        Pedido pedido = pedidoRepository.findByUsuarioIdAndStatus(pedidoDto.getIdUsuario(), StatusPedidoEnum.EM_ANDAMENTO);
 
         if (pedido == null) {
 
+
+
             Pedido pedidoCriado = Pedido.builder()
-                    .data(LocalDateTime.now())
+                    .dataHora(LocalDateTime.now())
                     .valorTotal(0.0)
-                    .status(StatusEnum.EM_ANDAMENTO)
-                    .usuario(usuarioRepository.findById(pedidoDto.getIdUsuario()).get())
+                    .status(StatusPedidoEnum.EM_ANDAMENTO)
+                    .usuario(usuarioService.buscarPorId(pedidoDto.getIdUsuario()))
                     .build();
 
             pedidoRepository.save(pedidoCriado);
@@ -113,7 +111,7 @@ public class PedidoService {
 
     public void exportarPedidosEmAberto() {
 
-        List<Pedido> pedidos = pedidoRepository.findAll();
+        List<Pedido> pedidos = pedidoRepository.findAllByStatus(StatusPedidoEnum.EM_ANDAMENTO);
         List<CarrinhoDto> carrinhoDtos = new ArrayList<>();
 
         for (int i = 0; i < pedidos.size(); i++) {

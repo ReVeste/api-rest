@@ -4,18 +4,14 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.produto.ProdutoMapper;
-import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.entity.itempedido.ItemPedido;
 import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.repository.ItemPedidoRepository;
-import reveste.brecho.repository.ProdutoRepository;
 import reveste.brecho.service.produto.ProdutoService;
 import reveste.brecho.util.Ordenador;
 import reveste.brecho.util.PesquisaBinaria;
@@ -23,7 +19,6 @@ import reveste.brecho.util.PesquisaBinaria;
 import java.util.ArrayList;
 import java.util.List;
 
-import static reveste.brecho.dto.produto.ProdutoMapper.entidadeToProdutoDTO;
 
 @Service
 public class ItemPedidoService {
@@ -42,7 +37,6 @@ public class ItemPedidoService {
                 .pedido(pedido)
                 .produto(produto)
                 .quantidade(quantidade)
-                .subTotal(0.0)
                 .build();
 
         itemPedidoRepository.save(itemPedidoCriado);

@@ -7,10 +7,8 @@ import org.springframework.web.server.ResponseStatusException;
 import reveste.brecho.entity.endereco.Endereco;
 import reveste.brecho.repository.EnderecoRepository;
 import reveste.brecho.service.usuario.UsuarioService;
-import reveste.brecho.util.CepUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

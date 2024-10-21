@@ -1,15 +1,11 @@
 package reveste.brecho.dto.pedido;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.entity.usuario.Usuario;
-import reveste.brecho.enun.pedido.StatusEnum;
+import reveste.brecho.enun.pedido.StatusPedidoEnum;
 
 import java.time.LocalDateTime;
 
@@ -17,10 +13,13 @@ import java.time.LocalDateTime;
 @Data
 public class PedidoDto {
 
-    private int id;
-    private LocalDateTime data;
+    private Integer id;
+    private LocalDateTime dataHora;
+    private String tipoFrete;
+    private Double valorFrete;
     private Double valorTotal;
-    private StatusEnum status;
+    @Enumerated(EnumType.STRING)
+    private StatusPedidoEnum status;
     private Usuario usuario;
 
 }

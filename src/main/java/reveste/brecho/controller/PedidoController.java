@@ -9,7 +9,6 @@ import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.entity.pedido.Pedido;
 import reveste.brecho.service.pedido.PedidoService;
 
 import java.util.List;

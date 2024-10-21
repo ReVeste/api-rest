@@ -13,19 +13,20 @@ public class UsuarioCriacaoDto {
     @NotBlank @Size(min = 3)
     private String nome;
 
+    @NotBlank @CPF @Size(min = 11, max = 11)
+    private String cpf;
+
+    @NotBlank @Size(min = 11, max = 11)
+    private String telefone;
+
+    @Past
+    private LocalDate dataNascimento;
+
     @NotBlank @Email
     private String email;
 
-    @NotBlank
+    @NotBlank @Size(min = 6)
     private String senha;
 
-    @NotBlank @CPF
-    private String cpf;
-
-    @NotBlank
-    private String telefone;
-
-    @NotNull @Past
-    private LocalDate dataNascimento;
-
+    private String imagemUrl;
 }

@@ -52,50 +52,10 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
+    public List<Produto> listarPorCategoria(String categoria) {
+        return categoria.isEmpty()
+                ? produtoRepository.findAll()
+                : produtoRepository.findAllByCategoria(categoria);
+    }
 
-
-
-
-
-
-
-
-//    public Produto criar(ProdutoCriacaoRequisicaoDto produtoCriacaoRequisicaoDto) {
-//
-//        Produto novoProduto;
-//
-//        if (produtoCriacaoRequisicaoDto.getTipo().equals(TipoEnum.RARA)) {
-//            novoProduto = new ProdutoEspecial(produtoCriacaoRequisicaoDto);
-//        } else {
-//            novoProduto = new Produto(produtoCriacaoRequisicaoDto);
-//        }
-//
-//        novoProduto.setId(null);
-//        return produtoRepository.save(novoProduto);
-//    }
-//
-//    public Produto atualizarPorId(int id, ProdutoCriacaoRequisicaoDto produto) {
-//        if (!produtoRepository.existsById(id)) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado um produto com o id especificado");
-//        }
-//
-//        Produto produtoExistente = produtoRepository.findById(id).orElse(null);
-//
-//        if (produto.getTipo().equals(TipoEnum.RARA)) {
-//            ProdutoEspecial produtoEspecial;
-//
-//            if (produtoExistente instanceof ProdutoEspecial) {
-//                produtoEspecial = (ProdutoEspecial) produtoExistente;
-//            } else {
-//                produtoEspecial = new ProdutoEspecial(produto);
-//            }
-//
-//            produtoEspecial.setId(id);
-//            return produtoRepository.save(produtoEspecial);
-//        }
-//
-//        produtoExistente.setId(id);
-//        return produtoRepository.save(produtoExistente);
-//
-//    }
 }
