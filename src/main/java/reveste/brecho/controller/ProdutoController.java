@@ -86,98 +86,15 @@ public class ProdutoController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping
-//    public ResponseEntity<Produto> criar(@RequestBody ProdutoDTO produtoDto){
-//
-//        Produto novoProduto;
-//
-//        if (produtoDto.getTipo().equals(TipoEnum.RARA)) {
-//            ProdutoEspecial produtoEspecial = new ProdutoEspecial();
-//
-//            produtoEspecial.setNome(produtoDto.getNome());
-//            produtoEspecial.setTamanho(produtoDto.getTamanho());
-//            produtoEspecial.setCor(produtoDto.getCor());
-//            produtoEspecial.setCategoria(produtoDto.getCategoria());
-//            produtoEspecial.setSubCategoria(produtoDto.getSubCategoria());
-//            produtoEspecial.setPreco(produtoDto.getPreco());
-//            produtoEspecial.setDescricao(produtoDto.getDescricao());
-//            produtoEspecial.setUrlImagem(produtoDto.getUrlImagem());
-//            produtoEspecial.setTipo(produtoDto.getTipo());
-//
-//            // Mapeando atributos de ProdutoEspecial
-//            produtoEspecial.setAntigoDono(produtoDto.getAntigoDono());
-//            produtoEspecial.setHistoria(produtoDto.getHistoria());
-//
-//            novoProduto = produtoEspecial;
-//        } else {
-//
-//            novoProduto = new Produto(produtoDto);
-//
-//            novoProduto.setNome(produtoDto.getNome());
-//            novoProduto.setTamanho(produtoDto.getTamanho());
-//            novoProduto.setCor(produtoDto.getCor());
-//            novoProduto.setCategoria(produtoDto.getCategoria());
-//            novoProduto.setSubCategoria(produtoDto.getSubCategoria());
-//            novoProduto.setPreco(produtoDto.getPreco());
-//            novoProduto.setDescricao(produtoDto.getDescricao());
-//            novoProduto.setUrlImagem(produtoDto.getUrlImagem());
-//            novoProduto.setTipo(produtoDto.getTipo());
-//
-//        }
-//
-//        Produto produtoSalvo = produtoService.save(novoProduto);
-//        return ResponseEntity.status(201).body(produtoService.save(novoProduto));
-//    }
+    @GetMapping("/categoria")
+    public ResponseEntity<List<ProdutoResumoRespostaDto>> buscarPorCategoria(@RequestParam String categoria) {
+        List<Produto> produtos = produtoService.listarPorCategoria(categoria);
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Produto> atualizar(@PathVariable int id, @RequestBody ProdutoDTO produtoDto) {
-//
-//        if (!produtoService.existsById(id)){
-//            return ResponseEntity.status(404).build();
-//        }
-//
-//        Produto produtoExistente = produtoService.findById(id).orElse(null);
-//
-//        if (produtoDto.getTipo().equals(TipoEnum.RARA)) {
-//            ProdutoEspecial produtoEspecial;
-//
-//            if (produtoExistente instanceof ProdutoEspecial) {
-//                produtoEspecial = (ProdutoEspecial) produtoExistente;
-//            } else {
-//                produtoEspecial = new ProdutoEspecial();
-//            }
-//
-//            // Atribuindo os valores comuns de Produto
-//            produtoEspecial.setId(id);
-//            produtoEspecial.setNome(produtoDto.getNome());
-//            produtoEspecial.setTamanho(produtoDto.getTamanho());
-//            produtoEspecial.setCor(produtoDto.getCor());
-//            produtoEspecial.setCategoria(produtoDto.getCategoria());
-//            produtoEspecial.setSubCategoria(produtoDto.getSubCategoria());
-//            produtoEspecial.setPreco(produtoDto.getPreco());
-//            produtoEspecial.setDescricao(produtoDto.getDescricao());
-//            produtoEspecial.setUrlImagem(produtoDto.getUrlImagem());
-//            produtoEspecial.setTipo(produtoDto.getTipo());
-//
-//            // Atribuindo os valores de ProdutoEspecial
-//            produtoEspecial.setAntigoDono(produtoDto.getAntigoDono());
-//            produtoEspecial.setHistoria(produtoDto.getHistoria());
-//
-//            return ResponseEntity.status(200).body(produtoService.save(produtoEspecial));
-//        }
-//
-//        produtoExistente.setId(id);
-//        produtoExistente.setNome(produtoDto.getNome());
-//        produtoExistente.setTamanho(produtoDto.getTamanho());
-//        produtoExistente.setCor(produtoDto.getCor());
-//        produtoExistente.setCategoria(produtoDto.getCategoria());
-//        produtoExistente.setSubCategoria(produtoDto.getSubCategoria());
-//        produtoExistente.setPreco(produtoDto.getPreco());
-//        produtoExistente.setDescricao(produtoDto.getDescricao());
-//        produtoExistente.setUrlImagem(produtoDto.getUrlImagem());
-//        produtoExistente.setTipo(produtoDto.getTipo());
-//        return ResponseEntity.status(200).body(produtoService.save(produtoExistente));
-//    }
+        if (produtos.isEmpty()){
+            return ResponseEntity.status(204).build();
+        }
 
+        return ResponseEntity.status(200).body(produtos.stream().map(ProdutoMapper::toResumoDto).toList());
+    }
 
 }
