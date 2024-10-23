@@ -1,20 +1,18 @@
-package reveste.brecho.entity.tamanhoproduto;
+package reveste.brecho.entity.imagem;
 
 import jakarta.persistence.*;
 import lombok.*;
 import reveste.brecho.entity.produto.Produto;
-import reveste.brecho.entity.tamanho.Tamanho;
 
 @Entity
 @Builder
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class TamanhoProduto {
+public class Imagem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne private Produto produto;
-    @ManyToOne private Tamanho tamanho;
-    private Integer estoque;
-
+    @ManyToOne
+    private Produto produto;
+    private String imagemUrl;
 }

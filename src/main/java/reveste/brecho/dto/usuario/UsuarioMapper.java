@@ -1,7 +1,7 @@
 package reveste.brecho.dto.usuario;
 
-import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.enun.usuario.TipoUsuarioEnum;
 
 public class UsuarioMapper {
     public static Usuario of(UsuarioCriacaoDto usuarioCriacaoDto) {
@@ -37,6 +37,8 @@ public class UsuarioMapper {
                 .email(entidade.getEmail())
                 .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())
+                .ativo(entidade.getAtivo())
+                .imagemUrl(entidade.getImagemUrl())
                 .build();
     }
 
@@ -48,6 +50,7 @@ public class UsuarioMapper {
                 .nome(entidade.getNome())
                 .email(entidade.getEmail())
                 .tipo(entidade.getTipo())
+                .ativo(entidade.getAtivo())
                 .build();
     }
 
@@ -56,19 +59,15 @@ public class UsuarioMapper {
 
         return Usuario.builder()
                 .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .telefone(dto.getTelefone())
+                .dataNascimento(dto.getDataNascimento())
                 .email(dto.getEmail())
                 .senha(dto.getSenha())
-                .telefone(dto.getTelefone())
-                .cpf(dto.getCpf())
-                .dataNascimento(dto.getDataNascimento())
+                .tipo(TipoUsuarioEnum.cliente)
+                .ativo(true)
+                .imagemUrl(dto.getImagemUrl())
                 .build();
     }
 
-    public static Usuario fkDtoToEntity(UsuarioFkDto dto) {
-        if (dto == null) return null;
-
-        return Usuario.builder()
-                .id(dto.getId())
-                .build();
-    }
 }

@@ -1,7 +1,5 @@
 package reveste.brecho.util;
 
-import reveste.brecho.dto.produto.ProdutoPedidoDto;
-import reveste.brecho.entity.itempedido.ItemPedido;
 import reveste.brecho.entity.produto.Produto;
 
 public class ListaProduto {
