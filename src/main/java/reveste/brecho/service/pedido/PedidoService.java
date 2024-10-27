@@ -77,9 +77,7 @@ public class PedidoService {
     }
 
     public List<ProdutoDTO> listarProdutos(int pedidoId) {
-
         return itemPedidoService.buscaProdutoPorPedido(pedidoId);
-
     }
 
     public PedidoDto buscarPedido(int idPedido) {

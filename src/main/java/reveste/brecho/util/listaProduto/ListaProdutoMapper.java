@@ -1,7 +1,6 @@
 package reveste.brecho.util.listaProduto;
 
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
 
 import java.util.List;
 

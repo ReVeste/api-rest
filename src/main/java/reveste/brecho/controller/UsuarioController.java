@@ -76,7 +76,7 @@ public class UsuarioController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDetalheRespostaDto> atualizarPorId(@PathVariable int id, @RequestBody @Valid UsuarioCriacaoDto usuario) {
-        Usuario usuarioAtualizado = service.atualizar(id, UsuarioMapper.dtoToEntity(usuario));
+        Usuario usuarioAtualizado = service.atualizar(UsuarioMapper.atualizacaoToEntity(usuario, id));
         return ResponseEntity.ok(UsuarioMapper.toDetalheDto(usuarioAtualizado));
     }
 

@@ -32,7 +32,9 @@ public class PedidoController {
     public ResponseEntity<List<ProdutoDTO>> listarProdutosPedido(@PathVariable Integer idPedido) {
         List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
 
-        return ResponseEntity.ok(produtos);
+        return produtos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{idPedido}")
