@@ -12,7 +12,5 @@ public class Imagem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    private Produto produto;
     private String imagemUrl;
 }

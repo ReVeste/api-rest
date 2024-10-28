@@ -17,6 +17,7 @@ public class ProdutoMapper {
                 .descricao(entidade.getDescricao())
                 .qtdEstoque(entidade.getQtdEstoque())
                 .status(entidade.getStatus())
+                .imagens(entidade.getImagens())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class ProdutoMapper {
                 .nome(entidade.getNome())
                 .categoria(entidade.getCategoria())
                 .preco(entidade.getPreco())
+                .imagens(entidade.getImagens())
                 .build();
     }
 
@@ -37,12 +39,13 @@ public class ProdutoMapper {
         return Produto.builder()
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
-                .qualidade(dto.getQualidade())
+//                .qualidade(dto.getQualidade())
                 .categoria(dto.getCategoria())
                 .preco(dto.getPreco())
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
+                .imagens(dto.getImages())
                 .build();
     }
 
@@ -59,6 +62,7 @@ public class ProdutoMapper {
                     .descricao(produto.getDescricao())
                     .qtdEstoque(quantidade)
                     .status(produto.getStatus())
+                    .imagens(produto.getImagens())
                     .build();
     }
 
