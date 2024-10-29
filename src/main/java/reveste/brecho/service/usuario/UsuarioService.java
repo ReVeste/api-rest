@@ -52,25 +52,24 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario atualizar(int id, Usuario usuario) {
-        if (!usuarioRepository.existsById(id)) {
+    public Usuario atualizar(Usuario usuario) {
+        if (!usuarioRepository.existsById(usuario.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado um usuário com esse id no banco");
         }
 
-//        if (usuarioRepository.existsByEmailOrCpf(usuario.getEmail(), usuario.getCpf())) {
-//             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já há um usuário com esse e-mail ou CPF");
-//        }
+        if (usuarioRepository.existsByEmailOrCpfAndIdNot(usuario.getEmail(), usuario.getCpf(), usuario.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já há um usuário com esse e-mail ou CPF");
+        }
 
-        usuario.setId(id);
         return usuarioRepository.save(usuario);
     }
 
     public void deletarPorId(int id) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
-        }
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-        usuarioRepository.deleteById(id);
+        usuarioExistente.setAtivo(false);
+        usuarioRepository.save(usuarioExistente);
     }
 
     public void criarNovoUsuario(UsuarioCriacaoDto usuarioCriacaoDto) {
@@ -89,9 +88,9 @@ public class UsuarioService {
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         Usuario usuarioAutenticado =
-                usuarioRepository.findByEmail(usuarioLoginDto.getEmail())
+                usuarioRepository.findByEmailAndAtivo(usuarioLoginDto.getEmail(), true)
                         .orElseThrow(
-                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
+                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado ou usuário inativo", null)
                         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
