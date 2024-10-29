@@ -23,7 +23,6 @@ public class EnderecoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor ao tentar criar o endereço")
     })
     public ResponseEntity<EnderecoDetalheRespostaDto> registrar(@RequestBody @Valid EnderecoCriacaoRequisicaoDto novoEndereco) {
         Endereco enderecoCriado = service.criar(EnderecoMapper.requsicaoDtoToEntity(novoEndereco), novoEndereco.getIdUsuario());
@@ -35,7 +34,6 @@ public class EnderecoController {
             @ApiResponse(responseCode = "200", description = "Lista de endereços retornada com sucesso"),
             @ApiResponse(responseCode = "204", description = "Nenhum endereço encontrado para o usuário"),
             @ApiResponse(responseCode = "400", description = "Parâmetro inválido fornecido para o id do usuário"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor ao buscar endereços do usuário")
     })
     public ResponseEntity<List<EnderecoResumoRespostaDto>> buscarPorUsuario(@PathVariable Integer idUsuario) {
         List<Endereco> enderecos = service.listarPorUsuario(idUsuario);
@@ -50,7 +48,6 @@ public class EnderecoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Endereço encontrado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Endereço não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor ao buscar o endereço")
     })
     public ResponseEntity<EnderecoDetalheRespostaDto> buscarPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(EnderecoMapper.toDetalheDto(service.buscarPorId(id)));
@@ -61,7 +58,6 @@ public class EnderecoController {
             @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
             @ApiResponse(responseCode = "404", description = "Endereço não encontrado para o ID fornecido"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor ao tentar atualizar o endereço")
     })
     public ResponseEntity<EnderecoDetalheRespostaDto> atualizarPorId(@PathVariable Integer id, @RequestBody @Valid EnderecoCriacaoRequisicaoDto endereco) {
         Endereco enderecoAtualizado = service.atualizar(id, EnderecoMapper.requsicaoDtoToEntity(endereco), endereco.getIdUsuario());
@@ -72,7 +68,6 @@ public class EnderecoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Endereço deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Endereço não encontrado para o ID fornecido"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor ao tentar deletar o endereço")
     })
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletarPorId(id);

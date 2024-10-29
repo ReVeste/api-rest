@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import reveste.brecho.entity.imagem.Imagem;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
+
+import java.util.List;
 
 
 @Data @Builder
@@ -25,5 +28,6 @@ public class ProdutoDTO {
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+    private List<String> imagens;
 
 }
