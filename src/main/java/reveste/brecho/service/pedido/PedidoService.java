@@ -142,4 +142,9 @@ public class PedidoService {
             return subTotal + calcularValorTotal(listaProduto, index);
     }
 
+    public List<Pedido> listarPorStatus(String status) {
+        return status.isEmpty()
+                ? pedidoRepository.findAll()
+                : pedidoRepository.findAllByStatus(StatusPedidoEnum.valueOf(status));
+    }
 }
