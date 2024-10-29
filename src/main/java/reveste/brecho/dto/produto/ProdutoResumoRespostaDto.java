@@ -13,5 +13,5 @@ public class ProdutoResumoRespostaDto {
     private String nome;
     private String categoria;
     private Double preco;
-    private List<Imagem> imagens;
+    private List<String> imagens;
 }

@@ -12,5 +12,7 @@ public class Imagem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne @JoinColumn(name = "produto_id")
+    private Produto produto;
     private String imagemUrl;
 }

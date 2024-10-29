@@ -28,7 +28,7 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
 
-    @OneToMany
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Imagem> imagens;
 
 }

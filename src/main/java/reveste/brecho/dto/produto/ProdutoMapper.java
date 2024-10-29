@@ -1,6 +1,9 @@
 package reveste.brecho.dto.produto;
 
+import reveste.brecho.entity.imagem.Imagem;
 import reveste.brecho.entity.produto.Produto;
+
+import java.util.stream.Collectors;
 
 public class ProdutoMapper {
 
@@ -17,7 +20,9 @@ public class ProdutoMapper {
                 .descricao(entidade.getDescricao())
                 .qtdEstoque(entidade.getQtdEstoque())
                 .status(entidade.getStatus())
-                .imagens(entidade.getImagens())
+                .imagens(entidade.getImagens().stream()
+                        .map(Imagem::getImagemUrl)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -29,7 +34,9 @@ public class ProdutoMapper {
                 .nome(entidade.getNome())
                 .categoria(entidade.getCategoria())
                 .preco(entidade.getPreco())
-                .imagens(entidade.getImagens())
+                .imagens(entidade.getImagens().stream()
+                        .map(Imagem::getImagemUrl)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -62,7 +69,9 @@ public class ProdutoMapper {
                     .descricao(produto.getDescricao())
                     .qtdEstoque(quantidade)
                     .status(produto.getStatus())
-                    .imagens(produto.getImagens())
+                    .imagens(produto.getImagens().stream()
+                            .map(Imagem::getImagemUrl)
+                            .collect(Collectors.toList()))
                     .build();
     }
 
