@@ -14,6 +14,10 @@ import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.pedido.CarrinhoDto;
 import reveste.brecho.dto.usuario.UsuarioDetalheRespostaDto;
+import reveste.brecho.dto.produto.ProdutoMapper;
+import reveste.brecho.dto.produto.ProdutoResumoRespostaDto;
+import reveste.brecho.entity.pedido.Pedido;
+import reveste.brecho.entity.produto.Produto;
 import reveste.brecho.service.pedido.PedidoService;
 
 import java.util.List;
@@ -137,6 +141,17 @@ public class PedidoController {
     public ResponseEntity<Void> exportarPedidosEmAberto(){
         pedidoService.exportarPedidosEmAberto();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<PedidoDto>> buscarPorStatus(@RequestParam String status) {
+        List<Pedido> pedidos = pedidoService.listarPorStatus(status);
+
+        if (pedidos.isEmpty()){
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(pedidos.stream().map(PedidoMapper::entidadeToPedidoDto).toList());
     }
 
 }
