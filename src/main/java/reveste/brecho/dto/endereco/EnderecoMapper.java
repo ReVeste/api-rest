@@ -47,7 +47,7 @@ public class EnderecoMapper {
         return EnderecoResumoRespostaDto.builder()
                 .id(entidade.getId())
                 .apelido(entidade.getApelido())
-                .cep(entidade.getCep())
+                .cidade(entidade.getCidade())
                 .rua(entidade.getRua())
                 .build();
     }

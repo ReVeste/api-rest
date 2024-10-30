@@ -19,8 +19,8 @@ public class UsuarioCriacaoDto {
     @NotBlank @Size(min = 11, max = 11)
     private String telefone;
 
-    @Past
-    private LocalDate dataNascimento;
+//    @Past
+//    private LocalDate dataNascimento;
 
     @NotBlank @Email
     private String email;

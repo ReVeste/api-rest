@@ -7,6 +7,6 @@ import lombok.Data;
 public class EnderecoResumoRespostaDto {
     private Integer id;
     private String apelido;
-    private String cep;
+    private String cidade;
     private String rua;
 }
