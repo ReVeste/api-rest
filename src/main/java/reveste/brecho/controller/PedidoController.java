@@ -1,5 +1,9 @@
 package reveste.brecho.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,7 @@ import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.pedido.CarrinhoDto;
+import reveste.brecho.dto.usuario.UsuarioDetalheRespostaDto;
 import reveste.brecho.dto.produto.ProdutoMapper;
 import reveste.brecho.dto.produto.ProdutoResumoRespostaDto;
 import reveste.brecho.entity.pedido.Pedido;
@@ -24,6 +29,16 @@ public class PedidoController {
 
     private final PedidoService pedidoService;
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Produto adicionado ao pedido com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
+            @ApiResponse(responseCode = "404", description = "Usuário ou Produto não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @PostMapping
     public ResponseEntity<CarrinhoDto> adicionarProduto(
             @RequestBody @Valid PedidoAdicionarProdutoDto pedidoDto) {
@@ -32,6 +47,16 @@ public class PedidoController {
 
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Produtos encontrados para o pedido",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoDTO.class))),
+            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @GetMapping("/{idPedido}/produtos")
     public ResponseEntity<List<ProdutoDTO>> listarProdutosPedido(@PathVariable Integer idPedido) {
         List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
@@ -41,6 +66,16 @@ public class PedidoController {
                 : ResponseEntity.ok(produtos);
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Carrinho encontrado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
+            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @GetMapping("/{idPedido}")
     public ResponseEntity<CarrinhoDto> buscarCarrinho(@PathVariable Integer idPedido) {
         List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
@@ -48,16 +83,33 @@ public class PedidoController {
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quantidade do produto atualizada com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
+            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @PutMapping("/{idPedido}/produto/{idProduto}")
     public ResponseEntity<CarrinhoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
-                                                             @PathVariable Integer idProduto,
-                                                             @RequestBody Integer quantidadeAtualizada){
+                                                               @PathVariable Integer idProduto,
+                                                               @RequestBody Integer quantidadeAtualizada){
 
         List<ProdutoDTO> produtos = pedidoService.editarQuantidade(idPedido, idProduto, quantidadeAtualizada);
         PedidoDto pedido = pedidoService.buscarPedido(idPedido);
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Produto removido com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @DeleteMapping("/{idPedido}/produto/{idProduto}")
     public ResponseEntity<Void> removerProduto(@PathVariable Integer idPedido,
                                                @PathVariable Integer idProduto) {
@@ -65,12 +117,26 @@ public class PedidoController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Todos os produtos removidos com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content)
+    })
     @DeleteMapping("/{idPedido}")
     public ResponseEntity<Void> removerProdutos(@PathVariable Integer idPedido) {
         pedidoService.removerProdutos(idPedido);
         return ResponseEntity.ok().build();
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
+            @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno ao exportar pedidos",
+                    content = @Content)
+    })
     @GetMapping("/em-aberto")
     public ResponseEntity<Void> exportarPedidosEmAberto(){
         pedidoService.exportarPedidosEmAberto();
