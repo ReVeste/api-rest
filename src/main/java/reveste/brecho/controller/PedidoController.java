@@ -35,8 +35,6 @@ public class PedidoController {
             @ApiResponse(responseCode = "404", description = "Usuário ou Produto não encontrado",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @PostMapping
@@ -53,8 +51,6 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @GetMapping("/{idPedido}/produtos")
@@ -72,8 +68,6 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @GetMapping("/{idPedido}")
@@ -89,8 +83,6 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @PutMapping("/{idPedido}/produto/{idProduto}")
@@ -106,8 +98,6 @@ public class PedidoController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Produto removido com sucesso"),
             @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @DeleteMapping("/{idPedido}/produto/{idProduto}")
@@ -120,8 +110,6 @@ public class PedidoController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Todos os produtos removidos com sucesso"),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content)
     })
     @DeleteMapping("/{idPedido}")
@@ -133,8 +121,6 @@ public class PedidoController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
             @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Erro interno ao exportar pedidos",
                     content = @Content)
     })
     @GetMapping("/em-aberto")
@@ -143,6 +129,11 @@ public class PedidoController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
+            @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
+                    content = @Content)
+    })
     @GetMapping("/status")
     public ResponseEntity<List<PedidoDto>> buscarPorStatus(@RequestParam String status) {
         List<Pedido> pedidos = pedidoService.listarPorStatus(status);

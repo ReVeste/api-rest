@@ -48,7 +48,7 @@ public class ProdutoMapper {
     public static Produto requisicaoDtoToProduto(ProdutoRequisicaoDto dto) {
         if (dto == null) return null;
 
-        return Produto.builder()
+        Produto produto = Produto.builder()
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
 //                .qualidade(dto.getQualidade())
@@ -59,6 +59,12 @@ public class ProdutoMapper {
                 .status(dto.getStatus())
                 .imagens(dto.getImages())
                 .build();
+
+        if (produto.getImagens() != null) {
+            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
+        }
+        
+        return produto;
     }
 
     public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade) {
