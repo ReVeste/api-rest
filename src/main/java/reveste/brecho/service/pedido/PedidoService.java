@@ -19,7 +19,6 @@ import reveste.brecho.service.usuario.UsuarioService;
 import reveste.brecho.util.Escritor;
 import reveste.brecho.util.listaProduto.ListaProduto;
 import reveste.brecho.util.listaProduto.ListaProdutoMapper;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,8 @@ public class PedidoService {
         Pedido pedido = pedidoRepository.findByUsuarioIdAndStatus(pedidoDto.getIdUsuario(), StatusPedidoEnum.EM_ANDAMENTO);
 
         if (pedido == null) {
+
+
 
             Pedido pedidoCriado = Pedido.builder()
                     .dataHora(LocalDateTime.now())

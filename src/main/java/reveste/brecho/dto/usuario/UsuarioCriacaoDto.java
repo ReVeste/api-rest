@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
-import java.time.LocalDate;
-
 @Getter @Setter
 public class UsuarioCriacaoDto {
 
@@ -18,9 +16,6 @@ public class UsuarioCriacaoDto {
 
     @NotBlank @Size(min = 11, max = 11)
     private String telefone;
-
-//    @Past
-//    private LocalDate dataNascimento;
 
     @NotBlank @Email
     private String email;

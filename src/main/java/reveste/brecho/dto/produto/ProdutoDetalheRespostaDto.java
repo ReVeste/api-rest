@@ -4,7 +4,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
-import reveste.brecho.entity.imagem.Imagem;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
@@ -24,4 +23,5 @@ public class ProdutoDetalheRespostaDto {
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
     private List<String> imagens;
+
 }

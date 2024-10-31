@@ -9,6 +9,7 @@ import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
 import java.util.List;
 
+
 @Entity
 @Builder
 @Getter @Setter

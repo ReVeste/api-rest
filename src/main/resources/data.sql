@@ -12,8 +12,6 @@ INSERT INTO endereco (apelido, cep, rua, numero, complemento, bairro, cidade, uf
            ('Casa de Praia', '45678-901', 'Estrada D', 101, NULL, 'Bairro D', 'Cidade C', 'RJ', 2);
 
 
-
-
 INSERT INTO Produto (nome, tamanho, qualidade, categoria, preco, descricao, qtd_estoque, status)
 VALUES
 ('Camiseta Básica Branca', 'M', 9, 'Roupas', 49.90, 'Camiseta de algodão básica branca', 1, 'DISPONIVEL'),

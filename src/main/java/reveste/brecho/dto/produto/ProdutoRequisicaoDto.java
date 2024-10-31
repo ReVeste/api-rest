@@ -28,7 +28,7 @@ public class ProdutoRequisicaoDto {
     @NotNull
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
-
     private StatusProdutoEnum status;
     private List<Imagem> images;
+
 }
