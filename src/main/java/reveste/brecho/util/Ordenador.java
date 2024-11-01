@@ -1,7 +1,7 @@
 package reveste.brecho.util;
 
 import reveste.brecho.dto.endereco.EnderecoResumoRespostaDto;
-import reveste.brecho.entity.itempedido.ItemPedido;
+import reveste.brecho.entity.ItemPedido;
 
 import java.util.ArrayList;
 import java.util.List;

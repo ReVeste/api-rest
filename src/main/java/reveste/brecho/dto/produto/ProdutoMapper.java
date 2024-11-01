@@ -1,7 +1,9 @@
 package reveste.brecho.dto.produto;
 
-import reveste.brecho.entity.imagem.Imagem;
-import reveste.brecho.entity.produto.Produto;
+import reveste.brecho.entity.Imagem;
+import reveste.brecho.entity.Produto;
+import reveste.brecho.exception.ArgumentoInvalidoException;
+
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -45,13 +47,12 @@ public class ProdutoMapper {
                 .build();
     }
 
-    public static Produto requisicaoDtoToProduto(ProdutoRequisicaoDto dto) {
+    public static Produto criacaoDtoToProduto(ProdutoRequisicaoDto dto) {
         if (dto == null) return null;
 
         Produto produto = Produto.builder()
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
-//                .qualidade(dto.getQualidade())
                 .categoria(dto.getCategoria())
                 .preco(dto.getPreco())
                 .descricao(dto.getDescricao())
@@ -64,6 +65,29 @@ public class ProdutoMapper {
             produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
         }
         
+        return produto;
+    }
+
+    public static Produto atualizacaoDtoToProduto(ProdutoRequisicaoDto dto) {
+        if (dto == null) return null;
+        if (dto.getId() == null) throw new ArgumentoInvalidoException("Produto", "Id");
+
+        Produto produto = Produto.builder()
+                .id(dto.getId())
+                .nome(dto.getNome())
+                .tamanho(dto.getTamanho())
+                .categoria(dto.getCategoria())
+                .preco(dto.getPreco())
+                .descricao(dto.getDescricao())
+                .qtdEstoque(dto.getQtdEstoque())
+                .status(dto.getStatus())
+                .imagens(dto.getImages())
+                .build();
+
+        if (produto.getImagens() != null) {
+            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
+        }
+
         return produto;
     }
 

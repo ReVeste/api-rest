@@ -1,6 +1,6 @@
 package reveste.brecho.dto.usuario;
 
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
 
 public class UsuarioMapper {
