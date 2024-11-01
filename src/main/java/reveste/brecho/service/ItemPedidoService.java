@@ -35,14 +35,11 @@ public class ItemPedidoService {
     private ProdutoService produtoService;
 
     public void adicionarProduto(Pedido pedido, Integer idProduto, Integer quantidade) {
-        if (idProduto == null) throw new ArgumentoInvalidoException("ItemPedido", "id do produto");
-
         if (itemPedidoRepository.existsByProdutoAndPedido(pedido.getId(), idProduto)) {
             throw new ConflitoException("Pedido");
         }
 
         Produto produto = produtoService.buscarPorId(idProduto);
-        if (produto == null) throw new NaoEncontradaException("Produto", idProduto);
 
         ItemPedido itemPedidoParaCriar = ItemPedidoMapper.criarItemPedido(pedido, produto, quantidade);
         itemPedidoRepository.save(itemPedidoParaCriar);

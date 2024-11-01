@@ -42,8 +42,6 @@ public class PedidoMapper {
     }
 
     public static Pedido criarPedidoParaUsuario(Usuario usuario) {
-        if (usuario == null) throw new NaoEncontradaException("Usuário");
-
         return Pedido.builder()
                 .dataHora(LocalDateTime.now())
                 .valorTotal(0.0)
