@@ -1,7 +1,7 @@
 package reveste.brecho.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import reveste.brecho.entity.endereco.Endereco;
+import reveste.brecho.entity.Endereco;
 
 import java.util.List;
 

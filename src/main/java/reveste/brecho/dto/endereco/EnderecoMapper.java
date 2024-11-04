@@ -1,15 +1,31 @@
 package reveste.brecho.dto.endereco;
 
-import reveste.brecho.entity.endereco.Endereco;
+import reveste.brecho.entity.Endereco;
 
 import java.util.List;
 
 public class EnderecoMapper {
 
-    public static Endereco requsicaoDtoToEntity(EnderecoCriacaoRequisicaoDto dto) {
+    public static Endereco criacaoDtoToEntity(EnderecoCriacaoRequisicaoDto dto) {
         if (dto == null) return null;
 
         return Endereco.builder()
+                .apelido(dto.getApelido())
+                .cep(dto.getCep())
+                .cidade(dto.getCidade())
+                .rua(dto.getRua())
+                .numero(dto.getNumero())
+                .complemento(dto.getComplemento())
+                .bairro(dto.getBairro())
+                .uf(dto.getUf())
+                .build();
+    }
+
+    public static Endereco atualizacaoDtoToEntity(EnderecoCriacaoRequisicaoDto dto) {
+        if (dto == null) return null;
+
+        return Endereco.builder()
+                .id(dto.getId())
                 .apelido(dto.getApelido())
                 .cep(dto.getCep())
                 .cidade(dto.getCidade())

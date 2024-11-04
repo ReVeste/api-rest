@@ -13,7 +13,7 @@ import reveste.brecho.api.configuration.security.jwt.GerenciadorTokenJwt;
 import reveste.brecho.dto.usuario.UsuarioCriacaoDto;
 import reveste.brecho.dto.usuario.UsuarioLoginDto;
 import reveste.brecho.dto.usuario.UsuarioTokenDto;
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.dto.usuario.UsuarioMapper;
 import reveste.brecho.repository.UsuarioRepository;
 
