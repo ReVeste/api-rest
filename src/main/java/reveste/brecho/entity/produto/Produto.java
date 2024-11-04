@@ -1,9 +1,14 @@
 package reveste.brecho.entity.produto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import reveste.brecho.entity.imagem.Imagem;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
+
+import java.util.List;
+
 
 @Entity
 @Builder
@@ -24,5 +29,9 @@ public class Produto {
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Imagem> imagens;
 
 }

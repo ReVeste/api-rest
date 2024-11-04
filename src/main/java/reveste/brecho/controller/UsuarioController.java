@@ -44,11 +44,9 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioResumoDto>> listar() {
         List<Usuario> usuarios = service.listar();
 
-        if (usuarios.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(usuarios.stream().map(UsuarioMapper::toResumoDto).toList());
+        return usuarios.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(usuarios.stream().map(UsuarioMapper::toResumoDto).toList());
     }
 
 
@@ -76,7 +74,7 @@ public class UsuarioController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDetalheRespostaDto> atualizarPorId(@PathVariable int id, @RequestBody @Valid UsuarioCriacaoDto usuario) {
-        Usuario usuarioAtualizado = service.atualizar(id, UsuarioMapper.dtoToEntity(usuario));
+        Usuario usuarioAtualizado = service.atualizar(UsuarioMapper.atualizacaoToEntity(usuario, id));
         return ResponseEntity.ok(UsuarioMapper.toDetalheDto(usuarioAtualizado));
     }
 

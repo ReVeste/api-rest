@@ -17,7 +17,8 @@ import reveste.brecho.repository.PedidoRepository;
 import reveste.brecho.service.itempedido.ItemPedidoService;
 import reveste.brecho.service.usuario.UsuarioService;
 import reveste.brecho.util.Escritor;
-
+import reveste.brecho.util.listaProduto.ListaProduto;
+import reveste.brecho.util.listaProduto.ListaProdutoMapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,8 @@ public class PedidoService {
                     pedidoDto.getIdProduto(),
                     pedidoDto.getQuantidadeProduto());
 
+            ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(pedidoCriado.getId()));
+            pedidoRepository.atualizarValorTotal(pedidoCriado.getId(), calcularValorTotal(listaProduto, 0));
 
             return PedidoMapper.toDetalheCarrinhoDto(
                     PedidoMapper.entidadeToPedidoDto(pedidoCriado), listarProdutos(pedidoCriado.getId())
@@ -66,6 +69,8 @@ public class PedidoService {
                 pedidoDto.getIdProduto(),
                 pedidoDto.getQuantidadeProduto());
 
+        ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(pedido.getId()));
+        pedidoRepository.atualizarValorTotal(pedido.getId(), calcularValorTotal(listaProduto, 0));
 
         return PedidoMapper.toDetalheCarrinhoDto(
                 PedidoMapper.entidadeToPedidoDto(pedido), listarProdutos(pedido.getId())
@@ -73,9 +78,7 @@ public class PedidoService {
     }
 
     public List<ProdutoDTO> listarProdutos(int pedidoId) {
-
         return itemPedidoService.buscaProdutoPorPedido(pedidoId);
-
     }
 
     public PedidoDto buscarPedido(int idPedido) {
@@ -91,11 +94,17 @@ public class PedidoService {
 
 
     public List<ProdutoDTO> editarQuantidade(int idPedido, int idProduto, int quantidadeAtualizada) {
+        ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(idPedido));
+        pedidoRepository.atualizarValorTotal(idPedido, calcularValorTotal(listaProduto, 0));
+
         return itemPedidoService.editarQuantidadeProduto(idPedido, idProduto, quantidadeAtualizada);
     }
 
     public void removerProduto(int idPedido, int idProduto) {
         itemPedidoService.removerProdutoPedido(idPedido, idProduto);
+
+        ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(idPedido));
+        pedidoRepository.atualizarValorTotal(idPedido, calcularValorTotal(listaProduto, 0));
     }
 
     @Modifying
@@ -124,14 +133,19 @@ public class PedidoService {
         Escritor.exportar(carrinhoDtos);
     }
 
-    /*public static double calcularValorTotal(ListaProduto listaProduto, int index) {
-        if (index == listaProduto.size()){
-            return 0.0;
-        }
-        double subTotal = (listaProduto.exibirPorIndex(index).getPrecoProduto()
-                * listaProduto.exibirPorIndex(index).getQuantidade());
-        index++;
-        return subTotal + calcularValorTotal(listaProduto, index);
-    }*/
+    public static double calcularValorTotal(ListaProduto listaProduto, int index) {
+            if (index == listaProduto.size()){
+                return 0.0;
+            }
+            double subTotal = (listaProduto.exibirPorIndex(index).getQtdEstoque()
+                    * listaProduto.exibirPorIndex(index).getQtdEstoque());
+            index++;
+            return subTotal + calcularValorTotal(listaProduto, index);
+    }
 
+    public List<Pedido> listarPorStatus(String status) {
+        return status.isEmpty()
+                ? pedidoRepository.findAll()
+                : pedidoRepository.findAllByStatus(StatusPedidoEnum.valueOf(status));
+    }
 }

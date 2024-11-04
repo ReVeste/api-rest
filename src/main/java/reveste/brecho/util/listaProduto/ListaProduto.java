@@ -1,18 +1,19 @@
-package reveste.brecho.util;
+package reveste.brecho.util.listaProduto;
 
-import reveste.brecho.entity.produto.Produto;
+import reveste.brecho.dto.produto.ProdutoDTO;
+
 
 public class ListaProduto {
 
-    private Produto[] vetor;
+    private ProdutoDTO[] vetor;
     private int nroElem;
 
     public ListaProduto(int tamanhoLista) {
-        this.vetor = new Produto[tamanhoLista];
+        this.vetor = new ProdutoDTO[tamanhoLista];
         this.nroElem = 0;
     }
 
-    public void adiciona(Produto elementoProduto){
+    public void adiciona(ProdutoDTO elementoProduto){
         if (nroElem >= vetor.length){
             throw new IllegalStateException();
         } else {
@@ -21,7 +22,7 @@ public class ListaProduto {
         }
     }
 
-    public int busca(Produto elementoPesquisa){
+    public int busca(ProdutoDTO elementoPesquisa){
         for (int i = 0; i < nroElem; i++) {
             if (vetor[i] == elementoPesquisa){
                 return i;
@@ -41,7 +42,7 @@ public class ListaProduto {
         return true;
     }
 
-    public boolean removeElemento(Produto elemento){
+    public boolean removeElemento(ProdutoDTO elemento){
         if (busca(elemento) == -1){
             return false;
         }
@@ -55,8 +56,8 @@ public class ListaProduto {
         }
     }
 
-    public Produto exibirPorIndex(int index){
-        Produto produto = new Produto();
+    public ProdutoDTO exibirPorIndex(int index){
+        ProdutoDTO produto = new ProdutoDTO();
         if (index < 0 || index >= nroElem){
             return null;
         }
@@ -76,7 +77,7 @@ public class ListaProduto {
         return tamanho;
     }
 
-    public Produto[] getVetor() {
+    public ProdutoDTO[] getVetor() {
         return vetor;
     }
 

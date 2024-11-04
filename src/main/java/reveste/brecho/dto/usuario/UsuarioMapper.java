@@ -61,7 +61,22 @@ public class UsuarioMapper {
                 .nome(dto.getNome())
                 .cpf(dto.getCpf())
                 .telefone(dto.getTelefone())
-                .dataNascimento(dto.getDataNascimento())
+                .email(dto.getEmail())
+                .senha(dto.getSenha())
+                .tipo(TipoUsuarioEnum.cliente)
+                .ativo(true)
+                .imagemUrl(dto.getImagemUrl())
+                .build();
+    }
+
+    public static Usuario atualizacaoToEntity(UsuarioCriacaoDto dto, Integer id) {
+        if (dto == null) return null;
+
+        return Usuario.builder()
+                .id(id)
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .telefone(dto.getTelefone())
                 .email(dto.getEmail())
                 .senha(dto.getSenha())
                 .tipo(TipoUsuarioEnum.cliente)
