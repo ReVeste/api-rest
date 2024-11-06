@@ -21,9 +21,10 @@ public class ProdutoRequisicaoDto {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-
     @NotBlank
     private String categoria;
+    @NotBlank
+    private String marca;
     @NotNull
     private Double preco;
     @NotBlank
@@ -32,6 +33,7 @@ public class ProdutoRequisicaoDto {
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+
     private List<Imagem> images;
 
 }

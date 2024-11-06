@@ -20,8 +20,8 @@ public class ProdutoDTO {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-    private Integer qualidade;
     private String categoria;
+    private String marca;
     private Double preco;
     private String descricao;
     private Integer qtdEstoque;

@@ -33,7 +33,6 @@ public class UsuarioMapper {
                 .nome(entidade.getNome())
                 .cpf(entidade.getCpf())
                 .telefone(entidade.getTelefone())
-                .dataNascimento(entidade.getDataNascimento())
                 .email(entidade.getEmail())
                 .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())

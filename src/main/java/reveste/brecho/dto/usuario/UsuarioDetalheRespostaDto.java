@@ -17,7 +17,6 @@ public class UsuarioDetalheRespostaDto {
     private String nome;
     private String cpf;
     private String telefone;
-    private LocalDate dataNascimento;
     private String email;
     private String senha;
     @Enumerated(EnumType.STRING)
