@@ -17,7 +17,7 @@ public class ProdutoMapper {
                 .id(entidade.getId())
                 .nome(entidade.getNome())
                 .tamanho(entidade.getTamanho())
-                .qualidade(entidade.getQualidade())
+                .marca(entidade.getMarca())
                 .categoria(entidade.getCategoria())
                 .preco(entidade.getPreco())
                 .descricao(entidade.getDescricao())
@@ -53,6 +53,7 @@ public class ProdutoMapper {
         Produto produto = Produto.builder()
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
+                .marca(dto.getMarca())
                 .categoria(dto.getCategoria())
                 .preco(dto.getPreco())
                 .descricao(dto.getDescricao())
@@ -70,12 +71,12 @@ public class ProdutoMapper {
 
     public static Produto atualizacaoDtoToProduto(ProdutoRequisicaoDto dto) {
         if (dto == null) return null;
-        if (dto.getId() == null) throw new ArgumentoInvalidoException("Produto", "Id");
 
         Produto produto = Produto.builder()
                 .id(dto.getId())
                 .nome(dto.getNome())
                 .tamanho(dto.getTamanho())
+                .marca(dto.getMarca())
                 .categoria(dto.getCategoria())
                 .preco(dto.getPreco())
                 .descricao(dto.getDescricao())
@@ -95,19 +96,19 @@ public class ProdutoMapper {
         if (produto == null || quantidade == null) return null;
 
         return ProdutoDTO.builder()
-                    .id(produto.getId())
-                    .nome(produto.getNome())
-                    .tamanho(produto.getTamanho())
-                    .qualidade(produto.getQualidade())
-                    .categoria(produto.getCategoria())
-                    .preco(produto.getPreco())
-                    .descricao(produto.getDescricao())
-                    .qtdEstoque(quantidade)
-                    .status(produto.getStatus())
-                    .imagens(produto.getImagens().stream()
-                            .map(Imagem::getImagemUrl)
-                            .collect(Collectors.toList()))
-                    .build();
+                .id(produto.getId())
+                .nome(produto.getNome())
+                .tamanho(produto.getTamanho())
+                .marca(produto.getMarca())
+                .categoria(produto.getCategoria())
+                .preco(produto.getPreco())
+                .descricao(produto.getDescricao())
+                .qtdEstoque(quantidade)
+                .status(produto.getStatus())
+                .imagens(produto.getImagens().stream()
+                        .map(Imagem::getImagemUrl)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
 }

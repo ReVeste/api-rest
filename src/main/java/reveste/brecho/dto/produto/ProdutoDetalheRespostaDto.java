@@ -15,7 +15,7 @@ public class ProdutoDetalheRespostaDto {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-    private Integer qualidade;
+    private String marca;
     private String categoria;
     private Double preco;
     private String descricao;
