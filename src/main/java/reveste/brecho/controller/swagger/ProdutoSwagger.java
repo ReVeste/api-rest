@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
 import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.dto.produto.ProdutoResumoRespostaDto;
+import reveste.brecho.enun.produto.CategoriaEnum;
 
 import java.util.List;
 
@@ -59,5 +60,5 @@ public interface ProdutoSwagger {
             @ApiResponse(responseCode = "204", description = "Nenhum produto encontrado", content = @Content),
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })
-    ResponseEntity<List<ProdutoResumoRespostaDto>> buscarPorCategoria(@RequestParam String categoria);
+    ResponseEntity<List<ProdutoResumoRespostaDto>> buscarPorCategoria(@RequestParam CategoriaEnum categoria);
 }
