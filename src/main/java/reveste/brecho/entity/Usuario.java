@@ -1,18 +1,18 @@
-package reveste.brecho.dto.usuario;
+package reveste.brecho.entity;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
 
 import java.time.LocalDate;
 
-
-@Data
+@Entity
 @Builder
-public class UsuarioDetalheRespostaDto {
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+public class Usuario {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private String cpf;

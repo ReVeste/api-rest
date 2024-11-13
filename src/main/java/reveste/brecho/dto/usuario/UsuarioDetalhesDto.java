@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 
 import java.util.Collection;
 

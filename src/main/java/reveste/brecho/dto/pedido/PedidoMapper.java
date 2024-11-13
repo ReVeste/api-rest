@@ -1,7 +1,12 @@
 package reveste.brecho.dto.pedido;
 
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.entity.pedido.Pedido;
+import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Usuario;
+import reveste.brecho.enun.pedido.StatusPedidoEnum;
+import reveste.brecho.exception.NaoEncontradaException;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PedidoMapper {
@@ -33,6 +38,15 @@ public class PedidoMapper {
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
                 .usuario(pedido.getUsuario())
+                .build();
+    }
+
+    public static Pedido criarPedidoParaUsuario(Usuario usuario) {
+        return Pedido.builder()
+                .dataHora(LocalDateTime.now())
+                .valorTotal(0.0)
+                .status(StatusPedidoEnum.EM_ANDAMENTO)
+                .usuario(usuario)
                 .build();
     }
 

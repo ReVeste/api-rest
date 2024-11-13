@@ -1,6 +1,6 @@
 package reveste.brecho.dto.usuario;
 
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
 
 public class UsuarioMapper {
@@ -33,7 +33,6 @@ public class UsuarioMapper {
                 .nome(entidade.getNome())
                 .cpf(entidade.getCpf())
                 .telefone(entidade.getTelefone())
-                .dataNascimento(entidade.getDataNascimento())
                 .email(entidade.getEmail())
                 .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())
