@@ -127,13 +127,13 @@ public class PedidoService {
     }
 
     public static double calcularValorTotal(ListaProduto listaProduto, int index) {
-            if (index == listaProduto.size()){
-                return 0.0;
-            }
-            double subTotal = (listaProduto.exibirPorIndex(index).getQtdEstoque()
-                    * listaProduto.exibirPorIndex(index).getQtdEstoque());
-            index++;
-            return subTotal + calcularValorTotal(listaProduto, index);
+        if (index == listaProduto.size()){
+            return 0.0;
+        }
+        double subTotal = (listaProduto.exibirPorIndex(index).getQtdEstoque()
+                * listaProduto.exibirPorIndex(index).getQtdEstoque());
+        index++;
+        return subTotal + calcularValorTotal(listaProduto, index);
     }
 
     public List<Pedido> listarPorStatus(String status) {

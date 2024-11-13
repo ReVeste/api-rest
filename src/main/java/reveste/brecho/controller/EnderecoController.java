@@ -40,7 +40,7 @@ public class EnderecoController implements EnderecoSwagger {
 
     @Override
     public ResponseEntity<EnderecoDetalheRespostaDto> atualizarPorId(@PathVariable Integer id,
-                                                      @RequestBody @Valid EnderecoCriacaoRequisicaoDto endereco) {
+                                                                     @RequestBody @Valid EnderecoCriacaoRequisicaoDto endereco) {
 
         Endereco enderecoParaAtualizar = EnderecoMapper.atualizacaoDtoToEntity(endereco);
         Endereco enderecoAtualizado = service.atualizar(id, enderecoParaAtualizar, endereco.getIdUsuario());
