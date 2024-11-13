@@ -9,6 +9,7 @@ import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
 import reveste.brecho.dto.produto.ProdutoMapper;
 import reveste.brecho.dto.produto.ProdutoResumoRespostaDto;
 import reveste.brecho.entity.Produto;
+import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.service.ProdutoService;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public class ProdutoController implements ProdutoSwagger {
     }
 
     @Override
-    public ResponseEntity<List<ProdutoResumoRespostaDto>> buscarPorCategoria(@RequestParam String categoria) {
+    public ResponseEntity<List<ProdutoResumoRespostaDto>> buscarPorCategoria(@RequestParam CategoriaEnum categoria) {
         List<Produto> produtos = produtoService.listarPorCategoria(categoria);
 
         return produtos.isEmpty()

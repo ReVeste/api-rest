@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import reveste.brecho.entity.ItemPedido;
+import reveste.brecho.enun.pedido.StatusPedidoEnum;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
 
 import java.util.List;
 import java.util.Optional;

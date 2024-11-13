@@ -13,6 +13,7 @@ import reveste.brecho.dto.produto.ProdutoMapper;
 import reveste.brecho.entity.ItemPedido;
 import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Produto;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.exception.ArgumentoInvalidoException;
 import reveste.brecho.exception.ConflitoException;
 import reveste.brecho.exception.NaoEncontradaException;
@@ -93,6 +94,19 @@ public class ItemPedidoService {
                 throw new RuntimeException("Erro ao remover produto: " + e.getMessage(), e);
             }
         }
+    }
+
+    public void finalizarPedido(int idPedido) {
+
+        List<ProdutoDTO> listaProdutos = buscaProdutoPorPedido(idPedido);
+        List<Integer> listaId = new ArrayList<>();
+
+        for (ProdutoDTO listaProduto : listaProdutos) {
+            listaId.add(listaProduto.getId());
+        }
+
+        produtoService.finalizarPedido(listaId);
+
     }
 
 }

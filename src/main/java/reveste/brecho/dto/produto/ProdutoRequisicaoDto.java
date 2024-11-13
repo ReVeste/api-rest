@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.entity.Imagem;
+import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
@@ -21,8 +22,8 @@ public class ProdutoRequisicaoDto {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-    @NotBlank
-    private String categoria;
+    @Enumerated(EnumType.STRING)
+    private CategoriaEnum categoria;
     @NotBlank
     private String marca;
     @NotNull

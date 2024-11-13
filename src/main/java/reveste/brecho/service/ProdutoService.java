@@ -3,6 +3,8 @@ package reveste.brecho.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reveste.brecho.entity.Produto;
+import reveste.brecho.enun.produto.CategoriaEnum;
+import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.exception.NaoEncontradaException;
 import reveste.brecho.repository.ProdutoRepository;
 
@@ -38,7 +40,7 @@ public class ProdutoService {
     }
 
     public List<Produto> listar() {
-        return produtoRepository.findAll();
+        return produtoRepository.findAllByStatus(StatusProdutoEnum.DISPONIVEL);
     }
 
     public void deletarPorId(int id) {
@@ -49,10 +51,14 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public List<Produto> listarPorCategoria(String categoria) {
-        return categoria.isEmpty()
-                ? produtoRepository.findAll()
-                : produtoRepository.findAllByCategoria(categoria);
+    public List<Produto> listarPorCategoria(CategoriaEnum categoria) {
+        return produtoRepository.findAllByCategoria(categoria);
+    }
+
+    public void finalizarPedido(List<Integer> listaId) {
+
+        produtoRepository.finalizarPedido(listaId, StatusProdutoEnum.VENDIDO);
+
     }
 
 }

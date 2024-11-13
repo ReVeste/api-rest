@@ -3,6 +3,7 @@ package reveste.brecho.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
@@ -22,10 +23,11 @@ public class Produto {
     private String marca;
     private String descricao;
     private Double preco;
-    private String categoria;
+    @Enumerated(EnumType.STRING)
+    private CategoriaEnum categoria;
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
-    private TamanhoProdutoEnum tamanho; // por enquanto será deixado o enum, porém o tamanho será responsabilidade de outra entidade depois
+    private TamanhoProdutoEnum tamanho;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
 
