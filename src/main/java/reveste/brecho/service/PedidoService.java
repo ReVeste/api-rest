@@ -141,4 +141,18 @@ public class PedidoService {
                 ? pedidoRepository.findAll()
                 : pedidoRepository.findAllByStatus(StatusPedidoEnum.valueOf(status));
     }
+
+    public void finalizarPedido(int idPedido) {
+
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+
+        if (pedidoOpt.isEmpty()){
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        pedidoRepository.finalizarPedido(idPedido, StatusPedidoEnum.CONCLUIDO);
+        itemPedidoService.finalizarPedido(idPedido);
+
+    }
+
 }

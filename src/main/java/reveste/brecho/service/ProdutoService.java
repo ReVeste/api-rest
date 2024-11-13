@@ -55,4 +55,10 @@ public class ProdutoService {
         return produtoRepository.findAllByCategoria(categoria);
     }
 
+    public void finalizarPedido(List<Integer> listaId) {
+
+        produtoRepository.finalizarPedido(listaId, StatusProdutoEnum.VENDIDO);
+
+    }
+
 }
