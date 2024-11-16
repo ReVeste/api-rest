@@ -53,7 +53,7 @@ public class UsuarioController implements UsuarioSwagger {
     }
 
     @Override
-    public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto) {
+    public ResponseEntity<UsuarioTokenDto> login(@RequestBody @Valid UsuarioLoginDto usuarioLoginDto) {
         return ResponseEntity.ok(service.autenticar(usuarioLoginDto));
     }
 
