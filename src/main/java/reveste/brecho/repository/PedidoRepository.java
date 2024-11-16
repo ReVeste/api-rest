@@ -8,6 +8,7 @@ import reveste.brecho.entity.Pedido;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
@@ -24,4 +25,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     Pedido findByUsuarioIdAndStatus(Integer usuarioId, StatusPedidoEnum status);
 
     List<Pedido> findAllByStatus(StatusPedidoEnum status);
+
+    @Query("SELECT p.id FROM Pedido p WHERE p.status = :status AND p.usuario.id = :usuarioId")
+    Optional<Integer> findIdPedidoEmAbertoByUsuarioId(StatusPedidoEnum status, Integer usuarioId);
+
+    List<Pedido> findAllByStatusAndUsuarioId(StatusPedidoEnum statusPedidoEnum, Integer idUsuario);
 }

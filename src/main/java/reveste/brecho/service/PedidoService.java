@@ -136,10 +136,10 @@ public class PedidoService {
         return subTotal + calcularValorTotal(listaProduto, index);
     }
 
-    public List<Pedido> listarPorStatus(String status) {
+    public List<Pedido> listarPorStatus(Integer idUsuario, String status) {
         return status.isEmpty()
                 ? pedidoRepository.findAll()
-                : pedidoRepository.findAllByStatus(StatusPedidoEnum.valueOf(status));
+                : pedidoRepository.findAllByStatusAndUsuarioId(StatusPedidoEnum.valueOf(status), idUsuario);
     }
 
     public void finalizarPedido(int idPedido) {
@@ -155,4 +155,13 @@ public class PedidoService {
 
     }
 
+    public Integer buscarPedidoEmAberto(Integer idUsuario) {
+        Optional<Integer> idPedido = pedidoRepository.findIdPedidoEmAbertoByUsuarioId(StatusPedidoEnum.EM_ANDAMENTO, idUsuario);
+
+        if (idPedido.isEmpty()) {
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        return idPedido.get();
+    }
 }

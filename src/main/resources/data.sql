@@ -1,6 +1,10 @@
 INSERT INTO Usuario (nome, cpf, telefone, email, senha, tipo, ativo)
     VALUES ('Matheus Rabello', '94960625040', '11992247954', 'matheus.csantos@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
-           ('Pedro Saraujo', '46553098069', '13981309594','pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'cliente', true);
+           ('Pedro Saraujo', '46553098069', '13981309594','pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'cliente', true),
+           ('Amanda Martins', '21234567890', '11987654321', 'amanda.martins@example.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
+           ('Ketelyn Medina', '31987654321', '11923456789', 'ketelyn.medina@example.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
+           ('Ryan Miranda', '31912345678', '11934567890', 'ryan.miranda@example.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
+           ('Karen Beatriz', '31956789012', '11987651234', 'karen.beatriz@example.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true);
 
 INSERT INTO endereco (apelido, cep, rua, numero, complemento, bairro, cidade, uf, usuario_id)
     VALUES
@@ -43,10 +47,19 @@ VALUES
 ('Bermuda Cargo', 'G', 'ROUPA', 69.90, 'Bermuda cargo com bolsos laterais', 3, 'DISPONIVEL'),
 ('Blusa de Manga Longa', 'GG', 'ROUPA', 79.90, 'Blusa de manga longa em algodão leve', 1, 'DISPONIVEL');
 
--- Vamos adicionar 4 imagens para cada produto na lista
+INSERT INTO feedback (nota, comentario, usuario_id) VALUES
+(5, 'Perfeito! Entrega rápida, produto de alta qualidade.', 1),
+(4, 'A entrega podia ser melhor.', 2),
+(3, 'O produto é ok, mas esperava algo diferente.', 3),
+(4, 'Produto bom, mas o suporte poderia ser mais rápido.', 4),
+(5, 'Excelente! Superou as expectativas!', 5),
+(2, 'Produto deixou a desejar, não atende às necessidades.', 1),
+(5, 'Ótimo atendimento e peças bem cuidadas!', 2);
+
+
+
 INSERT INTO Imagem (produto_id, imagem_url)
 VALUES
-    -- Camiseta Básica Branca
     (1, 'https://i.pinimg.com/originals/aa/52/90/aa5290929d03f73923e94fdc0d3e5897.jpg'),
     (1, 'https://i.pinimg.com/originals/aa/52/90/aa5290929d03f73923e94fdc0d3e5897.jpg'),
     (1, 'https://i.pinimg.com/originals/aa/52/90/aa5290929d03f73923e94fdc0d3e5897.jpg'),

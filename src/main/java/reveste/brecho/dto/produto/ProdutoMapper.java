@@ -97,7 +97,7 @@ public class ProdutoMapper {
         return produto;
     }
 
-    public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade) {
+    public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade, Integer idPedido) {
         if (produto == null || quantidade == null) return null;
 
         return ProdutoDTO.builder()
@@ -110,6 +110,7 @@ public class ProdutoMapper {
                 .descricao(produto.getDescricao())
                 .qtdEstoque(quantidade)
                 .status(produto.getStatus())
+                .idPedido(idPedido)
                 .imagens(produto.getImagens().stream()
                         .map(Imagem::getImagemUrl)
                         .collect(Collectors.toList()))
