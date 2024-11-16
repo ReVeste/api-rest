@@ -23,6 +23,7 @@ public class ProdutoRequisicaoDto {
 //    @NotNull // Falta o campo no front, por isso pode ser cadastrado sem tamanho
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
+
     @NotNull @Enumerated(EnumType.STRING)
     private CategoriaEnum categoria;
     @NotBlank
@@ -37,5 +38,4 @@ public class ProdutoRequisicaoDto {
     private StatusProdutoEnum status;
 
     private List<String> images;
-
 }

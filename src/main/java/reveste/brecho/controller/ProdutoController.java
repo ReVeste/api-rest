@@ -46,6 +46,7 @@ public class ProdutoController implements ProdutoSwagger {
     public ResponseEntity<ProdutoDetalheRespostaDto> atualizarPorId(@PathVariable int id,
                                                                     @RequestBody @Valid ProdutoRequisicaoDto produtoDto){
 
+
         Produto produtoAtualizado = produtoService.atualizar(id, ProdutoMapper.atualizacaoDtoToProduto(produtoDto));
         return ResponseEntity.ok(ProdutoMapper.toDetalheDto(produtoAtualizado));
     }

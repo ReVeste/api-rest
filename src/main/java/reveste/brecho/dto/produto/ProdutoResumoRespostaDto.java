@@ -5,7 +5,6 @@ import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.enun.produto.CategoriaEnum;
-
 import java.util.List;
 
 @Data

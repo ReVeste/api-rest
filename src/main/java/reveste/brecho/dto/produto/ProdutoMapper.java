@@ -60,6 +60,7 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
+
                 .build();
 
         List<Imagem> imagens = dto.getImages().stream()
@@ -67,6 +68,7 @@ public class ProdutoMapper {
                 .collect(Collectors.toList());
 
         produto.setImagens(imagens);
+
 
         return produto;
     }
