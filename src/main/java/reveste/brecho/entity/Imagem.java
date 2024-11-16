@@ -16,4 +16,9 @@ public class Imagem {
     @JsonBackReference
     private Produto produto;
     private String imagemUrl;
+
+    public Imagem(Produto produto, String imagemUrl) {
+        this.produto = produto;
+        this.imagemUrl = imagemUrl;
+    }
 }

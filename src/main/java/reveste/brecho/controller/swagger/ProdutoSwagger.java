@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
@@ -35,7 +36,7 @@ public interface ProdutoSwagger {
             @ApiResponse(responseCode = "201", description = "Produto criado com sucesso", content = @Content),
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })    @PostMapping
-    ResponseEntity<ProdutoDetalheRespostaDto> criar(@RequestBody ProdutoRequisicaoDto produtoDTO);
+    ResponseEntity<ProdutoDetalheRespostaDto> criar(@RequestBody @Valid ProdutoRequisicaoDto produtoDTO);
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Produtos encontrados com sucesso", content = @Content),
@@ -44,7 +45,7 @@ public interface ProdutoSwagger {
     })
     @PutMapping("/{id}")
     ResponseEntity<ProdutoDetalheRespostaDto> atualizarPorId(@PathVariable int id,
-                                                                    @RequestBody ProdutoRequisicaoDto produtoDto);
+                                                                    @RequestBody @Valid ProdutoRequisicaoDto produtoDto);
 
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Produto deletado com sucesso", content = @Content),

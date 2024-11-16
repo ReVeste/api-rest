@@ -1,5 +1,6 @@
 package reveste.brecho.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +37,15 @@ public class ProdutoController implements ProdutoSwagger {
     }
 
     @Override
-    public ResponseEntity<ProdutoDetalheRespostaDto> criar(@RequestBody ProdutoRequisicaoDto produtoDTO){
+    public ResponseEntity<ProdutoDetalheRespostaDto> criar(@RequestBody @Valid ProdutoRequisicaoDto produtoDTO){
         Produto produtoCriado = produtoService.criar(ProdutoMapper.criacaoDtoToProduto(produtoDTO));
         return ResponseEntity.created(null).body(ProdutoMapper.toDetalheDto(produtoCriado));
     }
 
     @Override
     public ResponseEntity<ProdutoDetalheRespostaDto> atualizarPorId(@PathVariable int id,
-                                                                    @RequestBody ProdutoRequisicaoDto produtoDto){
+                                                                    @RequestBody @Valid ProdutoRequisicaoDto produtoDto){
+
 
         Produto produtoAtualizado = produtoService.atualizar(id, ProdutoMapper.atualizacaoDtoToProduto(produtoDto));
         return ResponseEntity.ok(ProdutoMapper.toDetalheDto(produtoAtualizado));

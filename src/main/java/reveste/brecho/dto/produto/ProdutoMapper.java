@@ -5,6 +5,7 @@ import reveste.brecho.entity.Produto;
 import reveste.brecho.exception.ArgumentoInvalidoException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -59,12 +60,15 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
-                .imagens(dto.getImages())
+
                 .build();
 
-        if (produto.getImagens() != null) {
-            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
-        }
+        List<Imagem> imagens = dto.getImages().stream()
+                .map(url -> new Imagem(produto, url))
+                .collect(Collectors.toList());
+
+        produto.setImagens(imagens);
+
 
         return produto;
     }
@@ -82,12 +86,13 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
-                .imagens(dto.getImages())
                 .build();
 
-        if (produto.getImagens() != null) {
-            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
-        }
+        List<Imagem> imagens = dto.getImages().stream()
+                .map(url -> new Imagem(produto, url))
+                .collect(Collectors.toList());
+
+        produto.setImagens(imagens);
 
         return produto;
     }
