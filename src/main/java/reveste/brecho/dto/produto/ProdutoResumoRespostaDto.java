@@ -8,8 +8,6 @@ import reveste.brecho.enun.produto.CategoriaEnum;
 
 import java.util.List;
 
-import java.util.List;
-
 @Data
 @Builder
 public class ProdutoResumoRespostaDto {
