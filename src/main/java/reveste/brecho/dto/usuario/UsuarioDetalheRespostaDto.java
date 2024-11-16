@@ -18,7 +18,6 @@ public class UsuarioDetalheRespostaDto {
     private String cpf;
     private String telefone;
     private String email;
-    private String senha;
     @Enumerated(EnumType.STRING)
     private TipoUsuarioEnum tipo;
     private Boolean ativo;
