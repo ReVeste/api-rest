@@ -45,6 +45,7 @@ public class ProdutoMapper {
                         .map(Imagem::getImagemUrl)
                         .collect(Collectors.toList())
                         : Collections.emptyList())
+                .status(entidade.getStatus())
                 .build();
     }
 
