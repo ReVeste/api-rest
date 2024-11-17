@@ -40,6 +40,10 @@ public class ProdutoService {
     }
 
     public List<Produto> listar() {
+        return produtoRepository.findAll();
+    }
+
+    public List<Produto> listarProdutosDisponiveis() {
         return produtoRepository.findAllByStatus(StatusProdutoEnum.DISPONIVEL);
     }
 
