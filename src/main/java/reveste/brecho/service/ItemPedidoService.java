@@ -51,7 +51,7 @@ public class ItemPedidoService {
         if (produtosDoPedido.isEmpty()) throw new NaoEncontradaException("Item Pedido");
 
         return produtosDoPedido.stream().map(itemPedido -> ProdutoMapper.entidadeToProdutoDTO(
-                itemPedido.getProduto(), itemPedido.getQuantidade())).collect(Collectors.toList());
+                itemPedido.getProduto(), itemPedido.getQuantidade(), pedidoId)).collect(Collectors.toList());
     }
 
     @Modifying
@@ -69,7 +69,7 @@ public class ItemPedidoService {
                 produtosDoPedido.get(idItemPedidoParaEditar).getId(), quantidadeAtualizada);
 
         return produtosDoPedido.stream().map(itemPedido -> ProdutoMapper.entidadeToProdutoDTO(
-                itemPedido.getProduto(), itemPedido.getQuantidade())).collect(Collectors.toList());
+                itemPedido.getProduto(), itemPedido.getQuantidade(), idPedido)).collect(Collectors.toList());
     }
 
     public void removerProdutoPedido(int idPedido, int idProduto) {

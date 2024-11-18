@@ -5,6 +5,7 @@ import reveste.brecho.entity.Produto;
 import reveste.brecho.exception.ArgumentoInvalidoException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -44,6 +45,7 @@ public class ProdutoMapper {
                         .map(Imagem::getImagemUrl)
                         .collect(Collectors.toList())
                         : Collections.emptyList())
+                .status(entidade.getStatus())
                 .build();
     }
 
@@ -59,12 +61,15 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
-                .imagens(dto.getImages())
+
                 .build();
 
-        if (produto.getImagens() != null) {
-            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
-        }
+        List<Imagem> imagens = dto.getImages().stream()
+                .map(url -> new Imagem(produto, url))
+                .collect(Collectors.toList());
+
+        produto.setImagens(imagens);
+
 
         return produto;
     }
@@ -82,17 +87,18 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
-                .imagens(dto.getImages())
                 .build();
 
-        if (produto.getImagens() != null) {
-            produto.getImagens().forEach(imagem -> imagem.setProduto(produto));
-        }
+        List<Imagem> imagens = dto.getImages().stream()
+                .map(url -> new Imagem(produto, url))
+                .collect(Collectors.toList());
+
+        produto.setImagens(imagens);
 
         return produto;
     }
 
-    public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade) {
+    public static ProdutoDTO entidadeToProdutoDTO(Produto produto, Integer quantidade, Integer idPedido) {
         if (produto == null || quantidade == null) return null;
 
         return ProdutoDTO.builder()
@@ -105,6 +111,7 @@ public class ProdutoMapper {
                 .descricao(produto.getDescricao())
                 .qtdEstoque(quantidade)
                 .status(produto.getStatus())
+                .idPedido(idPedido)
                 .imagens(produto.getImagens().stream()
                         .map(Imagem::getImagemUrl)
                         .collect(Collectors.toList()))

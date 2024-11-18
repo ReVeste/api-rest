@@ -34,7 +34,6 @@ public class UsuarioMapper {
                 .cpf(entidade.getCpf())
                 .telefone(entidade.getTelefone())
                 .email(entidade.getEmail())
-                .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())
                 .ativo(entidade.getAtivo())
                 .imagemUrl(entidade.getImagemUrl())

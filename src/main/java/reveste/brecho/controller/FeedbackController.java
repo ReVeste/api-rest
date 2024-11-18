@@ -23,6 +23,7 @@ public class FeedbackController implements FeedbackSwagger{
 
     private final FeedbackService service;
 
+    @Override
     public ResponseEntity<List<FeedbackRespostaDto>> listar() {
         List<Feedback> feedbacks = service.listar();
 
@@ -31,22 +32,26 @@ public class FeedbackController implements FeedbackSwagger{
                 : ResponseEntity.ok(feedbacks.stream().map(FeedbackMapper::toDto).toList());
     }
 
+    @Override
     public ResponseEntity<FeedbackRespostaDto> buscarPorId(@PathVariable int id) {
         return ResponseEntity.ok(FeedbackMapper.toDto(service.buscarPorId(id)));
     }
 
+    @Override
     public ResponseEntity<FeedbackRespostaDto> criar(@RequestBody @Valid FeedbackRequisicaoDto feedbackDto) {
         Feedback feedback = FeedbackMapper.criacaoDtoToEntity(feedbackDto);
         Feedback feedbackCriado = service.criar(feedback, feedbackDto.getIdUsuario());
         return ResponseEntity.created(null).body(FeedbackMapper.toDto(feedbackCriado));
     }
 
+    @Override
     public ResponseEntity<FeedbackRespostaDto> atualizar(@RequestBody @Valid FeedbackRequisicaoDto feedbackDto) {
         Feedback feedback = FeedbackMapper.atualizacaoDtoToEntity(feedbackDto);
         Feedback feedbackAtualizado = service.atualizar(feedback, feedbackDto.getIdUsuario());
         return ResponseEntity.created(null).body(FeedbackMapper.toDto(feedbackAtualizado));
     }
 
+    @Override
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();

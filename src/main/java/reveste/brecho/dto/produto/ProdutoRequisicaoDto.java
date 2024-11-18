@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import reveste.brecho.entity.Imagem;
 import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
@@ -20,9 +19,12 @@ public class ProdutoRequisicaoDto {
 
     @NotBlank
     private String nome;
+
+//    @NotNull // Falta o campo no front, por isso pode ser cadastrado sem tamanho
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-    @Enumerated(EnumType.STRING)
+
+    @NotNull @Enumerated(EnumType.STRING)
     private CategoriaEnum categoria;
     @NotBlank
     private String marca;
@@ -35,6 +37,5 @@ public class ProdutoRequisicaoDto {
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
 
-    private List<Imagem> images;
-
+    private List<String> images;
 }

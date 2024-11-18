@@ -29,6 +29,7 @@ public class ProdutoDTO {
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+    private Integer idPedido;
     private List<String> imagens;
 
 }

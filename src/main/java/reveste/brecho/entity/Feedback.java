@@ -13,7 +13,6 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer nota;
-    private String titulo;
     private String comentario;
 
     @ManyToOne

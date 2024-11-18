@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.PedidoSwagger;
-import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
-import reveste.brecho.dto.pedido.PedidoDto;
-import reveste.brecho.dto.pedido.PedidoMapper;
+import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.dto.pedido.CarrinhoDto;
 import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.service.PedidoService;
 
 import java.util.List;
@@ -46,6 +44,16 @@ public class PedidoController implements PedidoSwagger {
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPedidoEmAberto(@PathVariable Integer idUsuario) {
+
+        Integer idPedidoEmAberto = pedidoService.buscarPedidoEmAberto(idUsuario);
+        List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedidoEmAberto);
+
+        return produtos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(produtos);
+    }
+
     @Override
     public ResponseEntity<CarrinhoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
                                                                @PathVariable Integer idProduto,
@@ -76,12 +84,38 @@ public class PedidoController implements PedidoSwagger {
     }
 
     @Override
-    public ResponseEntity<List<PedidoDto>> buscarPorStatus(@RequestParam String status) {
-        List<Pedido> pedidos = pedidoService.listarPorStatus(status);
+    public ResponseEntity<List<PedidoDto>> buscarPorStatus(@PathVariable Integer idUsuario, @RequestParam String status) {
+        List<Pedido> pedidos = pedidoService.listarPorStatus(idUsuario, status);
 
         return pedidos.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(pedidos.stream().map(PedidoMapper::entidadeToPedidoDto).toList());
+    }
+
+    @PutMapping("/{idPedido}")
+    public ResponseEntity<Void> atualizarPedidoPago(@PathVariable Integer idPedido) {
+        pedidoService.atualizarPedidoPago(idPedido);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/finalizar")
+    public ResponseEntity<Void> finalizarPedido() {
+        pedidoService.finalizarPedido();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/buscar-pedido-pago")
+    public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
+
+        Pedido pedido = pedidoService.buscarPedidoParaEntrega();
+        //Usuario usuario = pedidoService.buscarUsuarioPedidoEntrega(pedido);
+
+        if (pedido == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido));
+
     }
 
 }

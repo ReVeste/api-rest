@@ -41,6 +41,14 @@ public interface PedidoSwagger {
     })
     ResponseEntity<CarrinhoDto> buscarCarrinho(@PathVariable Integer idPedido);
 
+    @GetMapping("/{idUsuario}/em-aberto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Produtos encontrados para o pedido", content = @Content),
+            @ApiResponse(responseCode = "204", description = "Pedido sem produtos", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content)
+    })
+    ResponseEntity<List<ProdutoDTO>> listarProdutosPedidoEmAberto(@PathVariable Integer idUsuario);
+
     @PutMapping("/{idPedido}/produto/{idProduto}")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Quantidade atualizada com sucesso", content = @Content),
@@ -74,10 +82,10 @@ public interface PedidoSwagger {
     })
     ResponseEntity<Void> exportarPedidosEmAberto();
 
-    @GetMapping("/status")
+    @GetMapping("/{idUsuario}/status")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pedidos encontrados com sucesso"),
             @ApiResponse(responseCode = "204", description = "Nenhum pedido foi encontrado", content = @Content)
     })
-    ResponseEntity<List<PedidoDto>> buscarPorStatus(@RequestParam String status);
+    ResponseEntity<List<PedidoDto>> buscarPorStatus(@PathVariable Integer idUsuario, @RequestParam String status);
 }
