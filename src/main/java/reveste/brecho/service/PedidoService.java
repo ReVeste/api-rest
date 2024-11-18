@@ -16,6 +16,7 @@ import reveste.brecho.exception.NaoEncontradaException;
 import reveste.brecho.repository.PedidoRepository;
 import reveste.brecho.service.usuario.UsuarioService;
 import reveste.brecho.util.Escritor;
+import reveste.brecho.util.filaUtils.FilaObj;
 import reveste.brecho.util.listaProduto.ListaProduto;
 import reveste.brecho.util.listaProduto.ListaProdutoMapper;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class PedidoService {
     private final ItemPedidoService itemPedidoService;
     private final PedidoRepository pedidoRepository;
     private final UsuarioService usuarioService;
+
+    FilaObj<Integer> idPedidosPagos = new FilaObj<>(200);
 
     @Modifying
     @Transactional
@@ -142,19 +145,6 @@ public class PedidoService {
                 : pedidoRepository.findAllByStatusAndUsuarioId(StatusPedidoEnum.valueOf(status), idUsuario);
     }
 
-    public void finalizarPedido(int idPedido) {
-
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
-
-        if (pedidoOpt.isEmpty()){
-            throw new NaoEncontradaException("Pedido");
-        }
-
-        pedidoRepository.finalizarPedido(idPedido, StatusPedidoEnum.CONCLUIDO);
-        itemPedidoService.finalizarPedido(idPedido);
-
-    }
-
     public Integer buscarPedidoEmAberto(Integer idUsuario) {
         Optional<Integer> idPedido = pedidoRepository.findIdPedidoEmAbertoByUsuarioId(StatusPedidoEnum.EM_ANDAMENTO, idUsuario);
 
@@ -164,4 +154,59 @@ public class PedidoService {
 
         return idPedido.get();
     }
+
+    public void finalizarPedido() {
+
+        if (idPedidosPagos.isEmpty()) {
+            throw new NaoEncontradaException("idPedido");
+        }
+
+        int idPedido = idPedidosPagos.poll();
+
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+
+        if (pedidoOpt.isEmpty()){
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        pedidoRepository.finalizarPedido(idPedido, StatusPedidoEnum.CONCLUIDO);
+
+    }
+
+    public void atualizarPedidoPago(int idPedido) {
+
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+
+        if (pedidoOpt.isEmpty()){
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        pedidoRepository.finalizarPedido(idPedido, StatusPedidoEnum.PAGO);
+        itemPedidoService.finalizarPedido(idPedido);
+
+        idPedidosPagos.insert(idPedido);
+
+    }
+
+    public Pedido buscarPedidoParaEntrega() {
+
+        if (idPedidosPagos.isEmpty()) {
+            throw new NaoEncontradaException("idPedido");
+        }
+
+        int idPedido = idPedidosPagos.peek();
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+
+        if (pedidoOpt.isEmpty()){
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        return pedidoOpt.get();
+
+    }
+
+    public Usuario buscarUsuarioPedidoEntrega(Pedido pedido) {
+        return usuarioService.buscarPorId(pedido.getUsuario().getId());
+    }
+
 }
