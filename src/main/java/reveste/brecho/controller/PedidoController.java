@@ -108,9 +108,9 @@ public class PedidoController implements PedidoSwagger {
     public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
 
         Pedido pedido = pedidoService.buscarPedidoParaEntrega();
-        Usuario usuario = pedidoService.buscarUsuarioPedidoEntrega(pedido);
+        //Usuario usuario = pedidoService.buscarUsuarioPedidoEntrega(pedido);
 
-        if (pedido == null || usuario == null) {
+        if (pedido == null) {
             return ResponseEntity.noContent().build();
         }
 

@@ -157,6 +157,10 @@ public class PedidoService {
 
     public void finalizarPedido() {
 
+        if (idPedidosPagos.isEmpty()) {
+            throw new NaoEncontradaException("idPedido");
+        }
+
         int idPedido = idPedidosPagos.poll();
 
         Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
@@ -185,6 +189,10 @@ public class PedidoService {
     }
 
     public Pedido buscarPedidoParaEntrega() {
+
+        if (idPedidosPagos.isEmpty()) {
+            throw new NaoEncontradaException("idPedido");
+        }
 
         int idPedido = idPedidosPagos.peek();
         Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
