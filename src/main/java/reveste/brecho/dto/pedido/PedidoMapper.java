@@ -50,4 +50,17 @@ public class PedidoMapper {
                 .build();
     }
 
+    public static PedidoPagoDto toDetalhePedidoPagoDto(Pedido pedido) {
+        return PedidoPagoDto.builder()
+                .id(pedido.getId())
+                .dataHora(pedido.getDataHora())
+                .tipoFrete(pedido.getTipoFrete())
+                .valorFrete(pedido.getValorFrete())
+                .valorTotal(pedido.getValorTotal())
+                .status(pedido.getStatus())
+                .nomeUsuario(pedido.getUsuario().getNome())
+                .telefoneUsuario(pedido.getUsuario().getTelefone())
+                .build();
+    }
+
 }
