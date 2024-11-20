@@ -196,6 +196,7 @@ public class PedidoService {
 
         Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedidosPagos.peek());
 
+
         if (pedidoOpt.isEmpty()){
             throw new NaoEncontradaException("Pedido");
         }
