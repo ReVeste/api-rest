@@ -191,11 +191,10 @@ public class PedidoService {
     public Pedido buscarPedidoParaEntrega() {
 
         if (idPedidosPagos.isEmpty()) {
-            throw new NaoEncontradaException("idPedido");
+            return null;
         }
 
-        int idPedido = idPedidosPagos.peek();
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedidosPagos.peek());
 
         if (pedidoOpt.isEmpty()){
             throw new NaoEncontradaException("Pedido");
