@@ -2,12 +2,14 @@ package reveste.brecho.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Produto;
 import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.exception.NaoEncontradaException;
 import reveste.brecho.repository.ProdutoRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,8 +62,18 @@ public class ProdutoService {
     }
 
     public void finalizarPedido(List<Integer> listaId) {
-
         produtoRepository.finalizarPedido(listaId, StatusProdutoEnum.VENDIDO);
+    }
+
+    public Integer buscarQtdProdutosCadastradosNoPeriodo(LocalDate inicio, LocalDate fim) {
+        List<Produto> produtos = produtoRepository.findAllByDataCadastroBetween(inicio, fim);
+        if (produtos.isEmpty()) {return 0;}
+        return produtos.size();
+    }
+
+    public List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos) {
+
+        return produtoRepository.buscarProdutosRelacionados(pedidos);
 
     }
 

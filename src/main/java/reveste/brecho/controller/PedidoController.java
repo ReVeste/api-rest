@@ -2,9 +2,11 @@ package reveste.brecho.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.PedidoSwagger;
+import reveste.brecho.dto.dashboards.*;
 import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.entity.Pedido;
@@ -116,6 +118,45 @@ public class PedidoController implements PedidoSwagger {
 
         return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido));
 
+    }
+
+    @GetMapping("/kpis")
+    public ResponseEntity<KpisDto> buscarKpis() {
+
+        Double lucroTotalMes = pedidoService.buscarLucroTotalMes();
+        Double lucroTotalAno = pedidoService.buscarLucroTotalAno();
+        Integer pedidosPagos = pedidoService.buscarPedidosPagos();
+        Integer produtosDisponiveis = pedidoService.buscarProdutosDisponiveis();
+        Double porcetagemLucro = pedidoService.buscarPorcentagemLucro();
+        Integer produtosEnviadosSemana = pedidoService.buscarQtdProdutosEnviadosSemana();
+        Integer produtosEnviadosMes = pedidoService.buscarQtdProdutosEnviadosMes();
+        Integer produtosCadastradosSemana = pedidoService.buscarQtdProdutosCadastradosSemana();
+        Integer produtosCadastradosMes = pedidoService.buscarQtdProdutosCadastradosMes();
+
+        return ResponseEntity.ok(DashboardMapper.toDetalheKpisDto(lucroTotalMes, lucroTotalAno,
+                pedidosPagos, produtosDisponiveis, porcetagemLucro, produtosEnviadosSemana,
+                produtosEnviadosMes, produtosCadastradosSemana, produtosCadastradosMes));
+
+    }
+
+    @GetMapping("/lucros-mensais")
+    public ResponseEntity<LucrosMensaisDto> buscarLucrosMensais() {
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/vendas-por-mes")
+    public ResponseEntity<QtdVendasMesDto> buscarQtdVendasPorMes() {
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/cadastros-usuarios")
+    public ResponseEntity<CadastrosUsuarioDto> buscarQtdCadastroUsuarios() {
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/cadastros-por-regiao")
+    public ResponseEntity<CadastroPorRegiaoDto> buscarQtdCadastrosPorRegiao() {
+        return ResponseEntity.ok(null);
     }
 
 }
