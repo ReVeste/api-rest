@@ -27,7 +27,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     List<Produto> findAllByDataCadastroBetween(LocalDate inicio, LocalDate fim);
 
-    @Query("SELECT p FROM Produto p WHERE p.pedido IN :pedidos")
-    List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos);
-
 }

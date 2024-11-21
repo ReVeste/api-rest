@@ -287,7 +287,9 @@ public class PedidoService {
                 PesquisaPeriodos.buscarInicioSemana(hoje), PesquisaPeriodos.buscarFimSemana(hoje),
                 StatusPedidoEnum.CONCLUIDO);
 
-        List<Produto> produtos = produtoService.buscarProdutosRelacionados(pedidos);
+
+        List<Produto> produtos = itemPedidoService.buscarProdutosRelacionados(pedidos);
+
 
         return produtos.size();
     }
@@ -300,7 +302,9 @@ public class PedidoService {
                 PesquisaPeriodos.buscarInicioMes(hoje), PesquisaPeriodos.buscarFimMes(hoje),
                 StatusPedidoEnum.CONCLUIDO);
 
-        List<Produto> produtos = produtoService.buscarProdutosRelacionados(pedidos);
+
+        List<Produto> produtos = itemPedidoService.buscarProdutosRelacionados(pedidos);
+
 
         return produtos.size();
     }

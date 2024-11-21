@@ -109,4 +109,10 @@ public class ItemPedidoService {
 
     }
 
+    public List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos) {
+
+        return itemPedidoRepository.buscarProdutosRelacionados(pedidos);
+
+    }
+
 }
