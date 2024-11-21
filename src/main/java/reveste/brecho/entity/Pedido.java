@@ -5,6 +5,7 @@ import lombok.*;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 //import reveste.brecho.entity.Entrega;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +18,8 @@ public class Pedido {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private LocalDateTime dataHora;
+    private LocalDate dataPagamento;
+    private LocalDate dataConclusao;
     private String tipoFrete;
     private Double valorFrete;
     private Double valorTotal;

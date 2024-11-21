@@ -10,15 +10,21 @@ import reveste.brecho.dto.pedido.PedidoDto;
 import reveste.brecho.dto.pedido.PedidoMapper;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Produto;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 import reveste.brecho.exception.NaoEncontradaException;
 import reveste.brecho.repository.PedidoRepository;
 import reveste.brecho.service.usuario.UsuarioService;
 import reveste.brecho.util.Escritor;
+import reveste.brecho.util.PesquisaPeriodos;
 import reveste.brecho.util.filaUtils.FilaObj;
 import reveste.brecho.util.listaProduto.ListaProduto;
 import reveste.brecho.util.listaProduto.ListaProdutoMapper;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +35,7 @@ public class PedidoService {
 
     private final ItemPedidoService itemPedidoService;
     private final PedidoRepository pedidoRepository;
+    private final ProdutoService produtoService;
     private final UsuarioService usuarioService;
 
     FilaObj<Integer> idPedidosPagos = new FilaObj<>(200);
@@ -115,7 +122,7 @@ public class PedidoService {
 
     public void exportarPedidosEmAberto() {
 
-        List<Pedido> pedidos = pedidoRepository.findAllByStatus(StatusPedidoEnum.EM_ANDAMENTO);
+        List<Pedido> pedidos = pedidoRepository.findAllByStatus(StatusPedidoEnum.PAGO);
         List<CarrinhoDto> carrinhoDtos = new ArrayList<>();
 
         if (pedidos.isEmpty()) throw new NaoEncontradaException("Pedido");
@@ -181,6 +188,8 @@ public class PedidoService {
             throw new NaoEncontradaException("Pedido");
         }
 
+        // COLOCAR AQUI O UPDATE DO CAMPO private LocalDate dataPagamento; NO PEDIDO
+
         pedidoRepository.finalizarPedido(idPedido, StatusPedidoEnum.PAGO);
         itemPedidoService.finalizarPedido(idPedido);
 
@@ -207,6 +216,105 @@ public class PedidoService {
 
     public Usuario buscarUsuarioPedidoEntrega(Pedido pedido) {
         return usuarioService.buscarPorId(pedido.getUsuario().getId());
+    }
+
+    // Métodos relacionados as dtos das dashboards:
+
+    public Double buscarLucroTotalMes() {
+        LocalDate hoje = LocalDate.now();
+        List<Pedido> pedidos = pedidoRepository.findAllByDataPagamentoBetweenAndStatus(
+                PesquisaPeriodos.buscarInicioMes(hoje), PesquisaPeriodos.buscarFimMes(hoje), StatusPedidoEnum.PAGO);
+
+        Double lucroTotal = 0.0;
+        for (int i = 0; i < pedidos.size(); i++) {
+            lucroTotal += pedidos.get(i).getValorTotal();
+        }
+        return lucroTotal;
+    }
+
+    public Double buscarLucroTotalAno() {
+        List<Pedido> pedidos = pedidoRepository.findAllByDataPagamentoBetweenAndStatus(
+                PesquisaPeriodos.buscarInicioDoAno(), PesquisaPeriodos.buscarFimDoAno(), StatusPedidoEnum.PAGO);
+
+        Double lucroTotal = 0.0;
+        for (int i = 0; i < pedidos.size(); i++) {
+            lucroTotal += pedidos.get(i).getValorTotal();
+        }
+        return lucroTotal;
+    }
+
+    public Integer buscarPedidosPagos() {
+        if (pedidoRepository.findAllByStatus(StatusPedidoEnum.PAGO).isEmpty()) {return 0;}
+        return pedidoRepository.findAllByStatus(StatusPedidoEnum.PAGO).size();
+    }
+
+    public Integer buscarProdutosDisponiveis() {
+        if (produtoService.listarProdutosDisponiveis().isEmpty()) {return 0;}
+        return produtoService.listarProdutosDisponiveis().size();
+    }
+
+    public Double buscarPorcentagemLucro() {
+
+        Double lucroTotalMesAtual = buscarLucroTotalMes();
+        LocalDate hoje = LocalDate.now();
+
+        List<Pedido> pedidosMesPassado = pedidoRepository.findAllByDataPagamentoBetweenAndStatus(
+                PesquisaPeriodos.buscarInicioMesAnterior(hoje), PesquisaPeriodos.buscarFimMesAnterior(hoje),
+                StatusPedidoEnum.PAGO);
+
+        Double lucroTotalMesAnterior = 0.0;
+
+        for (Pedido pedido : pedidosMesPassado) {
+            lucroTotalMesAnterior += pedido.getValorTotal();
+        }
+
+        if (lucroTotalMesAtual == 0 && lucroTotalMesAnterior > 0) {
+            return 100.0;
+        }
+
+        if (lucroTotalMesAtual == 0 && lucroTotalMesAnterior == 0) {
+            return 0.0;
+        }
+
+        return ((lucroTotalMesAnterior - lucroTotalMesAtual) / lucroTotalMesAtual) * 100;
+    }
+
+    public Integer buscarQtdProdutosEnviadosSemana() {
+
+        LocalDate hoje = LocalDate.now();
+
+        List<Pedido> pedidos = pedidoRepository.findAllByDataConclusaoBetweenAndStatus(
+                PesquisaPeriodos.buscarInicioSemana(hoje), PesquisaPeriodos.buscarFimSemana(hoje),
+                StatusPedidoEnum.CONCLUIDO);
+
+        List<Produto> produtos = produtoService.buscarProdutosRelacionados(pedidos);
+
+        return produtos.size();
+    }
+
+    public Integer buscarQtdProdutosEnviadosMes() {
+
+        LocalDate hoje = LocalDate.now();
+
+        List<Pedido> pedidos = pedidoRepository.findAllByDataConclusaoBetweenAndStatus(
+                PesquisaPeriodos.buscarInicioMes(hoje), PesquisaPeriodos.buscarFimMes(hoje),
+                StatusPedidoEnum.CONCLUIDO);
+
+        List<Produto> produtos = produtoService.buscarProdutosRelacionados(pedidos);
+
+        return produtos.size();
+    }
+
+    public Integer buscarQtdProdutosCadastradosSemana() {
+        LocalDate hoje = LocalDate.now();
+        return produtoService.buscarQtdProdutosCadastradosNoPeriodo(
+                PesquisaPeriodos.buscarInicioSemana(hoje), PesquisaPeriodos.buscarFimSemana(hoje));
+    }
+
+    public Integer buscarQtdProdutosCadastradosMes() {
+        LocalDate hoje = LocalDate.now();
+        return produtoService.buscarQtdProdutosCadastradosNoPeriodo(
+                PesquisaPeriodos.buscarInicioMes(hoje), PesquisaPeriodos.buscarFimMes(hoje));
     }
 
 }
