@@ -71,10 +71,4 @@ public class ProdutoService {
         return produtos.size();
     }
 
-    public List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos) {
-
-        return produtoRepository.buscarProdutosRelacionados(pedidos);
-
-    }
-
 }
