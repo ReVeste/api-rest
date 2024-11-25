@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - back-end-reveste
+name: Build and deploy JAR app to Azure Web App - back-reveste
 
 on:
   push:
@@ -49,15 +49,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9360B9A84CB24A35B7E2EA84CB8D714E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E160FFBF27C14CB9A03FBAC5A63CFCA7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AB08BB1A655648269A3ABD50470E7632 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F34C7292DAF04FF4854EC13A871A4858 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_09FB89032A2B471987815D9A41105DB1 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8A84A55B76644AD4BCDBF96DA943013E }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'back-end-reveste'
+          app-name: 'back-reveste'
           slot-name: 'Production'
           package: '*.jar'
           
