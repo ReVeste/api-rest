@@ -18,7 +18,7 @@ INSERT INTO endereco (apelido, cep, rua, numero, complemento, bairro, cidade, uf
            ('Casa de Praia', '45678-901', 'Estrada D', 101, NULL, 'Bairro D', 'Cidade C', 'RJ', 2);
 
 
-INSERT INTO Produto (nome, tamanho, categoria, preco, descricao, qtd_estoque, status, dataCadastro)
+INSERT INTO Produto (nome, tamanho, categoria, preco, descricao, qtd_estoque, status, data_cadastro)
 VALUES
 ('Camiseta Básica Branca', 'M', 'ROUPA', 49.90, 'Camiseta de algodão básica branca', 1, 'DISPONIVEL', '2024-11-20'),
 ('Calça Jeans Slim', 'G', 'ROUPA', 89.90, 'Calça jeans modelo slim fit', 2, 'DISPONIVEL', '2024-11-20'),
