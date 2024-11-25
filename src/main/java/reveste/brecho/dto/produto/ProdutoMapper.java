@@ -4,6 +4,7 @@ import reveste.brecho.entity.Imagem;
 import reveste.brecho.entity.Produto;
 import reveste.brecho.exception.ArgumentoInvalidoException;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,7 @@ public class ProdutoMapper {
                 .descricao(dto.getDescricao())
                 .qtdEstoque(dto.getQtdEstoque())
                 .status(dto.getStatus())
+                .dataCadastro(LocalDate.now())
 
                 .build();
 

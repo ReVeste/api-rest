@@ -3,6 +3,7 @@ package reveste.brecho.dto.pedido;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 
@@ -18,7 +19,7 @@ public class PedidoPagoDto {
     private Double valorFrete;
     private Double valorTotal;
     private StatusPedidoEnum status;
-    private String nomeUsuario;
-    private String telefoneUsuario;
+    private Usuario usuario;
+    private Endereco endereco;
 
 }
