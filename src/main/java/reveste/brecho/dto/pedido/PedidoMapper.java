@@ -1,6 +1,7 @@
 package reveste.brecho.dto.pedido;
 
 import reveste.brecho.dto.produto.ProdutoDTO;
+import reveste.brecho.dto.usuario.UsuarioMapper;
 import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Usuario;
@@ -59,7 +60,7 @@ public class PedidoMapper {
                 .valorFrete(pedido.getValorFrete())
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
-                .usuario(pedido.getUsuario())
+                .usuario(UsuarioMapper.toDetalheDto(pedido.getUsuario()))
                 .endereco(endereco)
                 .build();
     }
