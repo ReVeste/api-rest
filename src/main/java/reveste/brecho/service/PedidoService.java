@@ -202,8 +202,8 @@ public class PedidoService {
             return null;
         }
 
-        int idPedido = idPedidosPagos.peek();
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedidosPagos.peek());
+
 
         if (pedidoOpt.isEmpty()){
             throw new NaoEncontradaException("Pedido");
@@ -293,7 +293,9 @@ public class PedidoService {
                 PesquisaPeriodos.buscarInicioSemana(hoje), PesquisaPeriodos.buscarFimSemana(hoje),
                 StatusPedidoEnum.CONCLUIDO);
 
+
         List<Produto> produtos = itemPedidoService.buscarProdutosRelacionados(pedidos);
+
 
         return produtos.size();
     }
@@ -306,7 +308,9 @@ public class PedidoService {
                 PesquisaPeriodos.buscarInicioMes(hoje), PesquisaPeriodos.buscarFimMes(hoje),
                 StatusPedidoEnum.CONCLUIDO);
 
+
         List<Produto> produtos = itemPedidoService.buscarProdutosRelacionados(pedidos);
+
 
         return produtos.size();
     }

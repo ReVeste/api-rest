@@ -68,6 +68,7 @@ public class ProdutoService {
         produtoRepository.finalizarPedido(listaId, StatusProdutoEnum.VENDIDO, LocalDate.now());
     }
 
+
     public Integer buscarQtdProdutosCadastradosNoPeriodo(LocalDate inicio, LocalDate fim) {
         List<Produto> produtos = produtoRepository.findAllByDataCadastroBetween(inicio, fim);
         if (produtos.isEmpty()) {return 0;}
