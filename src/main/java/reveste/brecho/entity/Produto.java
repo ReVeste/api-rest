@@ -32,6 +32,7 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
     private LocalDate dataCadastro;
+    private LocalDate dataVenda;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference

@@ -22,8 +22,13 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Pedido p SET p.status = :status WHERE p.id = :idPedido")
-    void finalizarPedido(Integer idPedido, StatusPedidoEnum status);
+    @Query("UPDATE Pedido p SET p.status = :status, p.dataPagamento = :dataPagamento WHERE p.id = :idPedido")
+    void atualizarPedidoPago(Integer idPedido, StatusPedidoEnum status, LocalDate dataPagamento);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Pedido p SET p.status = :status, p.dataConclusao = :dataConclusao WHERE p.id = :idPedido")
+    void finalizarPedido(Integer idPedido, StatusPedidoEnum status, LocalDate dataConclusao);
 
     Pedido findByUsuarioIdAndStatus(Integer usuarioId, StatusPedidoEnum status);
 

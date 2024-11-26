@@ -9,6 +9,7 @@ import reveste.brecho.controller.swagger.PedidoSwagger;
 import reveste.brecho.dto.dashboards.*;
 import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
+import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.service.PedidoService;
@@ -110,13 +111,14 @@ public class PedidoController implements PedidoSwagger {
     public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
 
         Pedido pedido = pedidoService.buscarPedidoParaEntrega();
-        //Usuario usuario = pedidoService.buscarUsuarioPedidoEntrega(pedido);
 
-        if (pedido == null) {
-            return ResponseEntity.noContent().build();
-        }
+        if (pedido == null) {return ResponseEntity.noContent().build();}
 
-        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido));
+        Endereco endereco = pedidoService.buscarEnderecoPedidoEntrega(pedido.getUsuario().getId());
+
+        if (endereco == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido, endereco));
 
     }
 
@@ -141,22 +143,11 @@ public class PedidoController implements PedidoSwagger {
 
     @GetMapping("/lucros-mensais")
     public ResponseEntity<LucrosMensaisDto> buscarLucrosMensais() {
-        return ResponseEntity.ok(null);
-    }
+        LucrosMensaisDto dto = pedidoService.buscarLucrosMensais();
 
-    @GetMapping("/vendas-por-mes")
-    public ResponseEntity<QtdVendasMesDto> buscarQtdVendasPorMes() {
-        return ResponseEntity.ok(null);
-    }
+        if (dto == null) {return ResponseEntity.noContent().build();}
 
-    @GetMapping("/cadastros-usuarios")
-    public ResponseEntity<CadastrosUsuarioDto> buscarQtdCadastroUsuarios() {
-        return ResponseEntity.ok(null);
-    }
-
-    @GetMapping("/cadastros-por-regiao")
-    public ResponseEntity<CadastroPorRegiaoDto> buscarQtdCadastrosPorRegiao() {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(dto);
     }
 
 }
