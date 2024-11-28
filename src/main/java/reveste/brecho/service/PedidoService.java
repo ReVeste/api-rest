@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import reveste.brecho.dto.arquivos.ArquivoDetalhesDownloadDto;
 import reveste.brecho.dto.dashboards.DashboardMapper;
 import reveste.brecho.dto.dashboards.LucrosMensaisDto;
 import reveste.brecho.dto.pedido.CarrinhoDto;
@@ -121,12 +122,12 @@ public class PedidoService {
         pedidoRepository.atualizarValorTotal(pedidoOpt.get().getId(), 0.0);
     }
 
-    public void exportarPedidosEmAberto() {
+    public ArquivoDetalhesDownloadDto exportarPedidosEmAberto() {
 
         List<Pedido> pedidos = pedidoRepository.findAllByStatus(StatusPedidoEnum.PAGO);
         List<CarrinhoDto> carrinhoDtos = new ArrayList<>();
 
-        if (pedidos.isEmpty()) throw new NaoEncontradaException("Pedido");
+        if (pedidos.isEmpty()) return null;
 
         for (Pedido pedido : pedidos) {
             List<ProdutoDTO> listaProdutos = listarProdutos(pedido.getId());
@@ -134,7 +135,8 @@ public class PedidoService {
                     PedidoMapper.entidadeToPedidoDto(pedido), listaProdutos));
         }
 
-        Escritor.exportar(carrinhoDtos);
+        return Escritor.exportar(carrinhoDtos);
+
     }
 
     public static double calcularValorTotal(ListaProduto listaProduto, int index) {
