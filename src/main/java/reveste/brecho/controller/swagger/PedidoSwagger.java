@@ -75,7 +75,7 @@ public interface PedidoSwagger {
     })
     ResponseEntity<Void> removerProdutos(@PathVariable Integer idPedido);
 
-    @GetMapping(value = "/exportar", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    @GetMapping(value = "/exportar")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
             @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",

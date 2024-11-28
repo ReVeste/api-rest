@@ -97,10 +97,9 @@ public class PedidoController implements PedidoSwagger {
 
             return ResponseEntity.ok()
                     .header("Content-Disposition", "attachment; filename="
-                            + arquivoDetalhesDownloadDto.getNomeArquivoOriginal() + ".xlsx")
+                            + arquivoDetalhesDownloadDto.getNomeArquivoOriginal() + ".csv")
                     .contentLength(arquivoDetalhesDownloadDto.getInputStream().available())
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(arquivoDetalhesDownloadDto.getInputStream().readAllBytes());
+                    .body(resource.getContentAsByteArray());
         } catch (IOException e) {
             throw new RuntimeException("Erro ao preparar o arquivo para download", e);
         }
