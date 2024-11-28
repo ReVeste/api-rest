@@ -24,8 +24,6 @@ public class PagamentoController implements PagamentoSwagger {
     private final PreferenciaService preferenceService;
 
     public ResponseEntity<Preference> criarPreferencia(@RequestBody PreferenciaRequisicaoDto preferenciaDto) throws MPException, MPApiException {
-        Preference preferencia = preferenceService.criar(preferenciaDto);
-        System.out.println(preferencia.getId());
-        return ResponseEntity.created(null).body(preferencia);
+        return ResponseEntity.created(null).body(preferenceService.criar(preferenciaDto));
     }
 }

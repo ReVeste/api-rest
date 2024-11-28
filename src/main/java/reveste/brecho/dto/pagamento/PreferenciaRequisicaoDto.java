@@ -2,15 +2,13 @@ package reveste.brecho.dto.pagamento;
 
 import lombok.Builder;
 import lombok.Data;
-import java.math.BigDecimal;
+
+import java.util.List;
 
 @Data @Builder
 public class PreferenciaRequisicaoDto {
-    private String produtoId;
-    private String produtoNome;
-    private String produtoDescricao;
-    private Integer produtoQuantidade;
-    private BigDecimal produtoPreco;
+    List<ProdutosDto> itens;
+
     private String usuarioNome;
     private String usuarioEmail;
     private String usuarioCodigoTelefone;
@@ -19,4 +17,5 @@ public class PreferenciaRequisicaoDto {
     private String usuarioCep;
     private String usuarioRua;
     private String usuarioNumeroCasa;
+
 }
