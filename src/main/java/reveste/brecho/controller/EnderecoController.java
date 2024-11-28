@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.EnderecoSwagger;
+import reveste.brecho.dto.dashboards.CadastroPorRegiaoDto;
 import reveste.brecho.dto.endereco.*;
 import reveste.brecho.entity.Endereco;
 import reveste.brecho.service.EnderecoService;
@@ -51,6 +52,17 @@ public class EnderecoController implements EnderecoSwagger {
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletarPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/cadastros-por-regiao")
+    public ResponseEntity<CadastroPorRegiaoDto> buscarQtdCadastrosPorRegiao() {
+
+        CadastroPorRegiaoDto dto = service.buscarQtdCadastrosPorRegiao();
+
+        if (dto == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(dto);
+
     }
 
 }

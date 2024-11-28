@@ -22,9 +22,11 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Produto p SET p.status = :status WHERE p.id IN :idProdutos")
-    void finalizarPedido(List<Integer> idProdutos, StatusProdutoEnum status);
+    @Query("UPDATE Produto p SET p.status = :status, p.dataVenda = :dataVenda WHERE p.id IN :idProdutos")
+    void finalizarPedido(List<Integer> idProdutos, StatusProdutoEnum status, LocalDate dataVenda);
 
     List<Produto> findAllByDataCadastroBetween(LocalDate inicio, LocalDate fim);
+
+    List<Produto> findAllByDataVendaBetweenAndStatus(LocalDate inicio, LocalDate fim, StatusProdutoEnum status);
 
 }

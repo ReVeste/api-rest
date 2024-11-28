@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.ProdutoSwagger;
+import reveste.brecho.dto.dashboards.QtdVendasMesDto;
 import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
 import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
 import reveste.brecho.dto.produto.ProdutoMapper;
@@ -64,6 +65,17 @@ public class ProdutoController implements ProdutoSwagger {
         return produtos.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(produtos.stream().map(ProdutoMapper::toResumoDto).toList());
+    }
+
+    @GetMapping("/vendas-por-mes")
+    public ResponseEntity<QtdVendasMesDto> buscarQtdVendasPorMes() {
+
+        QtdVendasMesDto dto = produtoService.buscarQtdVendasPorMes();
+
+        if (dto == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(dto);
+
     }
 
 }
