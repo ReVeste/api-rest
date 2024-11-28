@@ -3,6 +3,8 @@ package reveste.brecho.dto.usuario;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
 
+import java.time.LocalDate;
+
 public class UsuarioMapper {
     public static Usuario of(UsuarioCriacaoDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
@@ -10,6 +12,7 @@ public class UsuarioMapper {
         usuario.setEmail(usuarioCriacaoDto.getEmail());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
+        usuario.setDataCadastro(LocalDate.now());
 
         return usuario;
     }
@@ -63,6 +66,7 @@ public class UsuarioMapper {
                 .senha(dto.getSenha())
                 .tipo(TipoUsuarioEnum.cliente)
                 .ativo(true)
+                .dataCadastro(LocalDate.now())
                 .imagemUrl(dto.getImagemUrl())
                 .build();
     }

@@ -22,5 +22,6 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private TipoUsuarioEnum tipo;
     private Boolean ativo;
+    private LocalDate dataCadastro;
     private String imagemUrl;
 }

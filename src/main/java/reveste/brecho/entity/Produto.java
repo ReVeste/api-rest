@@ -7,6 +7,7 @@ import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -30,6 +31,8 @@ public class Produto {
     private TamanhoProdutoEnum tamanho;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+    private LocalDate dataCadastro;
+    private LocalDate dataVenda;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference

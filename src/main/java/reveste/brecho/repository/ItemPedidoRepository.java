@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import reveste.brecho.entity.ItemPedido;
+import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Produto;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 
@@ -27,5 +29,9 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer>
             "FROM ItemPedido ip JOIN ip.produto p JOIN ip.pedido pe " +
             "WHERE pe.id = :pedidoId AND p.id = :produtoId")
     boolean existsByProdutoAndPedido(Integer pedidoId, Integer produtoId);
+
+    @Query("SELECT p FROM ItemPedido ip JOIN ip.produto p WHERE ip.pedido IN :pedidos")
+    List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos);
+
 
 }

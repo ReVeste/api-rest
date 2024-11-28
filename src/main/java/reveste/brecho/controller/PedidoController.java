@@ -2,11 +2,14 @@ package reveste.brecho.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.PedidoSwagger;
+import reveste.brecho.dto.dashboards.*;
 import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
+import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.service.PedidoService;
@@ -108,14 +111,43 @@ public class PedidoController implements PedidoSwagger {
     public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
 
         Pedido pedido = pedidoService.buscarPedidoParaEntrega();
-        //Usuario usuario = pedidoService.buscarUsuarioPedidoEntrega(pedido);
 
-        if (pedido == null) {
-            return ResponseEntity.noContent().build();
-        }
+        if (pedido == null) {return ResponseEntity.noContent().build();}
 
-        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido));
+        Endereco endereco = pedidoService.buscarEnderecoPedidoEntrega(pedido.getUsuario().getId());
 
+        if (endereco == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido, endereco));
+
+    }
+
+    @GetMapping("/kpis")
+    public ResponseEntity<KpisDto> buscarKpis() {
+
+        Double lucroTotalMes = pedidoService.buscarLucroTotalMes();
+        Double lucroTotalAno = pedidoService.buscarLucroTotalAno();
+        Integer pedidosPagos = pedidoService.buscarPedidosPagos();
+        Integer produtosDisponiveis = pedidoService.buscarProdutosDisponiveis();
+        Double porcetagemLucro = pedidoService.buscarPorcentagemLucro();
+        Integer produtosEnviadosSemana = pedidoService.buscarQtdProdutosEnviadosSemana();
+        Integer produtosEnviadosMes = pedidoService.buscarQtdProdutosEnviadosMes();
+        Integer produtosCadastradosSemana = pedidoService.buscarQtdProdutosCadastradosSemana();
+        Integer produtosCadastradosMes = pedidoService.buscarQtdProdutosCadastradosMes();
+
+        return ResponseEntity.ok(DashboardMapper.toDetalheKpisDto(lucroTotalMes, lucroTotalAno,
+                pedidosPagos, produtosDisponiveis, porcetagemLucro, produtosEnviadosSemana,
+                produtosEnviadosMes, produtosCadastradosSemana, produtosCadastradosMes));
+
+    }
+
+    @GetMapping("/lucros-mensais")
+    public ResponseEntity<LucrosMensaisDto> buscarLucrosMensais() {
+        LucrosMensaisDto dto = pedidoService.buscarLucrosMensais();
+
+        if (dto == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(dto);
     }
 
 }

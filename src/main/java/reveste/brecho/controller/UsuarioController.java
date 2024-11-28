@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.controller.swagger.UsuarioSwagger;
+import reveste.brecho.dto.dashboards.CadastrosUsuarioDto;
 import reveste.brecho.dto.usuario.*;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.service.usuario.UsuarioService;
@@ -61,6 +62,16 @@ public class UsuarioController implements UsuarioSwagger {
     public ResponseEntity<Void> criar(@RequestBody @Valid UsuarioCriacaoDto usuarioCriacaoDto) {
         service.criarNovoUsuario(usuarioCriacaoDto);
         return ResponseEntity.created(null).build();
+    }
+
+    @GetMapping("/cadastros-usuarios")
+    public ResponseEntity<CadastrosUsuarioDto> buscarQtdCadastroUsuarios() {
+
+        CadastrosUsuarioDto dto = service.buscarQtdCadastroUsuarios();
+
+        if (dto == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(dto);
     }
 
 }
