@@ -4,7 +4,7 @@ INSERT INTO Usuario (nome, cpf, telefone, email, senha, tipo, ativo)
     ('Matheus Rabello', '94960625040', '11992247954', 'matheus.csantos@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
     ('Pedro Saraujo', '46553098069', '13981309594', 'pedro.saraujo@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
     ('Amanda Martins', '21234567890', '11987654321', 'amanda.martins@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
-    ('Ketelyn Medina', '31987654321', '11923456789', 'ketelyn.medina@sptech.schoo.', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
+    ('Ketelyn Medina', '31987654321', '11923456789', 'ketelyn.medina@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
     ('Ryan Miranda', '31912345678', '11934567890', 'ryan.miranda@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
     ('Karen Beatriz', '31956789012', '11987651234', 'karen.beatriz@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
     ('Eduarda Procorro', '47024663057', '12920014008', 'eduardaprocorro10@gmail.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'ADMIN', true);
