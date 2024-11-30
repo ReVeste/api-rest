@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reveste.brecho.dto.produto.ProdutoDetalheRespostaDto;
 import reveste.brecho.dto.produto.ProdutoRequisicaoDto;
@@ -36,6 +37,7 @@ public interface ProdutoSwagger {
             @ApiResponse(responseCode = "201", description = "Produto criado com sucesso", content = @Content),
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })    @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<ProdutoDetalheRespostaDto> criar(@RequestBody @Valid ProdutoRequisicaoDto produtoDTO);
 
     @ApiResponses({
@@ -44,6 +46,7 @@ public interface ProdutoSwagger {
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<ProdutoDetalheRespostaDto> atualizarPorId(@PathVariable int id,
                                                                     @RequestBody @Valid ProdutoRequisicaoDto produtoDto);
 
@@ -53,6 +56,7 @@ public interface ProdutoSwagger {
             @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<Void> deletar(@PathVariable int id);
 
     @GetMapping("/categoria")
