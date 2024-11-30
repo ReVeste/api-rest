@@ -22,6 +22,7 @@ public class Produto {
     private Integer id;
     private String nome;
     private String marca;
+    @Lob
     private String descricao;
     private Double preco;
     @Enumerated(EnumType.STRING)
