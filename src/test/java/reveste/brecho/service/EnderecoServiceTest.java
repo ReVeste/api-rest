@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
 import reveste.brecho.dto.dashboards.CadastroPorRegiaoDto;
 import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Usuario;
@@ -420,8 +419,10 @@ class EnderecoServiceTest {
 
             enderecoService.deletarPorId(1);
 
-            // n tenho ideia fi
-            assertNull(endereco);
+            var ex = assertThrows(NaoEncontradaException.class,
+                    () -> enderecoService.buscarPorId(1));
+
+            assertEquals("Endereço não encontrado(a) para o Id: 1", ex.getMessage());
 
         }
 
