@@ -1,7 +1,9 @@
 package reveste.brecho.dto.usuario;
 
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.usuario.TipoUsuarioEnum;
+
+import java.time.LocalDate;
 
 public class UsuarioMapper {
     public static Usuario of(UsuarioCriacaoDto usuarioCriacaoDto) {
@@ -10,6 +12,7 @@ public class UsuarioMapper {
         usuario.setEmail(usuarioCriacaoDto.getEmail());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
+        usuario.setDataCadastro(LocalDate.now());
 
         return usuario;
     }
@@ -33,9 +36,7 @@ public class UsuarioMapper {
                 .nome(entidade.getNome())
                 .cpf(entidade.getCpf())
                 .telefone(entidade.getTelefone())
-                .dataNascimento(entidade.getDataNascimento())
                 .email(entidade.getEmail())
-                .senha(entidade.getSenha())
                 .tipo(entidade.getTipo())
                 .ativo(entidade.getAtivo())
                 .imagemUrl(entidade.getImagemUrl())
@@ -65,6 +66,7 @@ public class UsuarioMapper {
                 .senha(dto.getSenha())
                 .tipo(TipoUsuarioEnum.cliente)
                 .ativo(true)
+                .dataCadastro(LocalDate.now())
                 .imagemUrl(dto.getImagemUrl())
                 .build();
     }

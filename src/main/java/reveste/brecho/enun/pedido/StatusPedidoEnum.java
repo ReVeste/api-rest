@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StatusPedidoEnum {
     CONCLUIDO("Concluído"),
+    PAGO("Pagamento Efetuado"),
     EM_ANDAMENTO("Em andamento"),
     CANCELADO("Cancelado");
 

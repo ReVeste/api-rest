@@ -4,7 +4,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 
 import java.time.LocalDateTime;

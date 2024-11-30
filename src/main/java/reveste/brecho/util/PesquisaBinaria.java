@@ -1,6 +1,6 @@
 package reveste.brecho.util;
 
-import reveste.brecho.entity.itempedido.ItemPedido;
+import reveste.brecho.entity.ItemPedido;
 
 import java.util.List;
 

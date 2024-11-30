@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import reveste.brecho.dto.usuario.UsuarioDetalhesDto;
-import reveste.brecho.entity.usuario.Usuario;
+import reveste.brecho.entity.Usuario;
 import reveste.brecho.repository.UsuarioRepository;
 
 import java.util.Optional;

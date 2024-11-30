@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
 import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
@@ -20,13 +21,15 @@ public class ProdutoDTO {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TamanhoProdutoEnum tamanho;
-    private Integer qualidade;
-    private String categoria;
+    @Enumerated(EnumType.STRING)
+    private CategoriaEnum categoria;
+    private String marca;
     private Double preco;
     private String descricao;
     private Integer qtdEstoque;
     @Enumerated(EnumType.STRING)
     private StatusProdutoEnum status;
+    private Integer idPedido;
     private List<String> imagens;
 
 }

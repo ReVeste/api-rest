@@ -1,39 +1,34 @@
 package reveste.brecho.controller;
 
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
-import reveste.brecho.dto.pedido.PedidoDto;
-import reveste.brecho.dto.pedido.PedidoMapper;
+import reveste.brecho.controller.swagger.PedidoSwagger;
+import reveste.brecho.dto.arquivos.ArquivoDetalhesDownloadDto;
+import reveste.brecho.dto.dashboards.*;
+import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.entity.pedido.Pedido;
-import reveste.brecho.service.pedido.PedidoService;
+import reveste.brecho.entity.Endereco;
+import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Usuario;
+import reveste.brecho.service.PedidoService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pedidos")
 @RequiredArgsConstructor
-public class PedidoController {
+public class PedidoController implements PedidoSwagger {
 
     private final PedidoService pedidoService;
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Produto adicionado ao pedido com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
-            @ApiResponse(responseCode = "404", description = "Usuário ou Produto não encontrado",
-                    content = @Content),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida",
-                    content = @Content)
-    })
-    @PostMapping
+    @Override
     public ResponseEntity<CarrinhoDto> adicionarProduto(
             @RequestBody @Valid PedidoAdicionarProdutoDto pedidoDto) {
 
@@ -41,15 +36,7 @@ public class PedidoController {
 
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Produtos encontrados para o pedido",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoDTO.class))),
-            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content)
-    })
-    @GetMapping("/{idPedido}/produtos")
+    @Override
     public ResponseEntity<List<ProdutoDTO>> listarProdutosPedido(@PathVariable Integer idPedido) {
         List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
 
@@ -58,30 +45,24 @@ public class PedidoController {
                 : ResponseEntity.ok(produtos);
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Carrinho encontrado",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
-            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content)
-    })
-    @GetMapping("/{idPedido}")
+    @Override
     public ResponseEntity<CarrinhoDto> buscarCarrinho(@PathVariable Integer idPedido) {
         List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedido);
         PedidoDto pedido = pedidoService.buscarPedido(idPedido);
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Quantidade do produto atualizada com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarrinhoDto.class))),
-            @ApiResponse(responseCode = "204", description = "Pedido sem produtos",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
-                    content = @Content)
-    })
-    @PutMapping("/{idPedido}/produto/{idProduto}")
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPedidoEmAberto(@PathVariable Integer idUsuario) {
+
+        Integer idPedidoEmAberto = pedidoService.buscarPedidoEmAberto(idUsuario);
+        List<ProdutoDTO> produtos = pedidoService.listarProdutos(idPedidoEmAberto);
+
+        return produtos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(produtos);
+    }
+
+    @Override
     public ResponseEntity<CarrinhoDto> editarQuantidadeProduto(@PathVariable Integer idPedido,
                                                                @PathVariable Integer idProduto,
                                                                @RequestBody Integer quantidadeAtualizada){
@@ -91,54 +72,102 @@ public class PedidoController {
         return ResponseEntity.ok(PedidoMapper.toDetalheCarrinhoDto(pedido, produtos));
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Produto removido com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Pedido ou produto não encontrado",
-                    content = @Content)
-    })
-    @DeleteMapping("/{idPedido}/produto/{idProduto}")
+    @Override
     public ResponseEntity<Void> removerProduto(@PathVariable Integer idPedido,
                                                @PathVariable Integer idProduto) {
         pedidoService.removerProduto(idPedido, idProduto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Todos os produtos removidos com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
-                    content = @Content)
-    })
-    @DeleteMapping("/{idPedido}")
+    @Override
     public ResponseEntity<Void> removerProdutos(@PathVariable Integer idPedido) {
         pedidoService.removerProdutos(idPedido);
         return ResponseEntity.ok().build();
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
-            @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
-                    content = @Content)
-    })
-    @GetMapping("/em-aberto")
-    public ResponseEntity<Void> exportarPedidosEmAberto(){
-        pedidoService.exportarPedidosEmAberto();
+    @Override
+    public ResponseEntity<byte[]> exportarPedidosEmAberto() {
+
+        ArquivoDetalhesDownloadDto arquivoDetalhesDownloadDto = pedidoService.exportarPedidosEmAberto();
+
+        if (arquivoDetalhesDownloadDto == null) {return ResponseEntity.noContent().build();}
+
+        try {
+            InputStreamResource resource = new InputStreamResource(arquivoDetalhesDownloadDto.getInputStream());
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename="
+                            + arquivoDetalhesDownloadDto.getNomeArquivoOriginal() + ".csv")
+                    .contentLength(arquivoDetalhesDownloadDto.getInputStream().available())
+                    .body(resource.getContentAsByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao preparar o arquivo para download", e);
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<List<PedidoDto>> buscarPorStatus(@PathVariable Integer idUsuario, @RequestParam String status) {
+        List<Pedido> pedidos = pedidoService.listarPorStatus(idUsuario, status);
+
+        return pedidos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(pedidos.stream().map(PedidoMapper::entidadeToPedidoDto).toList());
+    }
+
+    @PutMapping("/{idPedido}")
+    public ResponseEntity<Void> atualizarPedidoPago(@PathVariable Integer idPedido) {
+        pedidoService.atualizarPedidoPago(idPedido);
         return ResponseEntity.ok().build();
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
-            @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
-                    content = @Content)
-    })
-    @GetMapping("/status")
-    public ResponseEntity<List<PedidoDto>> buscarPorStatus(@RequestParam String status) {
-        List<Pedido> pedidos = pedidoService.listarPorStatus(status);
+    @PutMapping("/finalizar")
+    public ResponseEntity<Void> finalizarPedido() {
+        pedidoService.finalizarPedido();
+        return ResponseEntity.ok().build();
+    }
 
-        if (pedidos.isEmpty()){
-            return ResponseEntity.status(204).build();
-        }
+    @GetMapping("/buscar-pedido-pago")
+    public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
 
-        return ResponseEntity.status(200).body(pedidos.stream().map(PedidoMapper::entidadeToPedidoDto).toList());
+        Pedido pedido = pedidoService.buscarPedidoParaEntrega();
+
+        if (pedido == null) {return ResponseEntity.noContent().build();}
+
+        Endereco endereco = pedidoService.buscarEnderecoPedidoEntrega(pedido.getUsuario().getId());
+
+        if (endereco == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido, endereco));
+
+    }
+
+    @GetMapping("/kpis")
+    public ResponseEntity<KpisDto> buscarKpis() {
+
+        Double lucroTotalMes = pedidoService.buscarLucroTotalMes();
+        Double lucroTotalAno = pedidoService.buscarLucroTotalAno();
+        Integer pedidosPagos = pedidoService.buscarPedidosPagos();
+        Integer produtosDisponiveis = pedidoService.buscarProdutosDisponiveis();
+        Double porcetagemLucro = pedidoService.buscarPorcentagemLucro();
+        Integer produtosEnviadosSemana = pedidoService.buscarQtdProdutosEnviadosSemana();
+        Integer produtosEnviadosMes = pedidoService.buscarQtdProdutosEnviadosMes();
+        Integer produtosCadastradosSemana = pedidoService.buscarQtdProdutosCadastradosSemana();
+        Integer produtosCadastradosMes = pedidoService.buscarQtdProdutosCadastradosMes();
+
+        return ResponseEntity.ok(DashboardMapper.toDetalheKpisDto(lucroTotalMes, lucroTotalAno,
+                pedidosPagos, produtosDisponiveis, porcetagemLucro, produtosEnviadosSemana,
+                produtosEnviadosMes, produtosCadastradosSemana, produtosCadastradosMes));
+
+    }
+
+    @GetMapping("/lucros-mensais")
+    public ResponseEntity<LucrosMensaisDto> buscarLucrosMensais() {
+        LucrosMensaisDto dto = pedidoService.buscarLucrosMensais();
+
+        if (dto == null) {return ResponseEntity.noContent().build();}
+
+        return ResponseEntity.ok(dto);
     }
 
 }

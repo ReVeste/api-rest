@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 public class EnderecoCriacaoRequisicaoDto {
 
+    private Integer id;
+
     private String apelido;
 
     @NotBlank @Size(min = 8, max = 8)

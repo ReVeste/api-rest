@@ -1,7 +1,14 @@
 package reveste.brecho.dto.pedido;
 
 import reveste.brecho.dto.produto.ProdutoDTO;
-import reveste.brecho.entity.pedido.Pedido;
+import reveste.brecho.dto.usuario.UsuarioMapper;
+import reveste.brecho.entity.Endereco;
+import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Usuario;
+import reveste.brecho.enun.pedido.StatusPedidoEnum;
+import reveste.brecho.exception.NaoEncontradaException;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PedidoMapper {
@@ -33,6 +40,28 @@ public class PedidoMapper {
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
                 .usuario(pedido.getUsuario())
+                .build();
+    }
+
+    public static Pedido criarPedidoParaUsuario(Usuario usuario) {
+        return Pedido.builder()
+                .dataHora(LocalDateTime.now())
+                .valorTotal(0.0)
+                .status(StatusPedidoEnum.EM_ANDAMENTO)
+                .usuario(usuario)
+                .build();
+    }
+
+    public static PedidoPagoDto toDetalhePedidoPagoDto(Pedido pedido, Endereco endereco) {
+        return PedidoPagoDto.builder()
+                .id(pedido.getId())
+                .dataHora(pedido.getDataHora())
+                .tipoFrete(pedido.getTipoFrete())
+                .valorFrete(pedido.getValorFrete())
+                .valorTotal(pedido.getValorTotal())
+                .status(pedido.getStatus())
+                .usuario(UsuarioMapper.toDetalheDto(pedido.getUsuario()))
+                .endereco(endereco)
                 .build();
     }
 
