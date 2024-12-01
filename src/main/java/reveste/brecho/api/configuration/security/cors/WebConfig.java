@@ -15,9 +15,9 @@ public class WebConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000"); // Especifique o frontend
-        config.addAllowedOrigin("https://black-meadow-0cd280a0f.4.azurestaticapps.net/"); // Especifique o frontend
-        config.addAllowedHeader("");
-        config.addAllowedMethod("");
+        config.addAllowedOrigin("https://black-meadow-0cd280a0f.4.azurestaticapps.net"); // Especifique o frontend
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
