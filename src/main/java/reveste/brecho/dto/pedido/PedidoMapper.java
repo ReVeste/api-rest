@@ -4,6 +4,7 @@ import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.usuario.UsuarioMapper;
 import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Pedido;
+import reveste.brecho.entity.Produto;
 import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 import reveste.brecho.exception.NaoEncontradaException;
@@ -52,7 +53,7 @@ public class PedidoMapper {
                 .build();
     }
 
-    public static PedidoPagoDto toDetalhePedidoPagoDto(Pedido pedido, Endereco endereco) {
+    public static PedidoPagoDto toDetalhePedidoPagoDto(Pedido pedido, Endereco endereco, List<ProdutoDTO> produtos) {
         return PedidoPagoDto.builder()
                 .id(pedido.getId())
                 .dataHora(pedido.getDataHora())
@@ -61,6 +62,7 @@ public class PedidoMapper {
                 .valorTotal(pedido.getValorTotal())
                 .status(pedido.getStatus())
                 .usuario(UsuarioMapper.toDetalheDto(pedido.getUsuario()))
+                .produtos(produtos)
                 .endereco(endereco)
                 .build();
     }

@@ -1,5 +1,7 @@
 package reveste.brecho.util.filaUtils;
 
+import java.util.Arrays;
+
 public class FilaObj <T> {
 
     private int tamanho;
@@ -41,18 +43,20 @@ public class FilaObj <T> {
         return null;
     }
 
-    public void exibe() {
+    public Integer[] exibe() {
         if (isEmpty()) {
             System.out.println("Fila vazia");
+            return new Integer[0]; // Retorna um array vazio ao invés de null.
         } else {
             System.out.printf("\n%-10S|%-20S|", "Posição", "Valor");
             for (int i = 0; i < tamanho; i++) {
-                System.out.printf("\n%10S|%20S|",
-                        i, fila[i]);
+                System.out.printf("\n%10S|%20S|", i, fila[i]);
             }
             System.out.println("");
+            return Arrays.copyOf(fila, tamanho, Integer[].class); // Converte para Integer[].
         }
     }
+
 
     public int getTamanho() {
         return tamanho;

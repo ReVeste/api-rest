@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import reveste.brecho.dto.arquivos.ArquivoDetalhesDownloadDto;
 import reveste.brecho.dto.dashboards.DashboardMapper;
 import reveste.brecho.dto.dashboards.LucrosMensaisDto;
-import reveste.brecho.dto.pedido.CarrinhoDto;
-import reveste.brecho.dto.pedido.PedidoAdicionarProdutoDto;
-import reveste.brecho.dto.pedido.PedidoDto;
-import reveste.brecho.dto.pedido.PedidoMapper;
+import reveste.brecho.dto.pedido.*;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.entity.Endereco;
 import reveste.brecho.entity.Pedido;
@@ -27,6 +24,7 @@ import reveste.brecho.util.listaProduto.ListaProduto;
 import reveste.brecho.util.listaProduto.ListaProdutoMapper;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -198,20 +196,38 @@ public class PedidoService {
 
     }
 
-    public Pedido buscarPedidoParaEntrega() {
+    public List<PedidoPagoDto> buscarPedidoParaEntrega() {
 
         if (idPedidosPagos.isEmpty()) {
             return null;
         }
 
-        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedidosPagos.peek());
+        Integer[] ids = idPedidosPagos.exibe();
+        List<Integer> idsPedidos = new ArrayList<>();
 
+        for (int i = 0; i < ids.length; i++) {
+            idsPedidos.add(ids[i]);
+        }
 
-        if (pedidoOpt.isEmpty()){
+        List<Pedido> pedidos = new ArrayList<>();
+
+        for (Integer idsPedido : idsPedidos) {
+            pedidos.add(pedidoRepository.findById(idsPedido).get());
+        }
+
+        if (pedidos.isEmpty()){
             throw new NaoEncontradaException("Pedido");
         }
 
-        return pedidoOpt.get();
+        List<PedidoPagoDto> pedidosPagos = new ArrayList<>();
+
+        for (Pedido pedido : pedidos) {
+            Endereco endereco = buscarEnderecoPedidoEntrega(pedido.getUsuario().getId());
+            List<ProdutoDTO> produtos = listarProdutos(pedido.getId());
+            pedidosPagos.add(PedidoMapper.toDetalhePedidoPagoDto(pedido, endereco, produtos));
+        }
+
+        return pedidosPagos;
 
     }
 

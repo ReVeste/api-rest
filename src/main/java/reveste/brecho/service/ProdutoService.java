@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reveste.brecho.dto.dashboards.DashboardMapper;
 import reveste.brecho.dto.dashboards.QtdVendasMesDto;
-import reveste.brecho.entity.Pedido;
 import reveste.brecho.entity.Produto;
 import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
