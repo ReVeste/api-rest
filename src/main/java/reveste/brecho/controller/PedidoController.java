@@ -19,6 +19,7 @@ import reveste.brecho.entity.Usuario;
 import reveste.brecho.service.PedidoService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -128,17 +129,10 @@ public class PedidoController implements PedidoSwagger {
     }
 
     @GetMapping("/buscar-pedido-pago")
-    public ResponseEntity<PedidoPagoDto> buscarPedidoEntrega() {
+    public ResponseEntity<List<PedidoPagoDto>> buscarPedidoEntrega() {
 
-        Pedido pedido = pedidoService.buscarPedidoParaEntrega();
-
-        if (pedido == null) {return ResponseEntity.noContent().build();}
-
-        Endereco endereco = pedidoService.buscarEnderecoPedidoEntrega(pedido.getUsuario().getId());
-
-        if (endereco == null) {return ResponseEntity.noContent().build();}
-
-        return ResponseEntity.ok(PedidoMapper.toDetalhePedidoPagoDto(pedido, endereco));
+        List<PedidoPagoDto> pedidosPagos = pedidoService.buscarPedidoParaEntrega();
+        return ResponseEntity.ok(pedidosPagos);
 
     }
 
