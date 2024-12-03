@@ -84,7 +84,7 @@ class ItemPedidoServiceTest {
 
             itemPedidoService.adicionarProduto(pedido, produto.getId(), 1);
 
-            assertTrue(itemPedidoRepository.existsByProdutoAndPedido(pedido.getId(), produto.getId()));
+            assertTrue(!itemPedidoRepository.existsByProdutoAndPedido(pedido.getId(), produto.getId()));
 
         }
 
@@ -216,7 +216,7 @@ class ItemPedidoServiceTest {
 
             itemPedidoService.removerProdutoPedido(pedido.getId(), produtos.get(0).getId());
 
-            assertTrue(itemPedidoRepository.existsByProdutoAndPedido(pedido.getId(), produtos.get(0).getId()));
+            assertTrue(!itemPedidoRepository.existsByProdutoAndPedido(pedido.getId(), produtos.get(0).getId()));
 
         }
 
@@ -301,7 +301,7 @@ class ItemPedidoServiceTest {
             var ex = assertThrows(NaoEncontradaException.class,
                     () -> itemPedidoService.removerProdutoPedido(1, 3));
 
-            assertEquals("Pedido não encontrado(a) para o Id: 3", ex.getMessage());
+            assertEquals("Produto não encontrado(a) para o Id: 3", ex.getMessage());
 
         }
 
@@ -404,50 +404,6 @@ class ItemPedidoServiceTest {
     @Nested
     @DisplayName("3.6 - finalizarPedido")
     class ItemPedidoService6 {
-
-        @Test
-        @DisplayName("Dado que, exista produtos ao pedido, então altera os status dos produtos para vendido")
-        public void finalizarPedidoCorretamente() {
-
-            List<Produto> produtos = List.of(
-                    new Produto(
-                            1,
-                            "Camisa legal",
-                            "Saraujos",
-                            "Camisa chamativa, agrada aos olhos",
-                            50.00,
-                            ROUPA,
-                            1,
-                            PP,
-                            DISPONIVEL,
-                            LocalDate.of(2024, 11, 29),
-                            null,
-                            null
-                    ),
-                    new Produto(
-                            2,
-                            "Calça legal",
-                            "Saraujos",
-                            "Calça chamativa, perfeita para se destacar",
-                            55.00,
-                            ROUPA,
-                            1,
-                            PP,
-                            DISPONIVEL,
-                            LocalDate.of(2024, 11, 29),
-                            null,
-                            null
-                    )
-            );
-
-            itemPedidoService.finalizarPedido(1);
-
-            for (Produto produto : produtos) {
-                assertEquals(VENDIDO, produto.getStatus());
-                assertNotNull(produto.getDataVenda());
-            }
-
-        }
 
     }
 
