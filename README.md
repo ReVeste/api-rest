@@ -6,7 +6,6 @@ Este repositório contém o back-end do projeto de e-commerce desenvolvido para 
 - **Spring Boot**
 - **Spring Data JPA**
 - **Hibernate**
-- **MySQL**
 - **Swagger**
 
 ## Funcionalidades
