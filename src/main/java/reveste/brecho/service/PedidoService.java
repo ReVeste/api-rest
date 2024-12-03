@@ -209,7 +209,11 @@ public class PedidoService {
             idsPedidos.add(ids[i]);
         }
 
-        List<Pedido> pedidos = pedidoRepository.findAllById(idsPedidos);
+        List<Pedido> pedidos = new ArrayList<>();
+
+        for (Integer idsPedido : idsPedidos) {
+            pedidos.add(pedidoRepository.findById(idsPedido).get());
+        }
 
         if (pedidos.isEmpty()){
             throw new NaoEncontradaException("Pedido");
