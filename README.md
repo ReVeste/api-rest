@@ -1,4 +1,4 @@
-## ReVeste | Back-End
+# ReVeste | Back-End
 Este repositório contém o back-end do projeto de e-commerce desenvolvido para a empresa EarthMoon. A aplicação foi construída utilizando Java com o framework Spring Boot, oferecendo uma API REST robusta e eficiente para o gerenciamento de produtos, usuários e pedidos.
 
 # Tecnologias Utilizadas
