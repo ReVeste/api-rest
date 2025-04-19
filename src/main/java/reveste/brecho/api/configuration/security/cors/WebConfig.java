@@ -16,6 +16,7 @@ public class WebConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000"); // Especifique o frontend
         config.addAllowedOrigin("https://black-meadow-0cd280a0f.4.azurestaticapps.net/"); // Especifique o frontend
+        config.addAllowedOrigin("http://10.0.2.2:8080"); // Mobile
         config.addAllowedHeader("");
         config.addAllowedMethod("");
 
