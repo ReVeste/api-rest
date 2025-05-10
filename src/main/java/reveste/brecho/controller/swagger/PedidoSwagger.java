@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,13 +75,13 @@ public interface PedidoSwagger {
     })
     ResponseEntity<Void> removerProdutos(@PathVariable Integer idPedido);
 
-    @GetMapping("/em-aberto")
+    @GetMapping(value = "/exportar")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pedidos exportados com sucesso"),
             @ApiResponse(responseCode = "204", description = "Nenhum pedido em andamento encontrado para exportar",
                     content = @Content)
     })
-    ResponseEntity<Void> exportarPedidosEmAberto();
+    ResponseEntity<byte[]> exportarPedidosEmAberto();
 
     @GetMapping("/{idUsuario}/status")
     @ApiResponses({
