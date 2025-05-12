@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/feedbacks")
+@RequestMapping("/api/feedbacks")
 public class FeedbackController implements FeedbackSwagger{
 
     private final FeedbackService service;
