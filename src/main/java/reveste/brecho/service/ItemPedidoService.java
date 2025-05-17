@@ -48,7 +48,7 @@ public class ItemPedidoService {
 
     public List<ProdutoDTO> buscaProdutoPorPedido(int pedidoId) {
         List<ItemPedido> produtosDoPedido = itemPedidoRepository.findByPedidoId(pedidoId);
-        if (produtosDoPedido.isEmpty()) throw new NaoEncontradaException("Item Pedido");
+//        if (produtosDoPedido.isEmpty()) throw new NaoEncontradaException("Item Pedido");
 
         return produtosDoPedido.stream().map(itemPedido -> ProdutoMapper.entidadeToProdutoDTO(
                 itemPedido.getProduto(), itemPedido.getQuantidade(), pedidoId)).collect(Collectors.toList());
