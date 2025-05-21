@@ -19,13 +19,13 @@ public class WebConfig {
         config.addAllowedOrigin("https://black-meadow-0cd280a0f.4.azurestaticapps.net/"); // Especifique o frontend
         config.addAllowedOrigin("http://10.0.2.2:8080"); // Mobile
 
-        config.addAllowedOrigin("http://13.217.123.64"); // IP específico permitido
-        config.addAllowedOrigin("http://13.217.123.64:3000"); // IP específico permitido
-        config.addAllowedOrigin("http://13.217.123.64:8080"); // IP específico permitido
-        config.addAllowedOrigin("http://35.171.135.32"); // IP específico permitido
+        config.addAllowedOrigin("http://107.22.88.213"); // IP específico permitido
+        config.addAllowedOrigin("http://107.22.88.213:3000"); // IP específico permitido
+        config.addAllowedOrigin("http://107.22.88.213:8080"); // IP específico permitido
+        config.addAllowedOrigin("http://3.209.222.70"); // IP específico permitidocd
 
         config.addAllowedOriginPattern("http://localhosto:*");
-        config.addAllowedOriginPattern("http://13.217.123.64:*"); // IP específico permitido
+        config.addAllowedOriginPattern("http://107.22.88.213:*"); // IP específico permitido
         config.addAllowedOriginPattern("http://10.0.0.*"); // IP específico permitido
         config.addAllowedOriginPattern("http://10.0.1.*"); // IP específico permitido
 
