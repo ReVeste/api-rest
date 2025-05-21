@@ -30,7 +30,7 @@ public class ProdutoController implements ProdutoSwagger {
 
     @Override
     public ResponseEntity<List<ProdutoResumoRespostaDto>> listar() {
-        List<Produto> produtos = produtoService.listar();
+        List<Produto> produtos = produtoService.listarProdutosDisponiveis();
 
         return produtos.isEmpty()
                 ? ResponseEntity.noContent().build()
