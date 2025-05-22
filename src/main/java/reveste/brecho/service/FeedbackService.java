@@ -29,8 +29,7 @@ public class FeedbackService {
         return feedbackOpt.get();
     }
 
-    public Feedback criar(Feedback feedback, int idUsuario) {
-        feedback.setUsuario(usuarioService.buscarPorId(idUsuario));
+    public Feedback criar(Feedback feedback) {
         return repository.save(feedback);
     }
 
