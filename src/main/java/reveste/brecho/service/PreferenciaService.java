@@ -52,9 +52,9 @@ public class PreferenciaService {
         PreferenceRequest preferenciaRequest = PreferenceRequest.builder()
                 .backUrls(
                         PreferenceBackUrlsRequest.builder()
-                                .success("https://black-meadow-0cd280a0f.4.azurestaticapps.net/")
-                                .failure("https://black-meadow-0cd280a0f.4.azurestaticapps.net/")
-                                .pending("https://black-meadow-0cd280a0f.4.azurestaticapps.net/")
+                                .success("localhost:3000/produtos")
+                                .failure("localhost:3000/produtos")
+                                .pending("localhost:3000/produtos")
                                 .build())
                 .expires(true)
                 .items(itens)
