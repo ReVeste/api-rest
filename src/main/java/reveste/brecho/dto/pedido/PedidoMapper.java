@@ -44,6 +44,20 @@ public class PedidoMapper {
                 .build();
     }
 
+    public static Pedido pedidoDtoToEntidade(PedidoDto pedido){
+        if (pedido == null) return null;
+
+        return Pedido.builder()
+                .id(pedido.getId())
+                .dataHora(pedido.getDataHora())
+                .tipoFrete(pedido.getTipoFrete())
+                .valorFrete(pedido.getValorFrete())
+                .valorTotal(pedido.getValorTotal())
+                .status(pedido.getStatus())
+                .usuario(pedido.getUsuario())
+                .build();
+    }
+
     public static Pedido criarPedidoParaUsuario(Usuario usuario) {
         return Pedido.builder()
                 .dataHora(LocalDateTime.now())
