@@ -1,22 +1,23 @@
 package reveste.brecho.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Builder
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Feedback {
+public class ImagensFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String comentario;
+    private Integer idImagensFeedback;
+
+    @ManyToOne
+    @JoinColumn(name = "feedback_id")
+    @JsonBackReference
+    private Feedback feedback;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
@@ -33,8 +34,14 @@ public class Feedback {
     @JsonBackReference
     private ItemPedido itemPedido;
 
-    @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<ImagensFeedback> imagensFeedbacks;
 
+    private String ImagemUrl;
+
+    public ImagensFeedback(Feedback feedback, Pedido pedido, Usuario usuario, ItemPedido itemPedido, String imagemUrl) {
+        this.feedback = feedback;
+        this.pedido = pedido;
+        this.usuario = usuario;
+        this.itemPedido = itemPedido;
+        ImagemUrl = imagemUrl;
+    }
 }

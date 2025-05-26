@@ -19,4 +19,13 @@ public class ItemPedidoMapper {
                 .quantidade(quantidade)
                 .build();
     }
+
+//    public static ItemPedido criarItemPedido(Pedido pedido, Produto produto, Integer quantidade) {
+//
+//        return ItemPedido.builder()
+//                .pedido(pedido)
+//                .produto(produto)
+//                .quantidade(quantidade)
+//                .build();
+//    }
 }
