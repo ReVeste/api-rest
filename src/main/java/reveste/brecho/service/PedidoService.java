@@ -44,7 +44,10 @@ public class PedidoService {
     @Transactional
     public CarrinhoDto adicionarProduto(PedidoAdicionarProdutoDto pedidoDto) {
 
+        System.out.println("baratuxa 3: pedidoService, adicionarProduto");
+
         Pedido pedido = pedidoRepository.findByUsuarioIdAndStatus(pedidoDto.getIdUsuario(), StatusPedidoEnum.EM_ANDAMENTO);
+        System.out.println("baratuxa 4 - pedido: " + pedido);
 
         if (pedido == null) {
             Usuario usuario = usuarioService.buscarPorId(pedidoDto.getIdUsuario());
@@ -59,6 +62,7 @@ public class PedidoService {
 
             ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(pedidoCriado.getId()));
             pedidoRepository.atualizarValorTotal(pedidoCriado.getId(), calcularValorTotal(listaProduto, 0));
+            System.out.println("baratuxa calculo valor total: " + calcularValorTotal(listaProduto, 0));
 
             return PedidoMapper.toDetalheCarrinhoDto(
                     PedidoMapper.entidadeToPedidoDto(pedidoCriado), listarProdutos(pedidoCriado.getId())
@@ -72,6 +76,8 @@ public class PedidoService {
 
         ListaProduto listaProduto = ListaProdutoMapper.toListaProduto(listarProdutos(pedido.getId()));
         pedidoRepository.atualizarValorTotal(pedido.getId(), calcularValorTotal(listaProduto, 0));
+
+        System.out.println("baratuxa calculo valor total: " + calcularValorTotal(listaProduto, 0));
 
         return PedidoMapper.toDetalheCarrinhoDto(
                 PedidoMapper.entidadeToPedidoDto(pedido), listarProdutos(pedido.getId())
@@ -209,11 +215,7 @@ public class PedidoService {
             idsPedidos.add(ids[i]);
         }
 
-        List<Pedido> pedidos = new ArrayList<>();
-
-        for (Integer idsPedido : idsPedidos) {
-            pedidos.add(pedidoRepository.findById(idsPedido).get());
-        }
+        List<Pedido> pedidos = pedidoRepository.findAllById(idsPedidos);
 
         if (pedidos.isEmpty()){
             throw new NaoEncontradaException("Pedido");
@@ -237,7 +239,7 @@ public class PedidoService {
 
         if (enderecos.isEmpty()) {return null;}
 
-        return enderecos.get(0);
+        return enderecos.get(enderecos.size() -1);
 
     }
 

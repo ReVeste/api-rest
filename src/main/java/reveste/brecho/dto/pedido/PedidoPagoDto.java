@@ -1,13 +1,10 @@
 package reveste.brecho.dto.pedido;
 
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.dto.produto.ProdutoDTO;
 import reveste.brecho.dto.usuario.UsuarioDetalheRespostaDto;
 import reveste.brecho.entity.Endereco;
-import reveste.brecho.entity.Produto;
-import reveste.brecho.entity.Usuario;
 import reveste.brecho.enun.pedido.StatusPedidoEnum;
 
 import java.time.LocalDateTime;
