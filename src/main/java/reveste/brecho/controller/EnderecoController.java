@@ -14,7 +14,7 @@ import reveste.brecho.service.EnderecoService;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("/enderecos")
+@RestController @RequestMapping("/api/enderecos")
 public class EnderecoController implements EnderecoSwagger {
 
     private final EnderecoService service;

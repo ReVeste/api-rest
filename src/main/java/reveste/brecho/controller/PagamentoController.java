@@ -18,7 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/pagamentos")
+@RequestMapping("/api/pagamentos")
 public class PagamentoController implements PagamentoSwagger {
 
     private final PreferenciaService preferenceService;
