@@ -1,4 +1,3 @@
---
 --INSERT INTO Usuario (nome, cpf, telefone, email, senha, tipo, ativo)
 --    VALUES
 --    ('Matheus Rabello', '94960625040', '11992247954', 'matheus.csantos@sptech.school', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', 'CLIENTE', true),
@@ -22,6 +21,7 @@
 --
 --
 --INSERT INTO Produto (nome, tamanho, categoria, preco, descricao, qtd_estoque, status)
+
 --VALUES
 --('Corpete Blood', 'P', 'ROUPA', 49.90, 'Todo com detalhes de pedrarias! Com 4 barbatanas de sustentação. O zíper dele é comprido mesmo, mas dentro tem tipo um botãozinho pra deixar ele preso e não aparecer. Condição 9/10. Medidas APROXIMADAS: Largura 66cm, busto 72cm', 1, 'DISPONIVEL'),
 --

@@ -23,6 +23,7 @@ import reveste.brecho.util.PesquisaBinaria;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -115,4 +116,13 @@ public class ItemPedidoService {
 
     }
 
+    public ItemPedido buscarItemPedido(Integer idItemPedidos) {
+
+        Optional<ItemPedido> optItemPedido = itemPedidoRepository.findById(idItemPedidos);
+
+        if (optItemPedido.isEmpty()) throw new NaoEncontradaException("Item Pedido");
+
+        return optItemPedido.get();
+
+    }
 }

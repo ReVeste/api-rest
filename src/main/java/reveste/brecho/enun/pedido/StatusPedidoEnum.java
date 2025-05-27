@@ -9,7 +9,8 @@ public enum StatusPedidoEnum {
     CONCLUIDO("Concluído"),
     PAGO("Pagamento Efetuado"),
     EM_ANDAMENTO("Em andamento"),
-    CANCELADO("Cancelado");
+    CANCELADO("Cancelado"),
+    AVALIADO("Avaliado");
 
     private final String descricao;
 

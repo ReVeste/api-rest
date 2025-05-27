@@ -27,6 +27,9 @@ public class PedidoController implements PedidoSwagger {
     public ResponseEntity<CarrinhoDto> adicionarProduto(
             @RequestBody @Valid PedidoAdicionarProdutoDto pedidoDto) {
 
+        System.out.println("baratuxa 1: chamando pedidoService");
+        System.out.println("baratuxa 2 - pedidoDto: " + pedidoDto);
+
         return ResponseEntity.created(null).body(pedidoService.adicionarProduto(pedidoDto));
 
     }
