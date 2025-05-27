@@ -39,6 +39,7 @@ public class ProdutoMapper {
         return ProdutoResumoRespostaDto.builder()
                 .id(entidade.getId())
                 .nome(entidade.getNome())
+                .tamanho(entidade.getTamanho())
                 .categoria(entidade.getCategoria())
                 .preco(entidade.getPreco())
                 .imagens(entidade.getImagens() != null && !entidade.getImagens().isEmpty()

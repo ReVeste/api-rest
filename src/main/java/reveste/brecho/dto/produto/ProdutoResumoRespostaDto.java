@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import reveste.brecho.enun.produto.CategoriaEnum;
 import reveste.brecho.enun.produto.StatusProdutoEnum;
+import reveste.brecho.enun.produto.TamanhoProdutoEnum;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class ProdutoResumoRespostaDto {
     private String nome;
     @Enumerated(EnumType.STRING)
     private CategoriaEnum categoria;
+    @Enumerated(EnumType.STRING)
+    private TamanhoProdutoEnum tamanho;
     private Double preco;
     private List<String> imagens;
     @Enumerated(EnumType.STRING)
