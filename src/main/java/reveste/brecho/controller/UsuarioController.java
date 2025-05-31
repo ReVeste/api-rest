@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController implements UsuarioSwagger {
 
     private final UsuarioService service;
