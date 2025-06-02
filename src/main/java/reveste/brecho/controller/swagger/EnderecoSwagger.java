@@ -27,7 +27,7 @@ public interface EnderecoSwagger {
             @ApiResponse(responseCode = "204", description = "Nenhum endereço encontrado para o usuário"),
             @ApiResponse(responseCode = "400", description = "Parâmetro inválido fornecido para o id do usuário"),
     })
-    ResponseEntity<List<EnderecoResumoRespostaDto>> buscarPorUsuario(@PathVariable Integer idUsuario);
+    ResponseEntity<List<EnderecoDetalheRespostaDto>> buscarPorUsuario(@PathVariable Integer idUsuario);
 
 
     @GetMapping("/{id}")
