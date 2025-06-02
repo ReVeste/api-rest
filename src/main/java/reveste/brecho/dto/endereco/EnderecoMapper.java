@@ -71,4 +71,8 @@ public class EnderecoMapper {
     public static List<EnderecoResumoRespostaDto> entityListToResumoDtoList(List<Endereco> enderecos) {
         return enderecos.stream().map(EnderecoMapper::entityToResumoDto).toList();
     }
+
+    public static List<EnderecoDetalheRespostaDto> entityListToDetalheDtoList(List<Endereco> enderecos) {
+        return enderecos.stream().map(EnderecoMapper::toDetalheDto).toList();
+    }
 }

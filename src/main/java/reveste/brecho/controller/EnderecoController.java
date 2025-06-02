@@ -26,12 +26,12 @@ public class EnderecoController implements EnderecoSwagger {
     }
 
     @Override
-    public ResponseEntity<List<EnderecoResumoRespostaDto>> buscarPorUsuario(@PathVariable Integer idUsuario) {
+    public ResponseEntity<List<EnderecoDetalheRespostaDto>> buscarPorUsuario(@PathVariable Integer idUsuario) {
         List<Endereco> enderecos = service.listarPorUsuario(idUsuario);
 
         return enderecos.isEmpty()
                 ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(EnderecoMapper.entityListToResumoDtoList(enderecos));
+                : ResponseEntity.ok(EnderecoMapper.entityListToDetalheDtoList(enderecos));
     }
 
     @Override

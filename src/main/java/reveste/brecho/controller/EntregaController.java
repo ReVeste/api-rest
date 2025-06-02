@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reveste.brecho.service.EntregaService;
 
 @RestController
-@RequestMapping("/entregas")
+@RequestMapping("/api/entregas")
 public class EntregaController {
 
     @Autowired
