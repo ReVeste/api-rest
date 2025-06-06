@@ -29,19 +29,12 @@ public class ImagensFeedback {
     @JsonBackReference
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "itemPedido_id")
-    @JsonBackReference
-    private ItemPedido itemPedido;
-
-
     private String ImagemUrl;
 
-    public ImagensFeedback(Feedback feedback, Pedido pedido, Usuario usuario, ItemPedido itemPedido, String imagemUrl) {
+    public ImagensFeedback(Feedback feedback, Pedido pedido, Usuario usuario, String imagemUrl) {
         this.feedback = feedback;
         this.pedido = pedido;
         this.usuario = usuario;
-        this.itemPedido = itemPedido;
         ImagemUrl = imagemUrl;
     }
 }
