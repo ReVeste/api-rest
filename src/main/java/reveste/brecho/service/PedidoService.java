@@ -202,6 +202,19 @@ public class PedidoService {
 
     }
 
+    public Pedido atualizarPedidoAvaliado(int idPedido) {
+
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
+
+        if (pedidoOpt.isEmpty()){
+            throw new NaoEncontradaException("Pedido");
+        }
+
+        pedidoRepository.atualizarPedidoAvaliado(idPedido, StatusPedidoEnum.AVALIADO);
+
+        return pedidoRepository.findById(idPedido).get();
+    }
+
     public List<PedidoPagoDto> buscarPedidoParaEntrega() {
 
         if (idPedidosPagos.isEmpty()) {

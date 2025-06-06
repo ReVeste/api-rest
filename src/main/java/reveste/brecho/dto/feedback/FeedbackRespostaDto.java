@@ -14,19 +14,11 @@ public class FeedbackRespostaDto {
     private String comentario;
     private Integer idPedido;
     private UsuarioFeedbackDto usuario;
-    private ItemPedidoDto itemPedido;
     private List<ImagensFeedback> imagensFeedbacks;
 
     @Data @Builder
     static class UsuarioFeedbackDto {
         private Integer id;
         private String nome;
-    }
-
-    @Data
-    @Builder
-    static class ItemPedidoDto {
-        private Integer id;
-        private Produto produto;
     }
 }
