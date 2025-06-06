@@ -13,11 +13,9 @@ import java.util.List;
 @Data @Builder
 public class FeedbackRequisicaoDto {
 
-    private Integer id;
     @NotBlank
     private String comentario;
     private Integer pedido;
     private Integer usuario;
-    private Integer itemPedido;
     private List<String> imagensFeedback;
 }

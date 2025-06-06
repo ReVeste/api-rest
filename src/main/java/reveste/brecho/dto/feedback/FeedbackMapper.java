@@ -10,7 +10,6 @@ public class FeedbackMapper {
 
     public static Feedback criacaoDtoToEntity(
             FeedbackRequisicaoDto dto,
-            ItemPedido itemPedido,
             Pedido pedido,
             Usuario usuario
     ) {
@@ -18,13 +17,12 @@ public class FeedbackMapper {
 
         Feedback feedback = Feedback.builder()
                 .comentario(dto.getComentario())
-                .itemPedido(itemPedido)
                 .pedido(pedido)
                 .usuario(usuario)
                 .build();
 
         List<ImagensFeedback> imagensFeedbacks = dto.getImagensFeedback().stream()
-                .map(url -> new ImagensFeedback(feedback, pedido, usuario, itemPedido, url))
+                .map(url -> new ImagensFeedback(feedback, pedido, usuario, url))
                 .collect(Collectors.toList());
 
         feedback.setImagensFeedbacks(imagensFeedbacks);
@@ -42,18 +40,11 @@ public class FeedbackMapper {
                         entidade.getUsuario().getNome()
                 );
 
-        FeedbackRespostaDto.ItemPedidoDto itemDto =
-                new FeedbackRespostaDto.ItemPedidoDto(
-                        entidade.getItemPedido().getId(),
-                        entidade.getItemPedido().getProduto()
-                );
-
         return FeedbackRespostaDto.builder()
                 .id(entidade.getId())
                 .comentario(entidade.getComentario())
                 .idPedido(entidade.getPedido().getId())
                 .usuario(usuarioDto)
-                .itemPedido(itemDto)
                 .imagensFeedbacks(entidade.getImagensFeedbacks())
                 .build();
     }

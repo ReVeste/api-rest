@@ -31,7 +31,6 @@ public class FeedbackController implements FeedbackSwagger{
 
     private final FeedbackService service;
     private final PedidoService pedidoService;
-    private final ItemPedidoService itemPedidoService;
     private final UsuarioService usuarioService;
 
     @Override
@@ -53,10 +52,11 @@ public class FeedbackController implements FeedbackSwagger{
 
         PedidoDto pedidoDto = pedidoService.buscarPedido(feedbackDto.getPedido());
         Pedido pedido = PedidoMapper.pedidoDtoToEntidade(pedidoDto);
-        ItemPedido itemPedido = itemPedidoService.buscarItemPedido(feedbackDto.getItemPedido());
         Usuario usuario = usuarioService.buscarPorId(feedbackDto.getUsuario());
 
-        Feedback feedback = FeedbackMapper.criacaoDtoToEntity(feedbackDto, itemPedido, pedido, usuario);
+        Pedido pedidoAvaliado = pedidoService.atualizarPedidoAvaliado(pedido.getId());
+
+        Feedback feedback = FeedbackMapper.criacaoDtoToEntity(feedbackDto, pedidoAvaliado, usuario);
         Feedback feedbackCriado = service.criar(feedback);
 
         return ResponseEntity.created(null).body(FeedbackMapper.entityToDto(feedbackCriado));

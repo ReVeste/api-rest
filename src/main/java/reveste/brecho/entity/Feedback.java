@@ -18,7 +18,7 @@ public class Feedback {
     private Integer id;
     private String comentario;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "pedido_id")
     @JsonBackReference
     private Pedido pedido;
@@ -27,11 +27,6 @@ public class Feedback {
     @JoinColumn(name = "usuario_id")
     @JsonBackReference
     private Usuario usuario;
-
-    @ManyToOne
-    @JoinColumn(name = "itemPedido_id")
-    @JsonBackReference
-    private ItemPedido itemPedido;
 
     @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
