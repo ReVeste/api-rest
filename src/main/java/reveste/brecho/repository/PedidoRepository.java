@@ -23,8 +23,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Pedido p SET p.status = :status, p.dataPagamento = :dataPagamento WHERE p.id = :idPedido")
-    void atualizarPedidoPago(Integer idPedido, StatusPedidoEnum status, LocalDate dataPagamento);
+    @Query("UPDATE Pedido p SET p.status = :status, p.dataPagamento = :dataPagamento, p.valorTotal = :valorTotal WHERE p.id = :idPedido")
+    void atualizarPedidoPago(Integer idPedido, StatusPedidoEnum status, LocalDate dataPagamento, Double valorTotal);
 
     @Modifying
     @Transactional
