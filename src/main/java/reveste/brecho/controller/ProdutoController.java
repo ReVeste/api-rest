@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/produtos")
+@RequestMapping("/api/cd")
 public class ProdutoController implements ProdutoSwagger {
 
     private final ProdutoService produtoService;
