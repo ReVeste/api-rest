@@ -47,6 +47,7 @@ public class ProdutoMapper {
                         .collect(Collectors.toList())
                         : Collections.emptyList())
                 .status(entidade.getStatus())
+                .tamanho(entidade.getTamanho())
                 .build();
     }
 

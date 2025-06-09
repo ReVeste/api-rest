@@ -188,18 +188,23 @@ public class PedidoService {
     }
 
     public void atualizarPedidoPago(int idPedido) {
-
         Optional<Pedido> pedidoOpt = pedidoRepository.findById(idPedido);
 
-        if (pedidoOpt.isEmpty()){
+        if (pedidoOpt.isEmpty()) {
             throw new NaoEncontradaException("Pedido");
         }
 
-        pedidoRepository.atualizarPedidoPago(idPedido, StatusPedidoEnum.PAGO, LocalDate.now());
-        itemPedidoService.finalizarPedido(idPedido);
+        // Calcula o total dos produtos do pedido
+        List<ProdutoDTO> produtos = itemPedidoService.finalizarPedido(idPedido);
+        double totalPedido = 0.0;
+
+        for (ProdutoDTO produto : produtos) {
+            totalPedido += produto.getPreco(); // Assumindo que ProdutoDto tem getPreco()
+        }
+
+        pedidoRepository.atualizarPedidoPago(idPedido, StatusPedidoEnum.PAGO, LocalDate.now(), totalPedido);
 
         idPedidosPagos.insert(idPedido);
-
     }
 
     public Pedido atualizarPedidoAvaliado(int idPedido) {

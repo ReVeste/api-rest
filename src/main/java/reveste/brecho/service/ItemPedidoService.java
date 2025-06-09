@@ -97,7 +97,7 @@ public class ItemPedidoService {
         }
     }
 
-    public void finalizarPedido(int idPedido) {
+    public List<ProdutoDTO> finalizarPedido(int idPedido) {
 
         List<ProdutoDTO> listaProdutos = buscaProdutoPorPedido(idPedido);
         List<Integer> listaId = new ArrayList<>();
@@ -108,6 +108,7 @@ public class ItemPedidoService {
 
         produtoService.finalizarPedido(listaId);
 
+        return listaProdutos;
     }
 
     public List<Produto> buscarProdutosRelacionados(List<Pedido> pedidos) {
