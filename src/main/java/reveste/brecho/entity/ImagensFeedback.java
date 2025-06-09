@@ -12,7 +12,7 @@ public class ImagensFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idImagensFeedback;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "feedback_id")
